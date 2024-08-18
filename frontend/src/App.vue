@@ -7,6 +7,7 @@
 
 
 <script>
+import './style.css';
 export default {
 	inject: ['$auth']
 };
