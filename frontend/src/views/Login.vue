@@ -6,7 +6,7 @@
 		<input type="text" v-model="email" />
 		<br />
 		<label for="password"> Password: </label>
-		<input type="password" v-model="password" />
+		<Input type="password" v-model="password" />
 
 		<button
 		  class="bg-blue-500 block text-white p-2 hover:bg-blue-700"
