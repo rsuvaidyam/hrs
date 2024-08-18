@@ -1,0 +1,122 @@
+{
+ "actions": [],
+ "autoname": "format:PD-{MM}-{YY}-{######}",
+ "creation": "2024-08-18 12:11:32.993126",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "category",
+  "event",
+  "price",
+  "column_break_qohp",
+  "discounts",
+  "description",
+  "status",
+  "section_break_tmao",
+  "images",
+  "section_break_fuzy",
+  "key_features"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Category",
+   "options": "Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "event",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Event",
+   "options": "Events",
+   "reqd": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "in_list_view": 1,
+   "label": "Price",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_qohp",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "discounts",
+   "fieldtype": "Float",
+   "label": "Discounts",
+   "precision": "2",
+   "reqd": 1
+  },
+  {
+   "fieldname": "description",
+   "fieldtype": "Small Text",
+   "label": "Description"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nActive\nInactive",
+   "reqd": 1
+  },
+  {
+   "fieldname": "section_break_tmao",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "images",
+   "fieldtype": "Table",
+   "label": "Images",
+   "options": "Images Child"
+  },
+  {
+   "fieldname": "key_features",
+   "fieldtype": "Text Editor",
+   "label": "Key Features"
+  },
+  {
+   "fieldname": "section_break_fuzy",
+   "fieldtype": "Section Break"
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-18 13:12:29.493633",
+ "modified_by": "Administrator",
+ "module": "hrs",
+ "name": "Products",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}

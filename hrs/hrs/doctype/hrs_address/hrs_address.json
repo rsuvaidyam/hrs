@@ -1,0 +1,117 @@
+{
+ "actions": [],
+ "autoname": "format:AD-{MM}-{YY}-{####}",
+ "creation": "2024-08-18 12:22:40.928708",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+ "field_order": [
+  "name1",
+  "phone_no",
+  "house_name",
+  "road_name",
+  "land_mark",
+  "column_break_zqnj",
+  "pin_code",
+  "state",
+  "district",
+  "status"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "phone_no",
+   "fieldtype": "Data",
+   "in_list_view": 1,
+   "label": "Phone No.",
+   "length": 10,
+   "reqd": 1
+  },
+  {
+   "fieldname": "house_name",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "House Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "road_name",
+   "fieldtype": "Date",
+   "in_list_view": 1,
+   "label": "Road Name",
+   "reqd": 1
+  },
+  {
+   "fieldname": "land_mark",
+   "fieldtype": "Date",
+   "label": "Land Mark",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_zqnj",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "pin_code",
+   "fieldtype": "Data",
+   "label": "Pin Code",
+   "length": 6,
+   "reqd": 1
+  },
+  {
+   "fieldname": "state",
+   "fieldtype": "Link",
+   "label": "State",
+   "options": "State",
+   "reqd": 1
+  },
+  {
+   "fieldname": "district",
+   "fieldtype": "Link",
+   "label": "District",
+   "options": "District",
+   "reqd": 1
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nActive\nInactive"
+  }
+ ],
+ "hide_toolbar": 1,
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-18 13:11:01.895157",
+ "modified_by": "Administrator",
+ "module": "hrs",
+ "name": "Hrs Address",
+ "naming_rule": "Expression",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "search_fields": "phone_no,pin_code",
+ "show_title_field_in_link": 1,
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": [],
+ "title_field": "name1"
+}

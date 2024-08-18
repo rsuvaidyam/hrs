@@ -1,0 +1,38 @@
+[
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-08-18 12:52:38.777170",
+  "name": "BUYER",
+  "role_profile": "BUYER",
+  "roles": [
+   {
+    "role": "BUYER"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-08-18 12:52:52.095666",
+  "name": "SELLER",
+  "role_profile": "SELLER",
+  "roles": [
+   {
+    "role": "SELLER"
+   }
+  ]
+ },
+ {
+  "docstatus": 0,
+  "doctype": "Role Profile",
+  "modified": "2024-08-18 12:53:00.943883",
+  "name": "ADMIN",
+  "role_profile": "ADMIN",
+  "roles": [
+   {
+    "role": "ADMIN"
+   }
+  ]
+ }
+]
