@@ -5,3 +5,7 @@
 tags
 node_modules
 __pycache__
+frontend/node_modules
+frontend/dist
+frontend/.cache
+frontend/.env

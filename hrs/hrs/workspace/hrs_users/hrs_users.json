@@ -1,0 +1,35 @@
+{
+ "charts": [],
+ "content": "[{\"id\":\"oOrWtvgB5r\",\"type\":\"quick_list\",\"data\":{\"quick_list_name\":\"Hrs User\",\"col\":12}}]",
+ "creation": "2024-08-18 12:57:14.499887",
+ "custom_blocks": [],
+ "docstatus": 0,
+ "doctype": "Workspace",
+ "for_user": "",
+ "hide_custom": 0,
+ "icon": "customer",
+ "idx": 0,
+ "indicator_color": "green",
+ "is_hidden": 0,
+ "label": "Hrs Users",
+ "links": [],
+ "modified": "2024-08-18 13:45:52.516114",
+ "modified_by": "Administrator",
+ "module": "hrs",
+ "name": "Hrs Users",
+ "number_cards": [],
+ "owner": "Administrator",
+ "parent_page": "",
+ "public": 1,
+ "quick_lists": [
+  {
+   "document_type": "Hrs User",
+   "label": "Hrs User",
+   "quick_list_filter": "[]"
+  }
+ ],
+ "roles": [],
+ "sequence_id": 2.0,
+ "shortcuts": [],
+ "title": "Hrs Users"
+}

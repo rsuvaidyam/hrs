@@ -1,6 +1,6 @@
 {
  "actions": [],
- "autoname": "field:email",
+ "autoname": "format:{email}",
  "creation": "2024-08-18 12:44:43.740177",
  "doctype": "DocType",
  "engine": "InnoDB",
@@ -9,10 +9,12 @@
   "email",
   "phone_no",
   "gender",
+  "user_image",
   "column_break_gina",
   "date_of_birth",
   "role_profile",
-  "password"
+  "password",
+  "status"
  ],
  "fields": [
   {
@@ -27,7 +29,6 @@
    "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Email",
-   "options": "Email",
    "reqd": 1,
    "unique": 1
   },
@@ -67,19 +68,31 @@
   },
   {
    "fieldname": "password",
-   "fieldtype": "Password",
+   "fieldtype": "Data",
    "label": "Password",
    "reqd": 1
+  },
+  {
+   "fieldname": "user_image",
+   "fieldtype": "Attach Image",
+   "label": "Profile"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "\nActive\nInactive"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-18 12:51:01.949302",
+ "modified": "2024-08-18 14:06:34.235604",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Hrs User",
- "naming_rule": "By fieldname",
+ "naming_rule": "Expression",
  "owner": "Administrator",
  "permissions": [
   {
