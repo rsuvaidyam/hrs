@@ -233,4 +233,4 @@ fixtures = [
 # }
 
 
-website_route_rules = [{'from_route': '/frontend/<path:app_path>', 'to_route': 'frontend'},]
+website_route_rules = [{'from_route': '/hrs/<path:app_path>', 'to_route': 'hrs'},]
