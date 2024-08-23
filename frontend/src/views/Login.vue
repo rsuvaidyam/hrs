@@ -35,6 +35,8 @@ export default {
   },
   methods: {
 	async login() {
+		console.log('navigating to home');
+		
 	  if (this.email && this.password) {
 		let res = await this.$auth.login(this.email, this.password);
 		if (res) {

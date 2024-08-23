@@ -1,8 +1,7 @@
 <template>
 	<div>
-	  <button v-if="$auth.isLoggedIn" @click="$auth.logout()">Logout</button>
 	  <Navbar />
-	  <!-- <router-view /> -->
+	  <router-view />
 	</div>
   </template>
   

@@ -1,8 +1,7 @@
 <template>
-  <div>
+  <div class="pt-16">
 	<h1>Home Page</h1>
-	<!-- Fetch the resource on click -->
-	<button class="bg-blue-500" @click="$resources.ping.fetch()">Ping</button>
+	
   </div>
 </template>
 

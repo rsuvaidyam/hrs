@@ -25,7 +25,7 @@
           >
             Dashboard
           </router-link>
-          <Dropdown v-if="userDetails?.name"
+          <Dropdown v-if="$auth.isLoggedIn"
           :options="[
             {
               label: 'Profile',
@@ -33,12 +33,12 @@
             },
             {
               label: 'Logout',
-              onClick: () => {},
+              onClick: () => {$auth.logout()},
             },
            
           ]"
           :button="{
-            label: userDetails?.name,
+            label: $auth.cookie.full_name,
             variant:'outline',
             theme:'gray',
             size:'md',
@@ -53,7 +53,7 @@
           </router-link>
         </div>
       </div>
-    </div>
+    </div> 
   </template>
   
   <script>
@@ -64,6 +64,7 @@
   import { Button, Dropdown } from 'frappe-ui';
   
   export default {
+    inject: ['$auth'],
     components: { 
       Button,
       GlobalSearch,
