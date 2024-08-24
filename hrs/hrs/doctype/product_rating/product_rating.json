@@ -25,7 +25,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-18 13:12:15.642099",
+ "modified": "2024-08-24 15:55:28.061335",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Product Rating",
@@ -41,6 +41,28 @@
    "read": 1,
    "report": 1,
    "role": "System Manager",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "create": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "BUYER",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "SELLER",
    "share": 1,
    "write": 1
   }
