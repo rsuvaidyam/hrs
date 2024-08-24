@@ -1,9 +1,9 @@
 export default [
 	{
-		path: '/',
-		name: 'Home',
+		path: '/cart',
+		name: 'Cart',
 		component: () =>
-			import(/* webpackChunkName: "login" */ '../views/Home.vue'),
+			import('../views/Cart.vue'),
 		meta: {
 			isLoginPage: false
 		},

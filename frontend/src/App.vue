@@ -1,24 +1,19 @@
 <template>
-	<div>
-	  <Navbar />
-	  <div class="pt-12 md:pt-14">
-		<Carousel />
-	  <router-view />
-	  </div>
+	<div class="h-screen w-full">
+		<Navbar />
+		<div class="pt-12 md:pt-14 h-full">
+			<router-view />
+		</div>
 	</div>
-  </template>
-  
-  <script>
-  import Navbar from './components/Navbar.vue';
-  import Carousel from './components/Carousel.vue';
-  import './style.css';
-  
-  export default {
-	inject: ['$auth'],
+</template>
+
+<script>
+import Navbar from './components/Navbar.vue';
+import './style.css';
+
+export default {
 	components: {
-	  Navbar,
-	  Carousel
+		Navbar,
 	},
-  };
-  </script>
-  
+};
+</script>

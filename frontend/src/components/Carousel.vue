@@ -1,5 +1,5 @@
 <template>
-    <div class="carousel-container">
+    <div class="carousel-container max-w-[1800px] mx-auto">
       <Carousel
         :autoplay="2000"
         wrap-around="true"
