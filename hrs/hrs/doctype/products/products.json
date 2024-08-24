@@ -9,6 +9,7 @@
   "category",
   "event",
   "price",
+  "final_price",
   "column_break_qohp",
   "discounts",
   "description",
@@ -47,7 +48,7 @@
    "fieldtype": "Currency",
    "in_list_view": 1,
    "label": "Price",
-   "precision": "2",
+   "precision": "1",
    "reqd": 1
   },
   {
@@ -58,7 +59,7 @@
    "fieldname": "discounts",
    "fieldtype": "Float",
    "label": "Discounts",
-   "precision": "2",
+   "precision": "1",
    "reqd": 1
   },
   {
@@ -92,11 +93,20 @@
   {
    "fieldname": "section_break_fuzy",
    "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "final_price",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Final Price",
+   "length": 1,
+   "precision": "1",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-24 13:06:34.340902",
+ "modified": "2024-08-24 16:48:52.434213",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Products",
@@ -114,10 +124,30 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "BUYER",
+   "share": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "SELLER",
+   "share": 1,
+   "write": 1
   }
  ],
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": [],
- "title_field": "name1"
+ "states": []
 }

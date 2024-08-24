@@ -88,7 +88,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-18 13:11:01.895157",
+ "modified": "2024-08-24 15:57:27.275869",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Hrs Address",
@@ -106,6 +106,27 @@
    "role": "System Manager",
    "share": 1,
    "write": 1
+  },
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "BUYER",
+   "share": 1,
+   "write": 1
+  },
+  {
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "SELLER",
+   "share": 1
   }
  ],
  "search_fields": "phone_no,pin_code",
