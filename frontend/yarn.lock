@@ -4059,6 +4059,11 @@ vue-router@^4, vue-router@^4.1.6:
     "@vue/server-renderer" "3.4.38"
     "@vue/shared" "3.4.38"
 
+vue3-carousel@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.npmjs.org/vue3-carousel/-/vue3-carousel-0.3.3.tgz"
+  integrity sha512-VsuOBE4LG9lxAiYGR9U7ps4RyJ4oFQGzk79/49ybvoxzNpahPAVWIDHKK3a1lOv0CSplFq6u4FvaFLZ8x3FgWg==
+
 w3c-keyname@^2.2.0:
   version "2.2.8"
   resolved "https://registry.npmjs.org/w3c-keyname/-/w3c-keyname-2.2.8.tgz"
