@@ -9,37 +9,35 @@ import Auth from "./libs/controllers/auth";
 import { session } from "@/data/session"
 
 const app = createApp(App);
-const auth = reactive(new Auth());
 
 // Plugins
 app.use(router);
+const auth = reactive(new Auth());
 app.use(resourceManager);
 
 // Global Properties,
 // components can inject this
 app.provide("$session", session)
-app.provide("$auth", auth);
 app.provide("$call", call);
+app.provide("$auth", auth);
 app.provide("$socket", socket);
 
 
 // Configure route gaurds
 router.beforeEach(async (to, from, next) => {
-	if (to.matched.some((record) => !record.meta.isLoginPage)) {
-		// this route requires auth, check if logged in
-		// if not, redirect to login page.
-		if (!auth.isLoggedIn) {
-			next({ name: 'Login', query: { route: to.path } });
-		} else {
-			next();
-		}
-	} else {
-		if (auth.isLoggedIn) {
-			next({ name: 'Home' });
-		} else {
-			next();
-		}
-	}
+	// if (to.matched.some((record) => !record.meta.isLoginPage)) {
+	// 	if (!auth.isLoggedIn) {
+	// 		next({ name: 'Login', query: { route: to.path } });
+	// 	} else {
+	// 		next();
+	// 	}
+	// } else {
+	// 	if (!auth.isLoggedIn) {
+	// 		next({ name: 'Home' });
+	// 	} else {
+	// 	}
+	// }
+	next();
 });
 
 app.mount("#app");
