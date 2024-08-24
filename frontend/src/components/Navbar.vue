@@ -1,14 +1,10 @@
 <template>
-  <div class="w-full fixed top-0 h-12 md:h-14 z-40 bg-gray-200 shadow-sm">
-    <div class="px-3 md:px-8 flex justify-between items-center h-full max-w-[1600px] mx-auto w-full">
+  <div class="w-full fixed top-0 h-12 md:h-14 z-40 bg-[#982B1C] shadow-sm">
+    <div class="px-3 md:px-8 flex justify-between items-center h-full max-w-[1800px] mx-auto w-full">
       <router-link to="/" class="text-xl font-medium text-secondary cursor-pointer">HRS</router-link>
       
       <div class="flex items-center gap-3 md:gap-6">
         <GlobalSearch />
-        <router-link v-if="userDetails?.role === 'SELLER' || userDetails?.role === 'ADMIN'" to="/dashboard"
-          class="border px-5 py-[7px] font-medium text-sm hidden md:block bg-white hover:bg-primary hover:text-white transition-all">
-          Dashboard
-        </router-link>
         <Dropdown v-if="$auth.isLoggedIn" :options="[
           {
             label: 'Profile',
@@ -25,12 +21,10 @@
             theme: 'gray',
             size: 'md',
           }" />
-        <SingIn v-else />
-
-
-        <router-link v-if="route.path !== '/cart'" to="/cart" class="order-1 md:order-2 relative">
+        <Login v-else />
+        <router-link v-if="route.path !== '/cart'" to="/cart" class="order-1 md:order-2 text-white relative">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-            stroke="currentColor" class="size-6">
+            stroke="currentColor" class="size-7">
             <path stroke-linecap="round" stroke-linejoin="round"
               d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" />
           </svg>
@@ -47,7 +41,7 @@
 import { ref, onMounted, watch, computed,inject } from 'vue';
 import { useRoute } from 'vue-router';
 import GlobalSearch from './GlobalSearch.vue';
-import SingIn from '../pages/SingIn.vue';
+import Login from '../pages/Login.vue';
 import { Button, Dropdown } from 'frappe-ui';
 
 export default {
@@ -56,7 +50,7 @@ export default {
   components: {
     Button,
     GlobalSearch,
-    SingIn,
+    Login,
     Dropdown,
   },
   setup() {
