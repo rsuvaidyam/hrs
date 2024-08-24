@@ -1,27 +1,34 @@
 <template>
-    <div class="w-3/5 md:w-3/6 relative">
-        <Button :variant="'outline'" theme="gray" size="md" label="Search.." class="text-start w-96"
-            @click="dialog1 = true" />
-        <Dialog :options="{
-            title: 'Confirm',
-            message: 'Are you sure you want to confirm this action?',
-            size: 'xl',
-            actions: [{ label: 'Confirm', variant: 'solid', onClick: handleConfirm }],
-        }" v-model="dialog1" />
+    <div class="relative">
+        <label for="search" @click="dialog1 = true"> <p class="w-60 md:w-96 h-full rounded-md border-2 border-gray-400 cursor-pointer bg-white py-0.5 px-2 text-md">Search..</p> </label> 
+        <Dialog v-model="dialog1">
+            <template #body-title>
+                <h3>Search All Products</h3>
+            </template>
+            <template #body-content>
+                <div class="flex flex-col gap-2 relative">
+                    <TextInput v-model="search" label="search" id="search" placeholder="Search.." />
+                    <Spinner class="w-4 absolute top-1.5 right-1.5"/>
+                </div>
+                <div class="h-full min-h-72 md:h-48 md:min-h-48"></div>
+            </template>
+        </Dialog>
     </div>
 </template>
 
 <script>
 import { ref, watch } from 'vue';
-import { Dialog, Button } from 'frappe-ui';
+import { Dialog, Button, TextInput,Spinner } from 'frappe-ui';
 
 export default {
     components: {
         Dialog,
         Button,
+        TextInput,
+        Spinner
     },
     setup() {
-        const searchValue = ref('');
+        const search = ref('');
         const searchResults = ref([]);
         const searchLoader = ref(false);
         const dialog1 = ref(false);
@@ -50,10 +57,10 @@ export default {
             dialog1.value = false; // Close the dialog after confirming
         };
 
-        watch(searchValue, handleSearch);
+        watch(search, handleSearch);
 
         return {
-            searchValue,
+            search,
             searchResults,
             searchLoader,
             dialog1,

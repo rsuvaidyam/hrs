@@ -2,10 +2,11 @@ import { createApp, reactive } from "vue";
 import App from "./App.vue";
 
 import router from './router';
-import resourceManager from "../../../doppio/libs/resourceManager";
-import call from "../../../doppio/libs/controllers/call";
-import socket from "../../../doppio/libs/controllers/socket";
-import Auth from "../../../doppio/libs/controllers/auth";
+import resourceManager from "./libs/resourceManager";
+import call from "./libs/controllers/call";
+import socket from "./libs/controllers/socket";
+import Auth from "./libs/controllers/auth";
+import { session } from "@/data/session"
 
 const app = createApp(App);
 const auth = reactive(new Auth());
@@ -16,6 +17,7 @@ app.use(resourceManager);
 
 // Global Properties,
 // components can inject this
+app.provide("$session", session)
 app.provide("$auth", auth);
 app.provide("$call", call);
 app.provide("$socket", socket);
