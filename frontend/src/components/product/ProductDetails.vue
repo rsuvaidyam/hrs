@@ -6,14 +6,14 @@
                 <div class="hidden md:block">
                     <div class="w-full h-auto md:h-full flex gap-2">
                         <div class="w-20 h-full flex flex-col gap-1">
-                            <div v-for="(image,index) in products.images" :key="index" @click="setImageSelected(image)"
+                            <div v-for="(image, index) in products.images" :key="index" @click="setImageSelected(image)"
                                 :class="{ 'border-2 border-gray-950': imageSelected?.name === image.name }"
                                 class="px-0.5 md:px-0 overflow-hidden cursor-pointer">
                                 <img class="h-full md:h-auto w-auto md:w-full" :src="image.url" alt="" />
                             </div>
                         </div>
                         <div class="w-full h-full flex flex-col gap-3">
-                            <img class="w-full" :src="imageSelected?.url || (products?.images && products?.images[0]?.url ) " alt="" />
+                            <img class="w-full" :src="imageSelected?.url || (products?.images && products?.images[0]?.url)" alt="" />
                             <div class="hidden md:block">
                                 <div class="w-full items-center flex gap-4 left-0 px-2 md:px-0">
                                     <Button @click="addToCart(products.name)" :loading="cart_loading"
@@ -31,14 +31,13 @@
                 </div>
                 <div class="block md:hidden">
                     <Carousel :autoplay="2000" :wrap-around="true">
-                        <Slide v-for="(image,index) in products.images" :key="index">
+                        <Slide v-for="(image, index) in products.images" :key="index">
                             <img :src="image.url" alt="" class="carousel__item rounded-t-sm max-h-56 w-full" />
                         </Slide>
                         <template #addons>
                             <Pagination />
                         </template>
                     </Carousel>
-                    
                 </div>
             </div>
             <div
@@ -47,19 +46,18 @@
                 <div class="flex items-center gap-2">
                     <div class="bg-primary px-1 font-medium rounded-sm text-sm text-white flex items-center gap-1">
                         4.3
-                        <BsStarHalf class="text-xs" />
+                        <FeatherIcon name="star" class="w-3 h-3"/>
                     </div>
                     <div class="text-xs text-primary font-normal">456 Reviews</div>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="flex text-3xl font-normal text-secondary">
-                        <BiRupee class="pt-1" />
-                        {{ products.discounts ? Math.ceil((100 - products.discounts) / 100 * products.price) :
-                        products.price }}
+                         <FeatherIcon name="dollar-sign" class="w-5 h-5"/>
+                        {{ products.discounts ? Math.ceil((100 - products.discounts) / 100 * products.price) : products.price }}
                     </span>
                     <template v-if="products.discounts">
                         <del class="flex items-center text-base text-tatary">
-                            <BiRupee class="text-base" />
+                            <FeatherIcon name="dollar-sign" class="w-4 h-4"/>
                             {{ products.price }}
                         </del>
                         <span class="text-primary font-medium">{{ products.discounts }}% off</span>
@@ -83,9 +81,7 @@
                 </div>
                 <div class="w-full">
                     <p class="text-lg font-medium to-gray-700">Description</p>
-                    <p class="text-sm">{{ products?.description?.substring(0, 200) }}{{ products?.description?.length > 200
-                        ? '...' : ''
-                        }}</p>
+                    <p class="text-sm">{{ products?.description?.substring(0, 200) }}{{ products?.description?.length > 200 ? '...' : '' }}</p>
                 </div>
                 <div class="w-full">
                     <p class="font-medium to-gray-700">Product Details</p>
@@ -116,8 +112,6 @@
 import { ref, onMounted, inject } from 'vue';
 import {Spinner} from 'frappe-ui';
 import { useRoute, useRouter } from 'vue-router';
-// import { BsStarHalf } from 'vue-icons';
-// import { BiRupee } from 'vue-icons';
 import {Button} from 'frappe-ui';
 import { Carousel, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
@@ -144,7 +138,6 @@ onMounted(async () => {
         }, 1000);
     } catch (error) {
         console.log(error);
-        
     }
 });
 
@@ -163,7 +156,6 @@ const addToCart = async (item) => {
         }
     } catch (error) {
        console.log(error);
-       
     }
 };
 
