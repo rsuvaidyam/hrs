@@ -6,7 +6,8 @@ import resourceManager from "./libs/resourceManager";
 import call from "./libs/controllers/call";
 import socket from "./libs/controllers/socket";
 import Auth from "./libs/controllers/auth";
-import { session } from "@/data/session"
+import { session } from "@/data/session";
+import {FeatherIcon} from 'frappe-ui';
 
 const app = createApp(App);
 
@@ -14,6 +15,7 @@ const app = createApp(App);
 app.use(router);
 const auth = reactive(new Auth());
 app.use(resourceManager);
+app.component("FeatherIcon",FeatherIcon)
 
 // Global Properties,
 // components can inject this
