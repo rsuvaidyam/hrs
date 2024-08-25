@@ -106,7 +106,7 @@
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-24 16:48:52.434213",
+ "modified": "2024-08-25 14:35:20.566130",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Products",
@@ -147,7 +147,9 @@
    "write": 1
   }
  ],
+ "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": []
+ "states": [],
+ "title_field": "name1"
 }

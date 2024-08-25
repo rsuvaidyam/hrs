@@ -5,7 +5,7 @@
         wrap-around="true"
         :dynamic-height="true"
       >
-        <Slide v-for="el in carousel" :key="el._id">
+        <Slide v-for="el in carousel" :key="el.name">
           <img :src="el.image" :alt="el.mimetype" class="carousel__item h-24" />
         </Slide>
   

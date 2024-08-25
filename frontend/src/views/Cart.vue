@@ -1,24 +1,18 @@
 <!-- src/components/Cart.vue -->
 <template>
 	<div class=" h-full">
-		<div class="w-full h-full flex items-center justify-center"  v-if="false" >
-			<Spinner class="w-40 absolute top-1.5 right-1.5"/>
+		<div class="w-full h-full flex items-center justify-center" v-if="loading">
+			<Spinner class="w-40 absolute top-1.5 right-1.5" />
 		</div>
 		<CartAlert v-else-if="!products.length" />
-		<div v-else class="pt-12 md:pt-14 pb-16 w-full h-full px-0 lg:px-8 bg-gray-100 relative">
+		<div v-else class=" pb-16 w-full h-full px-0 lg:px-8 bg-gray-100 relative">
 			<div
 				class="flex flex-col md:flex-row gap-3 h-full pt-1 md:pt-3 overflow-y-auto md:overscroll-y-none scrollbar-thin">
 				<div
 					class="w-full md:w-[70%] md:overflow-y-auto shadow-md md:shadow-none md:scrollbar-thin md:border h-auto md:h-full flex flex-col bg-white">
-					<!-- <CartItem
-			  v-for="item in products"
-			  :key="item._id"
-			  :product="item"
-			  :isSelected="selectedProductIds.includes(item._id)"
-			  @delete="deleteItem"
-			  @quantityChange="updateCartItemCount"
-			  @select="toggleProductSelection"
-			/> -->
+					<CartItem v-for="item in products" :key="item.name" :product="item"
+						:isSelected="selectedProductIds.includes(item.name)" @delete="deleteItem"
+						@quantityChange="updateCartItemCount" @select="toggleProductSelection" />
 				</div>
 				<div class="w-full md:w-[30%]">
 					<div class="md:border bg-white h-auto shadow-md md:shadow-none">
@@ -56,13 +50,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, onMounted, watch,inject } from 'vue';
+import { defineComponent, ref, computed, onMounted, watch, inject } from 'vue';
 import CartItem from '../components/CartItem.vue';
 import CartAlert from '../components/CartAlert.vue';
 import { Spinner } from 'frappe-ui';
 export default defineComponent({
 	name: 'Cart',
-	components: { CartItem, Spinner ,CartAlert},
+	components: { CartItem, Spinner, CartAlert },
 	setup() {
 		const products = ref([]);
 		const loading = ref(true);
@@ -71,9 +65,9 @@ export default defineComponent({
 		const session = inject('$session');
 		const fetchCart = async () => {
 			try {
-				const response = await call('hrs.controllers.cart.cart_count', { usr: session.user });
-				products.value = response.data.data;
-				selectedProductIds.value = response.map((e) => e._id);
+				const response = await call('hrs.controllers.cart.get_cart', { usr: session.user });
+				products.value = response;
+				selectedProductIds.value = response.map((e) => e.name);
 				loading.value = false;
 			} catch (error) {
 				// Handle error, e.g., show a toast or redirect to login
@@ -81,11 +75,11 @@ export default defineComponent({
 			}
 		};
 
-		const deleteItem = async (id: string) => {
+		const deleteItem = async (name: string) => {
 			try {
-				const response = await call('hrs.controllers.cart.delete_item', { id: id });
-				products.value = products.value.filter(product => product._id !== id);
-				selectedProductIds.value = selectedProductIds.value.filter(pid => pid !== id);
+				const response = await call('hrs.controllers.cart.delete_item', { id: name });
+				products.value = products.value.filter(product => product.name !== name);
+				selectedProductIds.value = selectedProductIds.value.filter(pid => pid !== name);
 			} catch (error) {
 				console.error(error);
 			}
@@ -94,7 +88,7 @@ export default defineComponent({
 		//   const updateCartItemCount = async (id: string, value: number) => {
 		// 	try {
 		// 	  onst response = await call('hrs.controllers.cart.update_item',{ id: id, value: value });
-		// 	  const product = products.value.find(p => p._id === id);
+		// 	  const product = products.value.find(p => p.name === id);
 		// 	  if (product) {
 		// 		product.count = value;
 		// 	  }
@@ -128,7 +122,7 @@ export default defineComponent({
 
 		onMounted(fetchCart);
 
-		return { products, loading, selectedProductIds,  totalPrice, totalDiscounts, totalPriceWithDiscount };
+		return { products, loading, selectedProductIds, totalPrice, totalDiscounts, totalPriceWithDiscount };
 	},
 });
 </script>
