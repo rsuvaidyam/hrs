@@ -1,0 +1,118 @@
+{
+ "actions": [],
+ "allow_rename": 1,
+ "creation": "2024-08-25 15:55:03.794580",
+ "doctype": "DocType",
+ "engine": "InnoDB",
+"field_order": [
+  "name1",
+  "discount_mode",
+  "discount",
+  "max_discount_in_ruppes",
+  "column_break_mlzs",
+  "discount_category",
+  "status",
+  "start_on",
+  "expire_on",
+  "total_dayes"
+ ],
+ "fields": [
+  {
+   "fieldname": "name1",
+   "fieldtype": "Data",
+   "label": "Name",
+   "not_nullable": 1,
+   "reqd": 1,
+   "unique": 1
+  },
+  {
+   "fieldname": "discount_mode",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Discount Mode",
+   "options": "Percent( % )\nRuppe ( \u20b9 )",
+   "reqd": 1
+  },
+  {
+   "fieldname": "discount_category",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Discount Category",
+   "options": "Category",
+   "reqd": 1
+  },
+  {
+   "fieldname": "discount",
+   "fieldtype": "Float",
+   "in_list_view": 1,
+   "label": "Discount",
+   "non_negative": 1,
+   "precision": "1",
+   "reqd": 1
+  },
+  {
+   "fieldname": "max_discount_in_ruppes",
+   "fieldtype": "Float",
+   "label": "Max Discount in Ruppes",
+   "non_negative": 1,
+   "precision": "1"
+  },
+  {
+   "fieldname": "column_break_mlzs",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "in_list_view": 1,
+   "label": "Status",
+   "options": "Active\nIncomming\nExpired",
+   "reqd": 1
+  },
+  {
+   "fieldname": "start_on",
+   "fieldtype": "Datetime",
+   "in_list_view": 1,
+   "label": "Start On",
+   "reqd": 1
+  },
+  {
+   "fieldname": "expire_on",
+   "fieldtype": "Datetime",
+   "label": "Expire On",
+   "reqd": 1
+  },
+  {
+   "fieldname": "total_dayes",
+   "fieldtype": "Int",
+   "in_list_view": 1,
+   "label": "Total Dayes",
+   "non_negative": 1,
+   "reqd": 1
+  }
+ ],
+ "index_web_pages_for_search": 1,
+ "links": [],
+ "modified": "2024-08-25 15:55:03.794580",
+ "modified_by": "Administrator",
+ "module": "hrs",
+ "name": "Coupon Code",
+ "owner": "Administrator",
+ "permissions": [
+  {
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "System Manager",
+   "share": 1,
+   "write": 1
+  }
+ ],
+ "sort_field": "creation",
+ "sort_order": "DESC",
+ "states": []
+}
