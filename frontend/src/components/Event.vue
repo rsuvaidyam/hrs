@@ -5,6 +5,7 @@
       <div v-else class="w-full flex flex-col md:flex-row gap-3">
         <router-link
           v-for="occasion in occasions"
+          :key="occasion.name"
           :to="`/productlist/event/${occasion.name}`"
           class="w-full md:w-1/2"
         >

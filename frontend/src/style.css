@@ -4,3 +4,13 @@
 /* *{
     font-family: "Work Sans", Sans-serif;
   } */
+
+  :root{
+    --color-bg-primary: #111827;
+    --color-bg-secondary: #E87436;
+    --color-bg-tatary: #331d11;
+  
+    --color-text-primary:#E87436;
+    --color-text-secondary:#111827;
+    --color-text-tatary:#4B5563;
+  }
