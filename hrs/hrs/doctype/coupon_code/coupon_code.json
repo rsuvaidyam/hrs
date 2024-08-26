@@ -4,7 +4,7 @@
  "creation": "2024-08-25 15:55:03.794580",
  "doctype": "DocType",
  "engine": "InnoDB",
-"field_order": [
+ "field_order": [
   "name1",
   "discount_mode",
   "discount",
@@ -14,7 +14,7 @@
   "status",
   "start_on",
   "expire_on",
-  "total_dayes"
+  "total_days"
  ],
  "fields": [
   {
@@ -83,17 +83,17 @@
    "reqd": 1
   },
   {
-   "fieldname": "total_dayes",
+   "fieldname": "total_days",
    "fieldtype": "Int",
    "in_list_view": 1,
-   "label": "Total Dayes",
+   "label": "Total Days",
    "non_negative": 1,
    "reqd": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-25 15:55:03.794580",
+ "modified": "2024-08-25 16:12:17.272010",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Coupon Code",
