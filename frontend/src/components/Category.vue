@@ -6,7 +6,7 @@
           <div class="md:w-28 w-16 rounded-full md:rounded-2xl border-2 ">
             <img class="rounded-full md:rounded-3xl" :src="category?.image" alt="" />
           </div>
-          <p class="text-xs md:text-lg truncate font-medium">{{ category.name1 }}</p>
+          <p class="text-xs md:text-lg truncate text-main font-medium">{{ category.name1 }}</p>
         </router-link>
       </div>
     </div>

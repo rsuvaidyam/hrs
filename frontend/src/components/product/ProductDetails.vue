@@ -42,7 +42,7 @@
             </div>
             <div
                 class="w-full md:w-1/2 h-full md:overflow-y-scroll md:scrollbar-none p-2 pb-14 md:pb-0 flex flex-col gap-2 relative">
-                <p class="text-xl">{{ products.name1 }}</p>
+                <p class="text-xl text-main">{{ products.name1 }}</p>
                 <div class="flex items-center gap-2">
                     <div class="bg-primary px-1 font-medium rounded-sm text-sm text-white flex items-center gap-1">
                         4.3
@@ -67,7 +67,7 @@
                     <div class="w-5 h-5 border-2 border-green-500 flex items-center justify-center">
                         <div class="w-3 h-3 rounded-full bg-green-500"></div>
                     </div>
-                    100% vegetarian
+                    <span class="text-main">100% vegetarian</span>
                 </div>
                 <div class="flex items-center gap-2">
                     <p class="font-light text-sm">Fresh Cake & delicious</p>
@@ -94,11 +94,11 @@
                     <div
                         class="w-full bg-[#982B1C] fixed md:sticky bottom-0 h-14 items-center flex gap-4 left-0 px-2 md:px-0 z-10">
                         <button @click="addToCart(products.name)"
-                            class="uppercase w-full font-medium h-10 text-white bg-primary">
+                            class="uppercase w-full font-medium h-10 text-white bg-btn-primary">
                             Add to Cart
                         </button>
                         <button @click="buyNow(products.name)"
-                            class="uppercase w-full font-medium h-10 bg-secondary">
+                            class="uppercase w-full font-medium h-10 bg-btn-secondary">
                             Buy Now
                         </button>
                     </div>
