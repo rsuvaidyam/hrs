@@ -2,7 +2,7 @@
     <div class="w-full px-3 md:px-8 pt-6 max-w-[1800px] mx-auto flex flex-col gap-5">
         <div v-for="e in product" :key="e.name" class="bg-white md:rounded-sm shadow-md p-3">
             <div class="flex items-center justify-between">
-                <p class="text-2xl font-medium">
+                <p class="text-2xl font-medium text-main">
                     {{ e.name1 }} <span class="text-lg">({{ e.products.length }})</span>
                 </p>
                 <router-link :to="`/productlist/event/${e.name}`"
@@ -27,17 +27,17 @@
                         </Carousel>
                     </div>
                     <div class="w-full p-1 flex flex-col gap-2">
-                        <p class="text-sm truncate">{{ product.name1 }}</p>
+                        <p class="text-sm truncate text-main">{{ product.name1 }}</p>
                         <div class="flex justify-between items-center">
                             <div class="flex items-center gap-1">
-                                <span class="flex items-center">
-                                    <BiRupee class="text-lg" />{{ Math.ceil(product.final_price) }}
+                                <span class="flex items-center text-secondary">
+                                    <FeatherIcon name="dollar-sign" class="w-4 h-4"/>{{ Math.ceil(product.final_price) }}
                                 </span>
                                 <template v-if="product.discounts">
-                                    <del class="flex items-center text-sm text-gray-700">
-                                        <BiRupee class="text-md" />{{ product.price }}
+                                    <del class="flex items-center text-sm text-gray-700 text-tatary">
+                                        <FeatherIcon name="dollar-sign" class="w-3 h-3"/>{{ product.price }}
                                     </del>
-                                    <span class="text-[#982B1C] text-sm font-medium">{{ product.discounts }}% off</span>
+                                    <span class="text-primary text-sm font-medium">{{ product.discounts }}% off</span>
                                 </template>
                             </div>
                             <div class="bg-primary rounded-sm px-1 text-sm text-white flex items-center gap-1">
@@ -46,8 +46,8 @@
                             </div>
                         </div>
                         <div class="flex justify-between items-center">
-                            <span class="text-xs font-medium">{{ product.category }}</span>
-                            <div class="text-xs text-gray-500">456 Reviews</div>
+                            <span class="text-xs font-medium text-main">{{ product.category }}</span>
+                            <div class="text-xs text-primary">456 Reviews</div>
                         </div>
                     </div>
                 </router-link>

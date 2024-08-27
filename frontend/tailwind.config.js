@@ -17,6 +17,7 @@ module.exports = {
 			},
 			textColor:{
 			  'primary': 'var(--color-text-primary)',
+			  'main': 'var(--color-text-main)',
 			  'secondary': 'var(--color-text-secondary)',
 			  'tatary': 'var(--color-text-tatary)',
 			},
