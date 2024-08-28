@@ -16,7 +16,7 @@
                     :to="{ name: 'ProductDetails', params: { name: product.name } }" target="_blank"
                     >
                     <div class="w-full overflow-hidden rounded-t-sm relative">
-                        <div class="-top-0.5 -left-0.5 absolute z-50">
+                        <div class="-top-0.5 -left-0.5 absolute ">
                             <svg width="34" height="30" viewBox="0 0 29 28" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -52,7 +52,7 @@
                     </div>
                 </router-link>
                 <Button :variant="'outline'" theme="blue" size="md" label="ADD" :loading="false" :loadingText="null"
-                    :disabled="false" :link="null" class="px-4 z-50 absolute bottom-2 right-2">
+                    :disabled="false" :link="null" class="px-4  absolute bottom-2 right-2">
                     ADD
                 </Button>
                 </div>
@@ -63,9 +63,7 @@
 
 <script setup lang="ts">
 import { ref, onMounted, inject } from 'vue';
-import { Carousel, Pagination, Slide } from 'vue3-carousel'
 import { Button } from 'frappe-ui'
-import 'vue3-carousel/dist/carousel.css'
 
 const product = ref([]);
 const call = inject('$call');
