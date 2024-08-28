@@ -3,7 +3,7 @@
       <CategoryLoader v-if="loader" />
       <div v-else v-for="category in categoryList" :key="category.name">
         <router-link :to="`/productlist/category/${category.name}`" class="flex flex-col items-center cursor-pointer">
-          <div class="md:w-28 w-16 h-24 bg-blue-100 rounded-full md:rounded-md ">
+          <div class="md:w-28 w-16 h-20 md:h-28 bg-blue-100 rounded-md ">
             <!-- <img class="w-full h-full" :src="category?.image" alt="" /> -->
           </div>
           <p class="text-xs md:text-lg pt-2 truncate text-main font-medium">{{ category.name1 }}</p>
