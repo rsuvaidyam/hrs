@@ -68,11 +68,11 @@ export default defineComponent({
   name: 'CartItem',
   props: {
       product: {
-        type: Object, // Specify the correct type for the product prop
+        // type: Object, // Specify the correct type for the product prop
         required: true,
       },
     isSelected: {
-      type: Boolean,
+      // type: Boolean,
       required: true,
     },
   },
