@@ -20,17 +20,17 @@ def get_event():
 @frappe.whitelist()
 def add_to_cart(product):
     try:
-        exit_cart = frappe.db.exists('Cart', {'product': product})
-        if exit_cart:
-            doc = frappe.get_doc('Cart', exit_cart)
+        existing_cart = frappe.db.exists('Cart', {'product': product})
+        if existing_cart:
+            doc = frappe.get_doc('Cart', existing_cart)
             doc.count += 1
             doc.save(ignore_permissions=True)
-            return {"msg":"msg","code":"200","data":doc}
         else:
             doc = frappe.new_doc('Cart')
             doc.count = 1
             doc.product = product
             doc.insert(ignore_permissions=True)
-            return {"msg":"msg","code":"200","data":doc}
+        frappe.publish_realtime('cart_update', {"count": doc.count}, user=frappe.session.user)
+        return {"msg": "Item added to cart", "code": "200", "data": doc}
     except Exception as e:
         return str(e)
