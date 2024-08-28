@@ -8,8 +8,13 @@ import socket from "./libs/controllers/socket";
 import Auth from "./libs/controllers/auth";
 import { session } from "@/data/session";
 import {FeatherIcon} from 'frappe-ui';
+import { store } from './globalState';
 
 const app = createApp(App);
+
+// Provide the global state
+app.provide('store', store);
+
 
 // Plugins
 app.use(router);
