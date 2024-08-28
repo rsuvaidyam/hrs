@@ -32,6 +32,16 @@ module.exports = {
 				"safe-bottom": "env(safe-area-inset-bottom)",
 				"safe-left": "env(safe-area-inset-left)",
 			},
+			keyframes: {
+				vibrate: {
+				  '0%, 100%': { transform: 'translateX(0)' },
+				  '20%, 60%': { transform: 'translateX(-2px)' },
+				  '40%, 80%': { transform: 'translateX(2px)' },
+				},
+			  },
+			  animation: {
+				vibrate: 'vibrate 0.2s ease-in-out',
+			  },
 		},
 	},
 	plugins: [],
