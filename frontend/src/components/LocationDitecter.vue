@@ -36,31 +36,74 @@
 <script setup>
 import { ref, watch ,inject} from 'vue';
 import { Button } from 'frappe-ui';
-const store=inject('store')
+
+const store = inject('store');
 const selectedPinCode = ref('');
-
-
 const pinCodes = ['841311', '110001', '400001', '560001'];
 
 function detectLocation() {
-   localStorage.setItem('location_ditecter', '841711');
-   store.location_ditecter = 841711
-   store.openpop =  false
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+    } else {
+        alert("Geolocation is not supported by this browser.");
+    }
 }
+
+function successCallback(position) {
+    const latitude = position.coords.latitude;
+    const longitude = position.coords.longitude;
+    console.log('latitude',latitude,'longitude',longitude)
+    // Use reverse geocoding API to get pin code from latitude and longitude
+    getPinCodeFromCoordinates(latitude, longitude);
+}
+
+function errorCallback(error) {
+    console.error('error',error);
+    alert(`Error detecting location: ${error.message}`);
+}
+
+async function getPinCodeFromCoordinates(latitude, longitude) {
+    try {
+        const response = await fetch(
+            `https://api.opencagedata.com/geocode/v1/json?q=${latitude}+${longitude}&key=b3dfb1982c2345f2acabc73933dc6a56`
+        );
+        const data = await response.json();
+        if (data.status.code === 200) {
+            const addressComponents = data.results[0].components;
+            store.address=data.results[0].formatted ?? selectedPinCode.value;
+            const postalCode = addressComponents.postcode;
+
+            if (postalCode) {
+                const detectedPinCode = postalCode;
+                console.log("%cpostalCode %c" + postalCode, "color: blue; font-size: 14px;", "color: green; font-size: 20px;");
+                localStorage.setItem('location_ditecter', detectedPinCode);
+                store.location_ditecter = detectedPinCode;
+                store.openpop = false;
+            } else {
+                alert("Could not detect the pin code for your location.");
+            }
+        } else {
+            console.error('error',data.status.message)
+            alert(`Geocoding error: ${data.status.message}`);
+        }
+    } catch (error) {
+        alert(`Error fetching pin code: ${error.message}`);
+    }
+}
+
 
 function setPinCode() {
     if (selectedPinCode.value) {
         localStorage.setItem('location_ditecter', selectedPinCode.value);
-        store.location_ditecter =  selectedPinCode.value
-        store.openpop =  false
+        store.location_ditecter = selectedPinCode.value;
+        store.openpop = false;
     }
-}selectedPinCode
+}
 
 watch(() => store.location_ditecter, (newValue) => {
     store.location_ditecter = localStorage.getItem('location_ditecter');
 });
-
-
 </script>
+
 <style scoped>
 </style>
