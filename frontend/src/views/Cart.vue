@@ -5,17 +5,17 @@
 			<Spinner class="w-40 absolute top-1.5 right-1.5" />
 		</div>
 		<CartAlert v-else-if="!products.length" />
-		<div v-else class=" pb-16 w-full h-full px-0 lg:px-8 bg-gray-100 relative">
+		<div v-else class=" pb-[70px] w-full h-full px-0 lg:px-4 bg-gray-100 relative">
 			<div
-				class="flex flex-col md:flex-row gap-3 h-full pt-1 md:pt-3 overflow-y-auto md:overscroll-y-none scrollbar-thin">
+				class="flex flex-col px-2 md:flex-row gap-3 h-full pt-1 md:pt-3 overflow-y-auto md:overscroll-y-none scrollbar-thin">
 				<div
-					class="w-full md:w-[70%] md:overflow-y-auto shadow-md md:shadow-none md:scrollbar-thin md:border h-auto md:h-full flex flex-col bg-white">
+					class="w-full md:w-[70%] md:overflow-y-auto px-2 rounded-md shadow-md md:shadow-none md:scrollbar-thin md:border h-auto md:h-full flex flex-col bg-white">
 					<CartItem v-for="item in products" :key="item.name" :product="item"
 						:isSelected="selectedProductIds.includes(item.name)" @delete="deleteItem"
 						@quantityChange="updateCartItemCount" @select="toggleProductSelection" />
 				</div>
 				<div class="w-full md:w-[30%]">
-					<div class="md:border bg-white h-auto shadow-md md:shadow-none">
+					<div class="md:border rounded-md bg-white h-auto shadow-md md:shadow-none">
 						<p class="text-lg text-gray-600 h-12 border-b flex items-center px-4">PRICE DETAILS</p>
 						<div class="flex flex-col gap-5 p-4 border-b">
 							<p class="flex justify-between items-center">Price <span class="flex items-center">

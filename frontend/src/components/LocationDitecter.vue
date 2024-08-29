@@ -75,7 +75,6 @@ async function getPinCodeFromCoordinates(latitude, longitude) {
 
             if (postalCode) {
                 const detectedPinCode = postalCode;
-                console.log("%cpostalCode %c" + postalCode, "color: blue; font-size: 14px;", "color: green; font-size: 20px;");
                 localStorage.setItem('location_ditecter', detectedPinCode);
                 store.location_ditecter = detectedPinCode;
                 store.openpop = false;

@@ -1,86 +1,71 @@
 <!-- src/components/CartItem.vue -->
 <template>
-  <div class="lg:h-36 p-3 text-gray-800 relative border-b flex flex-col lg:flex-row justify-between">
-    <FormControl
-    type="checkbox"
-    size="sm"
-    variant="subtle"
-    placeholder="Placeholder"
-    :disabled="false"
-    label=""
-    v-model="isSelected"
-    @change="handleSelect"
-    class="absolute top-2 right-2"
-  />
-    <router-link :to="`/productdetails/${product?.product?.name}`" class="flex gap-2 lg:gap-4 group">
-      <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.product?.images[0]?.image"
-        :alt="product?.product?.name1" />
-      <div class="flex flex-col gap-1 justify-between">
-        <div class="flex flex-col gap-2">
+  <div class="lg:h-36 py-3 relative border-b flex gap-4">
+    <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.product?.images[0]?.image"
+      :alt="product?.product?.name1" />
+    <div class="flex flex-col gap-1 justify-between">
+      <div class="flex flex-col gap-2">
+        <router-link :to="`/productdetails/${product?.product?.name}`" class="w-[80%]">
           <p class="text-sm md:text-lg truncate group-hover:underline">{{ product?.product?.name1 }}</p>
-          <p class="truncate text-sm">
-            <span class="text-gray-500">Flavour : </span>
-            <span class="bg-gray-100 rounded-md p-1 text-gray-700 font-medium text-xs">{{ product?.product?.category
-              }}</span>
-          </p>
-        </div>
-        <div class="flex items-center gap-2">
-          <div class="bg-primary rounded-sm w-14 px-2.5 text-sm text-white flex items-center gap-1">
-            4.3
-            <!-- <BsStarHalf class="text-xs" /> -->
-          </div>
-          <span class="flex items-center text-lg text-primary">
-            <!-- <BiRupee class="text-md" /> -->
-            {{ formattedPrice }}
-          </span>
-          <template v-if="product.product.discounts">
-            <del class="flex items-center text-sm text-gray-700">
-              <!-- <BiRupee class="text-base" /> -->
-              {{ originalPrice }}
-            </del>
-            <span class="text-green-500 text-sm font-medium">{{ product?.product?.discounts }}% off</span>
-          </template>
-        </div>
+        </router-link>
+        <p class="truncate text-sm">
+          <span class="text-gray-500">Flavour : </span>
+          <span class="bg-gray-100 rounded-md p-1 text-gray-700 font-medium text-xs">{{ product?.product?.category
+            }}</span>
+        </p>
       </div>
-    </router-link>
-    <div class="flex flex-row-reverse lg:flex-col items-center pt-2 lg:pt-0 justify-between">
-       <FeatherIcon name="trash-2" class="w-5 text-red-500 cursor-pointer" @click="handleDelete" />
-      <div class="flex gap-2 items-center">
-        <div class="flex bg-gray-100 text-sm px-1.5  rounded-sm">
-          <button class="cursor-text text-sm">Qty :</button>
+      <div class="">
 
-          <Select class="pr-7" v-model="count" :options="[
-            {
-              label: '1',
-              value: '1',
-            },
-            {
-              label: '2',
-              value: '2',
-            },
-            {
-              label: '3',
-              value: '3',
-            },
-
-          ]" @change="handleQuantityChange" />
-        </div>
+        <template v-if="product.product.discounts">
+          <del class="flex items-center text-sm text-gray-700">
+            <!-- <BiRupee class="text-base" /> -->
+            {{ originalPrice }}
+          </del>
+        </template>
+        <p class="flex items-center text-lg text-primary">
+          <!-- <BiRupee class="text-md" /> -->
+          {{ formattedPrice }}
+        </p>
       </div>
     </div>
+    <div v-if="product?.product?.discounts != 0"
+      class="absolute flex flex-col items-center justify-center text-white top-0 right-0">
+      <div class="relative flex h-8 w-8">
+        <span class=" absolute inline-flex h-full w-full">
+          <svg width="34" height="30" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path
+              d="M28.9499 0C28.3999 0 27.9361 1.44696 27.9361 2.60412V27.9718L24.5708 25.9718L21.2055 27.9718L17.8402 25.9718L14.4749 27.9718L11.1096 25.9718L7.74436 27.9718L4.37907 25.9718L1.01378 27.9718V2.6037C1.01378 1.44655 0.549931 0 0 0H28.9499Z"
+              fill="#538CEE"></path>
+          </svg>
+        </span>
+        <div class="relative inline-flex items-center justify-center px-1">
+          <span class="text-xs font-medium">{{ product?.product?.discounts }}%</span>
+        </div>
+      </div>
+
+    </div>
+    <div class="absolute bottom-2 right-2">
+      <div class="bg-primary rounded-[5px] w-14 h-7 flex justify-around items-center text-white">
+        <FeatherIcon name="minus" class="w-3 text-white cursor-pointer" @click="" />
+        <span class="text-xs font-medium">{{ count }}</span>
+        <FeatherIcon name="plus" class="w-3 text-white cursor-pointer" @click="" />
+      </div>
+    </div>
+
   </div>
 </template>
 
 <script>
 import { defineComponent, computed } from 'vue';
-import { Select,FormControl } from 'frappe-ui';
+import { Select, FormControl } from 'frappe-ui';
 
 export default defineComponent({
   name: 'CartItem',
   props: {
-      product: {
-        type: Object,
-        required: true,
-      },
+    product: {
+      type: Object,
+      required: true,
+    },
     isSelected: {
       type: Boolean,
       required: true,
@@ -104,7 +89,7 @@ export default defineComponent({
 
     return { count, handleDelete, handleQuantityChange, handleSelect, originalPrice, formattedPrice };
   },
-  components: { Select,FormControl },
+  components: { Select, FormControl },
 });
 </script>
 
