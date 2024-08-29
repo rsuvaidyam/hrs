@@ -9,6 +9,7 @@ import Auth from "./libs/controllers/auth";
 import { session } from "@/data/session";
 import {FeatherIcon} from 'frappe-ui';
 import { store } from './globalState';
+import { MotionPlugin } from '@vueuse/motion';
 
 const app = createApp(App);
 
@@ -18,6 +19,7 @@ app.provide('store', store);
 
 // Plugins
 app.use(router);
+app.use(MotionPlugin);
 const auth = reactive(new Auth());
 app.use(resourceManager);
 app.component("FeatherIcon",FeatherIcon)
