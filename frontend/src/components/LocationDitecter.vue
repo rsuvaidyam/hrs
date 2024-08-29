@@ -1,19 +1,24 @@
 <template>
     <div v-if="!pinCodes.includes(store.location_ditecter) || store.openpop"
-        class="w-full h-screen md:px-10 py-5 bg-black bg-opacity-40 fixed z-50">
-        <div class="bg-white rounded-lg shadow-lg p-6 max-w-xl w-full text-center animate-vibrate">
-            <h2 class="text-xl font-semibold text-main">Welcome to <span class="text-primary">HRS</span></h2>
-            <p class="mt-4 text-sm text-secondary">
+        class="w-full h-screen md:px-10 pt-16 bg-black bg-opacity-40 top-0 fixed z-50">
+        <div class="bg-white h-3/5 fixed bottom-0 md:static md:h-auto rounded-t-lg md:rounded-lg shadow-lg p-4 md:p-6 max-w-xl w-full md:text-center md:animate-vibrate">
+            <FeatherIcon v-if="pinCodes.includes(store.location_ditecter)" name="x" class="w-6 h-6 text-gray-500 cursor-pointer absolute top-4 md:top-6 md:left-12 right-4"
+                @click="store.openpop = false" />
+            <h2 class="text-xl font-semibold text-main text-center">Welcome to <span class="text-primary">HRS</span></h2>
+            <p class="mt-4 text-sm hidden md:block text-secondary">
                 Please provide your delivery location to see products at a nearby store
             </p>
-            <div class="mt-6 flex items-center justify-center gap-4">
-                <Button @click="detectLocation" label="Detect my location" :variant="'outline'" theme="blue" size="md"
+            <p class="mt-4 text-xl font-bold block md:hidden text-secondary">
+                Select your Location            
+            </p>
+            <div class="mt-6 flex flex-col md:flex-row md:items-center justify-center gap-4">
+                <Button @click="detectLocation" class="order-3 md:order-1"label="Detect my location" :variant="'outline'" theme="blue" size="md"
                     :loading="false" :loadingText="'Getting..'" :disabled="false" :link="null">
                     Detect my location
                 </Button>
-                <span class="text-gray-400 text-sm">OR</span>
+                <span class="text-gray-400 text-sm text-center order-2 md:order-2">OR</span>
                 <select v-model="selectedPinCode" @change="setPinCode"
-                    class="border border-gray-300 rounded-lg py-1 px-7 focus:ring-2 focus:ring-blue-500 focus:outline-none">
+                    class="border order-1 md:order-3  border-gray-300 rounded-md py-1 px-7 focus:ring-2 focus:ring-blue-500 focus:outline-none">
                     <option disabled value="">Select your pin code</option>
                     <option v-for="pin in pinCodes" :key="pin" :value="pin">{{ pin }}</option>
                 </select>
@@ -56,3 +61,5 @@ watch(store.location_ditecter, (newValue) => {
 });
 
 </script>
+<style scoped>
+</style>

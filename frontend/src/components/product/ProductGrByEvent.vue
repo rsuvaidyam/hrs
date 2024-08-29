@@ -51,7 +51,7 @@
                         <!-- <span class="text-center py-0.5 bg-blue-100 text-xs text-main">{{ product.category }}</span> -->
                     </div>
                 </router-link>
-                <Button :variant="'outline'" theme="blue" size="md" label="ADD" :loading="false" :loadingText="null"
+                <Button @click="add_to_cart(product.name)" :variant="'outline'" theme="blue" size="md" label="ADD" :loading="false" :loadingText="null"
                     :disabled="false" :link="null" class="px-4  absolute bottom-2 right-2">
                     ADD
                 </Button>
@@ -61,7 +61,7 @@
     </div>
 </template>
 
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, inject } from 'vue';
 import { Button } from 'frappe-ui'
 
@@ -71,7 +71,16 @@ const getProducts = async () => {
     try {
         const response = await call('hrs.controllers.product.get_event_by_product', {});
         product.value = response;
-    } catch (error: any) {
+    } catch (error) {
+        console.log(error);
+
+    }
+};
+const add_to_cart = async (item) => {
+    try {
+        const response = await call('hrs.controllers.api.add_to_cart', {product: item });
+        console.log(response);
+    } catch (error) {
         console.log(error);
 
     }

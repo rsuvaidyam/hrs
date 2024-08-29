@@ -1,7 +1,17 @@
 <!-- src/components/CartItem.vue -->
 <template>
   <div class="lg:h-36 p-3 text-gray-800 relative border-b flex flex-col lg:flex-row justify-between">
-    <input type="checkbox" class="absolute top-4 right-4" :checked="isSelected" @change="handleSelect" />
+    <FormControl
+    type="checkbox"
+    size="sm"
+    variant="subtle"
+    placeholder="Placeholder"
+    :disabled="false"
+    label=""
+    v-model="isSelected"
+    @change="handleSelect"
+    class="absolute top-2 right-2"
+  />
     <router-link :to="`/productdetails/${product?.product?.name}`" class="flex gap-2 lg:gap-4 group">
       <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.product?.images[0]?.image"
         :alt="product?.product?.name1" />
@@ -33,8 +43,8 @@
         </div>
       </div>
     </router-link>
-    <div class="flex flex-row-reverse lg:flex-col items-center justify-between">
-      <!-- <RiDeleteBin6Line class="text-xl text-red-500 cursor-pointer" @click="handleDelete" /> -->
+    <div class="flex flex-row-reverse lg:flex-col items-center pt-2 lg:pt-0 justify-between">
+       <FeatherIcon name="trash-2" class="w-5 text-red-500 cursor-pointer" @click="handleDelete" />
       <div class="flex gap-2 items-center">
         <div class="flex bg-gray-100 text-sm px-1.5  rounded-sm">
           <button class="cursor-text text-sm">Qty :</button>
@@ -60,19 +70,19 @@
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import { defineComponent, computed } from 'vue';
-import { Select } from 'frappe-ui';
+import { Select,FormControl } from 'frappe-ui';
 
 export default defineComponent({
   name: 'CartItem',
   props: {
       product: {
-        // type: Object, // Specify the correct type for the product prop
+        type: Object,
         required: true,
       },
     isSelected: {
-      // type: Boolean,
+      type: Boolean,
       required: true,
     },
   },
@@ -94,7 +104,7 @@ export default defineComponent({
 
     return { count, handleDelete, handleQuantityChange, handleSelect, originalPrice, formattedPrice };
   },
-  components: { Select },
+  components: { Select,FormControl },
 });
 </script>
 
