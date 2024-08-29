@@ -106,7 +106,6 @@ export default {
 
     onMounted(() => {
       console.log('Component mounted...');
-      // Optional: Setup socket events if needed
     });
 
     return {
