@@ -39,7 +39,7 @@ import { Button } from 'frappe-ui';
 
 const store = inject('store');
 const selectedPinCode = ref('');
-const pinCodes = ['841311', '110001', '400001', '560001'];
+const pinCodes = ['821115', '823003', '400001', '560001'];
 
 function detectLocation() {
     if (navigator.geolocation) {
@@ -70,7 +70,7 @@ async function getPinCodeFromCoordinates(latitude, longitude) {
         const data = await response.json();
         if (data.status.code === 200) {
             const addressComponents = data.results[0].components;
-            store.address=data.results[0].formatted ?? selectedPinCode.value;
+            localStorage.setItem('address', data.results[0].formatted ?? selectedPinCode.value);
             const postalCode = addressComponents.postcode;
 
             if (postalCode) {
