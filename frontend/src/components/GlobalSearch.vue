@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <label for="search" @click="dialog1 = true"> <p class="w-60 md:w-96 h-full rounded-md border-2 border-gray-400 cursor-pointer bg-white py-0.5 px-2 text-md">Search..</p> </label> 
+        <label for="search" @click="dialog1 = true"> <p class="w-full h-full rounded-md border-2 border-gray-400 cursor-pointer bg-white py-0.5 px-2 text-md">Search..</p> </label> 
         <Dialog v-model="dialog1">
             <template #body-title>
                 <h3>Search All Products</h3>

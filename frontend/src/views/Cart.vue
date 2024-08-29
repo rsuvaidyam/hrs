@@ -1,6 +1,6 @@
 <!-- src/components/Cart.vue -->
 <template>
-	<div class=" h-full">
+	<div class="pt-12 md:pt-14 h-full">
 		<div class="w-full h-full flex items-center justify-center" v-if="loading">
 			<Spinner class="w-40 absolute top-1.5 right-1.5" />
 		</div>
@@ -41,7 +41,8 @@
 				class="fixed w-full left-0 bg-white h-16 z-50 bottom-0 px-2 md:px-16 flex justify-between items-center">
 				<p class="text-xl text-gray-700 flex items-center">Total Price : <span
 						class="text-lg flex items-center">
-						<BiRupee /> {{ totalPriceWithDiscount }}
+						<!-- <BiRupee /> -->
+						 {{ totalPriceWithDiscount }}
 					</span></p>
 				<router-link to="/buy" class="text-white bg-primary py-2 px-10">PLACE ORDER</router-link>
 			</div>
@@ -49,7 +50,7 @@
 	</div>
 </template>
 
-<script lang="ts">
+<script >
 import { defineComponent, ref, computed, onMounted, watch, inject } from 'vue';
 import CartItem from '../components/CartItem.vue';
 import CartAlert from '../components/CartAlert.vue';
@@ -75,7 +76,7 @@ export default defineComponent({
 			}
 		};
 
-		const deleteItem = async (name: string) => {
+		const deleteItem = async (name) => {
 			try {
 				const response = await call('hrs.controllers.cart.delete_item', { id: name });
 				products.value = products.value.filter(product => product.name !== name);
@@ -85,7 +86,7 @@ export default defineComponent({
 			}
 		};
 
-		//   const updateCartItemCount = async (id: string, value: number) => {
+		  const updateCartItemCount = async (id, value) => {
 		// 	try {
 		// 	  onst response = await call('hrs.controllers.cart.update_item',{ id: id, value: value });
 		// 	  const product = products.value.find(p => p.name === id);
@@ -95,16 +96,16 @@ export default defineComponent({
 		// 	} catch (error) {
 		// 	  console.error(error);
 		// 	}
-		//   };
+		  };
 
-		//   const toggleProductSelection = (id: string) => {
-		// 	const index = selectedProductIds.value.indexOf(id);
-		// 	if (index !== -1) {
-		// 	  selectedProductIds.value.splice(index, 1);
-		// 	} else {
-		// 	  selectedProductIds.value.push(id);
-		// 	}
-		//   };
+		  const toggleProductSelection = (id) => {
+			const index = selectedProductIds.value.indexOf(id);
+			if (index !== -1) {
+			  selectedProductIds.value.splice(index, 1);
+			} else {
+			  selectedProductIds.value.push(id);
+			}
+		  };
 
 		const totalPrice = computed(() => {
 			return products.value.reduce((total, product) => {
