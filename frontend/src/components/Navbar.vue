@@ -84,7 +84,7 @@ export default {
       }
     };
 
-    watch(() => auth.isLoggedIn, getCart, { immediate: true });
+    watch(() => auth.isLoggedIn, getCart, store.address, { immediate: true });
 
     const dropdownOptions = [
       {
