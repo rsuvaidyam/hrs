@@ -1,12 +1,9 @@
 <!-- src/components/Cart.vue -->
 <template>
-	<div class="pt-10 md:pt-0 h-full" v-motion :initial="{
-		opacity: 0,
-		y: 100,
-	}" :enter="{
-		opacity: 1,
-		y: 0,
-	}">
+	<div class="pt-10 md:pt-0 h-full" 
+	v-motion :initial="{ opacity: 0, scale: 0.8 }" :enter="{ opacity: 1, scale: 1 }"
+		:leave="{ opacity: 0, scale: 0.8 }"
+	>
 		<div class="w-full h-full flex items-center justify-center" v-if="loading">
 			<CartLoader />
 		</div>

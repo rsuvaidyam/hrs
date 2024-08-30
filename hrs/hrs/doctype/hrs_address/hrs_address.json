@@ -34,21 +34,21 @@
   },
   {
    "fieldname": "house_name",
-   "fieldtype": "Date",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "label": "House Name",
    "reqd": 1
   },
   {
    "fieldname": "road_name",
-   "fieldtype": "Date",
+   "fieldtype": "Data",
    "in_list_view": 1,
    "label": "Road Name",
    "reqd": 1
   },
   {
    "fieldname": "land_mark",
-   "fieldtype": "Date",
+   "fieldtype": "Data",
    "label": "Land Mark",
    "reqd": 1
   },
@@ -88,7 +88,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-24 15:57:27.275869",
+ "modified": "2024-08-30 14:22:46.460882",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Hrs Address",
