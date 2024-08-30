@@ -1,28 +1,30 @@
 <template>
     <div v-if="!pinCodes.includes(store.location_ditecter) || store.openpop"
-    v-motion
-    :initial="{
-      opacity: 0,
-      y: 100,
-    }"
-    :enter="{
-      opacity: 1,
-      y: 0,
-    }"
         class="w-full h-screen md:px-10 pt-16 bg-black bg-opacity-40 top-0 fixed z-50">
-        <div class="bg-white h-3/5 fixed bottom-0 md:static md:h-auto rounded-t-lg md:rounded-lg shadow-lg p-4 md:p-6 max-w-xl w-full md:text-center md:animate-vibrate">
-            <FeatherIcon v-if="pinCodes.includes(store.location_ditecter)" name="x" class="w-6 h-6 md:w-5 md:h-5 text-gray-500 cursor-pointer absolute top-4 md:top-[70px] md:left-12 right-4"
+        <div 
+        v-motion :initial="{
+            opacity: 0,
+            y: 100,
+        }" :enter="{
+            opacity: 1,
+            y: 0,
+        }" 
+        class="bg-white h-3/5 fixed bottom-0 md:static md:h-auto rounded-t-lg md:rounded-lg shadow-lg p-4 md:p-6 max-w-xl w-full md:text-center md:animate-vibrate">
+            <FeatherIcon v-if="pinCodes.includes(store.location_ditecter)" name="x"
+                class="w-6 h-6 md:w-5 md:h-5 text-gray-500 cursor-pointer absolute top-4 md:top-[70px] md:left-12 right-4"
                 @click="store.openpop = false" />
-            <h2 class="text-xl font-semibold text-main text-center">Welcome to <span class="text-primary">HRS</span></h2>
+            <h2 class="text-xl font-semibold text-main text-center">Welcome to <span class="text-primary">HRS</span>
+            </h2>
             <p class="mt-4 text-sm hidden md:block text-secondary">
                 Please provide your delivery location to see products at a nearby store
             </p>
             <p class="mt-4 text-xl font-bold block md:hidden text-secondary">
-                Select your Location            
+                Select your Location
             </p>
             <div class="mt-6 flex flex-col md:flex-row md:items-center justify-center gap-4">
-                <Button @click="detectLocation" class="order-3 md:order-1"label="Detect my location" :variant="'outline'" theme="blue" size="md"
-                    :loading="false" :loadingText="'Getting..'" :disabled="false" :link="null">
+                <Button @click="detectLocation" class="order-3 md:order-1" label="Detect my location"
+                    :variant="'outline'" theme="blue" size="md" :loading="false" :loadingText="'Getting..'"
+                    :disabled="false" :link="null">
                     Detect my location
                 </Button>
                 <span class="text-gray-400 text-sm text-center order-2 md:order-2">OR</span>
@@ -36,16 +38,16 @@
                 v-if="!pinCodes.includes(store.location_ditecter) && store.location_ditecter">
                 <img class="w-32 mb-4" src="../assets/not_found.webp" alt="Not Found">
                 <p class="text-main mb-2">Oops!</p>
-                <p class="text-sm text-main">HRS is not available at the moment. Please select a different location.</p>
+                <p class="text-sm text-main">HRS is not available at the moment. Please select a different location.
+                </p>
             </div>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, watch ,inject} from 'vue';
+import { ref, watch, inject } from 'vue';
 import { Button } from 'frappe-ui';
-
 const store = inject('store');
 const selectedPinCode = ref('');
 const pinCodes = ['821115', '823003', '400001', '560001'];
@@ -61,13 +63,13 @@ function detectLocation() {
 function successCallback(position) {
     const latitude = position.coords.latitude;
     const longitude = position.coords.longitude;
-    console.log('latitude',latitude,'longitude',longitude)
+    console.log('latitude', latitude, 'longitude', longitude)
     // Use reverse geocoding API to get pin code from latitude and longitude
     getPinCodeFromCoordinates(latitude, longitude);
 }
 
 function errorCallback(error) {
-    console.error('error',error);
+    console.error('error', error);
     alert(`Error detecting location: ${error.message}`);
 }
 
@@ -91,7 +93,7 @@ async function getPinCodeFromCoordinates(latitude, longitude) {
                 alert("Could not detect the pin code for your location.");
             }
         } else {
-            console.error('error',data.status.message)
+            console.error('error', data.status.message)
             alert(`Geocoding error: ${data.status.message}`);
         }
     } catch (error) {
@@ -113,5 +115,4 @@ watch(() => store.location_ditecter, (newValue) => {
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>

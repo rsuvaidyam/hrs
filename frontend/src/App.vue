@@ -2,16 +2,16 @@
 	<div class="h-screen w-full">
 		<Navbar />
 		<div class="pt-12 md:pt-14 h-full">
-			<PageTransition>
+			<!-- <PageTransition> -->
 			<router-view />
-			</PageTransition>
+			<!-- </PageTransition> -->
 		</div>
 	</div>
 </template>
 
 <script>
 import Navbar from './components/Navbar.vue';
-import PageTransition from './components/PageTransition.vue';
+// import PageTransition from './components/PageTransition.vue';
 import './style.css';
 
 export default {

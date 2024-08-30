@@ -1399,7 +1399,7 @@
     protobufjs "^7.2.5"
     yargs "^17.7.2"
 
-"@headlessui/vue@^1.7.14", "@headlessui/vue@^1.7.22":
+"@headlessui/vue@^1.7.14":
   version "1.7.22"
   resolved "https://registry.npmjs.org/@headlessui/vue/-/vue-1.7.22.tgz"
   integrity sha512-Hoffjoolq1rY+LOfJ+B/OvkhuBXXBFgd8oBlN+l1TApma2dB0En0ucFZrwQtb33SmcCqd32EQd0y07oziXWNYg==
