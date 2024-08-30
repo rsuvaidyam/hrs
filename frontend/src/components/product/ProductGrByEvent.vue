@@ -17,7 +17,7 @@
                     :to="{ name: 'ProductDetails', params: { name: product.name } }" target="_blank"
                     >
                     <div class="w-full overflow-hidden rounded-t-sm relative">
-                        <div class="-top-0.5 -left-0.5 absolute ">
+                        <div class="-top-0.5 -left-0.5 absolute " v-if="product.discounts">
                             <svg width="34" height="30" viewBox="0 0 29 28" fill="none"
                                 xmlns="http://www.w3.org/2000/svg">
                                 <path
@@ -38,14 +38,14 @@
                         <p class="text-sm text-main">{{ product.name1 }}</p>
                         <div class="flex justify-between items-end">
                             <div class="flex flex-col gap-1">
-                                <span class="flex items-center text-secondary">
-                                    <FeatherIcon name="dollar-sign" class="w-4 h-4" />{{ Math.ceil(product.final_price)
+                                <span class="flex gap-0.5 items-center text-secondary">
+                                    <span>₹</span>{{ Math.ceil(product.final_price)
                                     }}
                                 </span>
                                 <template v-if="product.discounts">
-                                    <del class="flex items-center text-sm text-gray-700 text-tatary">
-                                        <FeatherIcon name="dollar-sign" class="w-3 h-3" />{{ product.price }}
-                                    </del>
+                                    <div class="flex gap-0.5 items-center text-sm text-gray-700 text-tatary">
+                                        <span>₹</span> <del>{{ product.price }}</del>
+                                    </div>
                                 </template>
                             </div>
                         </div>
