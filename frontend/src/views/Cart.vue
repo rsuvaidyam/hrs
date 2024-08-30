@@ -49,9 +49,9 @@
 			</div>
 			<div v-if="selectedProductIds.length"
 				class="fixed w-full left-0 bg-white h-12 z-50 bottom-0 px-2 md:px-16 flex justify-between items-center">
-				<p class="text-xl text-gray-700 flex items-center">Total Price : <span
+				<p class="text-xl text-gray-700 flex items-end gap-1">Total <span
 						class="text-lg flex items-center">
-						<!-- <BiRupee /> -->
+						<span>₹</span>
 						 {{ totalPriceWithDiscount }}
 					</span></p>
 				<router-link to="/buy" class="text-white rounded-sm bg-primary py-1 px-8">PLACE ORDER</router-link>
@@ -86,36 +86,6 @@ export default defineComponent({
 			}
 		};
 
-		const deleteItem = async (name) => {
-			try {
-				const response = await call('hrs.controllers.cart.delete_item', { id: name });
-				products.value = products.value.filter(product => product.name !== name);
-				selectedProductIds.value = selectedProductIds.value.filter(pid => pid !== name);
-			} catch (error) {
-				console.error(error);
-			}
-		};
-
-		  const updateCartItemCount = async (id, value) => {
-		// 	try {
-		// 	  onst response = await call('hrs.controllers.cart.update_item',{ id: id, value: value });
-		// 	  const product = products.value.find(p => p.name === id);
-		// 	  if (product) {
-		// 		product.count = value;
-		// 	  }
-		// 	} catch (error) {
-		// 	  console.error(error);
-		// 	}
-		  };
-
-		  const toggleProductSelection = (id) => {
-			const index = selectedProductIds.value.indexOf(id);
-			if (index !== -1) {
-			  selectedProductIds.value.splice(index, 1);
-			} else {
-			  selectedProductIds.value.push(id);
-			}
-		  };
 
 		const totalPrice = computed(() => {
 			return products.value.reduce((total, product) => {
