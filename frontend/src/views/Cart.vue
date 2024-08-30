@@ -28,21 +28,21 @@
 					<div class="md:border rounded-md bg-white h-auto shadow-md md:shadow-none">
 						<p class="text-lg text-gray-600 h-12 border-b flex items-center px-4">PRICE DETAILS</p>
 						<div class="flex flex-col gap-5 p-4 border-b">
-							<p class="flex justify-between items-center">Price <span class="flex items-center">
-									<!-- <BiRupee class="text-base" /> -->
+							<p class="flex justify-between items-center">Price <span class="flex gap-0.5 items-center">
+									 <span>₹</span>
 									{{ totalPrice }}</span></p>
 							<p class="flex justify-between items-center">Discounts <span
 									class="flex items-center text-primary">-
-									<!-- <BiRupee class="text-base" /> -->
+									 <span>₹</span>
 									{{ totalDiscounts }}</span></p>
 							<p class="flex justify-between items-center">Delivery Charge <del
-									class="flex items-center text-gray-500">
-									<!-- <BiRupee class="text-base" /> -->
+									class="flex items-center gap-0.5 text-gray-500">
+									<span>₹</span>
 									40</del></p>
 						</div>
 						<p class="flex justify-between px-4 py-2 font-medium">Total Price <span
-								class="flex items-center">
-								<!-- <BiRupee class="text-base" /> -->
+								class="flex items-center gap-0.5">
+								<span>₹</span>
 								{{ totalPriceWithDiscount }}</span></p>
 					</div>
 				</div>

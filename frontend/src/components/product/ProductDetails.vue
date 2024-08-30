@@ -52,14 +52,14 @@
                     <div class="text-xs text-primary font-normal">456 Reviews</div>
                 </div>
                 <div class="flex items-center gap-2">
-                    <span class="flex text-3xl font-normal text-secondary">
-                        <FeatherIcon name="dollar-sign" class="w-5 h-5" />
+                    <span class="flex gap-0.5 text-3xl font-normal text-secondary">
+                        <span>₹</span>
                         {{ products.discounts ? Math.ceil((100 - products.discounts) / 100 * products.price) :
                         products.price }}
                     </span>
                     <template v-if="products.discounts">
-                        <del class="flex items-center text-base text-tatary">
-                            <FeatherIcon name="dollar-sign" class="w-4 h-4" />
+                        <del class="flex gap-0.5 items-center text-base text-tatary">
+                            <span>₹</span>
                             {{ products.price }}
                         </del>
                         <span class="text-primary font-medium">{{ products.discounts }}% off</span>

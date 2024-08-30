@@ -17,13 +17,13 @@
       <div class="">
 
         <template v-if="product.product.discounts">
-          <del class="flex items-center text-sm text-gray-700">
-            <!-- <BiRupee class="text-base" /> -->
+          <del class="flex items-center gap-0.5 text-sm text-gray-700">
+            <span>₹</span>
             {{ originalPrice }}
           </del>
         </template>
-        <p class="flex items-center text-lg text-primary">
-          <!-- <BiRupee class="text-md" /> -->
+        <p class="flex items-center text-lg gap-0.5 text-primary">
+          <span>₹</span>
           {{ formattedPrice }}
         </p>
       </div>
