@@ -1,6 +1,8 @@
 <template>
   <div class="carousel-container max-w-[1800px] mx-auto">
-    <Carousel
+    <div class="w-full h-48 animate-pulse bg-gray-100" v-if="loader"></div>
+    <div v-else>
+      <Carousel 
       :autoplay="2000"
       :wrap-around="true"
       :dynamic-height="true"
@@ -13,6 +15,7 @@
         <Pagination />
       </template>
     </Carousel>
+    </div>
   </div>
 </template>
 
@@ -23,13 +26,17 @@ import 'vue3-carousel/dist/carousel.css';
 
 const carousel = ref([]);
 const call = inject('$call');
+const loader = ref(false);
 
 const getCategory = async () => {
+  loader.value = true;
   try {
     const response = await call('hrs.controllers.api.get_carousel', {});
     carousel.value = response?.images || [];
+    loader.value = false;
   } catch (error) {
     console.log(error);
+    loader.value = false;
   }
 };
 

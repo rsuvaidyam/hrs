@@ -1,13 +1,13 @@
 <!-- src/components/Cart.vue -->
 <template>
-	<div class="pt-12 md:pt-14 h-full">
+	<div class="pt-10 md:pt-0 h-full">
 		<div class="w-full h-full flex items-center justify-center" v-if="loading">
-			<Spinner class="w-40 absolute top-1.5 right-1.5" />
+			<CartLoader />
 		</div>
 		<CartAlert v-else-if="!products.length" />
-		<div v-else class=" pb-[70px] w-full h-full px-0 lg:px-4 bg-gray-100 relative">
+		<div v-else class=" pb-12 w-full h-full px-0 lg:px-4 bg-gray-100 relative">
 			<div
-				class="flex flex-col px-2 md:flex-row gap-3 h-full pt-1 md:pt-3 overflow-y-auto md:overscroll-y-none scrollbar-thin">
+				class="flex flex-col px-2 pb-2 md:flex-row gap-3 h-full pt-1 md:pt-3 overflow-y-auto md:overscroll-y-none scrollbar-thin">
 				<div
 					class="w-full md:w-[70%] md:overflow-y-auto px-2 rounded-md shadow-md md:shadow-none md:scrollbar-thin md:border h-auto md:h-full flex flex-col bg-white">
 					<CartItem v-for="item in products" :key="item.name" :product="item"
@@ -38,13 +38,13 @@
 				</div>
 			</div>
 			<div v-if="selectedProductIds.length"
-				class="fixed w-full left-0 bg-white h-16 z-50 bottom-0 px-2 md:px-16 flex justify-between items-center">
+				class="fixed w-full left-0 bg-white h-12 z-50 bottom-0 px-2 md:px-16 flex justify-between items-center">
 				<p class="text-xl text-gray-700 flex items-center">Total Price : <span
 						class="text-lg flex items-center">
 						<!-- <BiRupee /> -->
 						 {{ totalPriceWithDiscount }}
 					</span></p>
-				<router-link to="/buy" class="text-white bg-primary py-2 px-10">PLACE ORDER</router-link>
+				<router-link to="/buy" class="text-white rounded-sm bg-primary py-1 px-8">PLACE ORDER</router-link>
 			</div>
 		</div>
 	</div>
@@ -54,10 +54,10 @@
 import { defineComponent, ref, computed, onMounted, watch, inject } from 'vue';
 import CartItem from '../components/CartItem.vue';
 import CartAlert from '../components/CartAlert.vue';
-import { Spinner } from 'frappe-ui';
+import CartLoader from '../components/Loader/CartLoader.vue';
 export default defineComponent({
 	name: 'Cart',
-	components: { CartItem, Spinner, CartAlert },
+	components: { CartItem, CartAlert,CartLoader },
 	setup() {
 		const products = ref([]);
 		const loading = ref(true);

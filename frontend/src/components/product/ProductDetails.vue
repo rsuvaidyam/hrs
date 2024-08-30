@@ -1,5 +1,5 @@
 <template>
-    <div class="md:pt-14 w-full h-full max-w-[1060px] mx-auto relative">
+    <div class="pt-10 md:pt-2 w-full h-full max-w-[1060px] mx-auto relative">
         <Spinner v-if="false" />
         <div v-else class="flex flex-col gap-x-5 md:flex-row h-full">
             <div class="w-full md:w-1/2 md:h-full md:p-2">
@@ -13,15 +13,16 @@
                             </div>
                         </div>
                         <div class="w-full h-full flex flex-col gap-3">
-                            <img class="w-full" :src="imageSelected?.url || (products?.images && products?.images[0]?.url)" alt="" />
+                            <img class="w-full"
+                                :src="imageSelected?.url || (products?.images && products?.images[0]?.url)" alt="" />
                             <div class="hidden md:block">
                                 <div class="w-full items-center flex gap-4 left-0 px-2 md:px-0">
                                     <Button @click="addToCart(products.name)" :loading="cart_loading"
-                                        class="uppercase w-full font-medium h-[45px] text-white bg-primary">
+                                        class="uppercase w-full font-medium h-[40px] text-white bg-primary">
                                         Add to Cart
                                     </Button>
                                     <Button @click="buyNow(products.name)" :disabled="cart_loading"
-                                        class="uppercase w-full font-medium h-[45px] text-white bg-secondary">
+                                        class="uppercase w-full font-medium h-[40px] text-white bg-secondary">
                                         Buy Now
                                     </Button>
                                 </div>
@@ -46,18 +47,19 @@
                 <div class="flex items-center gap-2">
                     <div class="bg-primary px-1 font-medium rounded-sm text-sm text-white flex items-center gap-1">
                         4.3
-                        <FeatherIcon name="star" class="w-3 h-3"/>
+                        <FeatherIcon name="star" class="w-3 h-3" />
                     </div>
                     <div class="text-xs text-primary font-normal">456 Reviews</div>
                 </div>
                 <div class="flex items-center gap-2">
                     <span class="flex text-3xl font-normal text-secondary">
-                         <FeatherIcon name="dollar-sign" class="w-5 h-5"/>
-                        {{ products.discounts ? Math.ceil((100 - products.discounts) / 100 * products.price) : products.price }}
+                        <FeatherIcon name="dollar-sign" class="w-5 h-5" />
+                        {{ products.discounts ? Math.ceil((100 - products.discounts) / 100 * products.price) :
+                        products.price }}
                     </span>
                     <template v-if="products.discounts">
                         <del class="flex items-center text-base text-tatary">
-                            <FeatherIcon name="dollar-sign" class="w-4 h-4"/>
+                            <FeatherIcon name="dollar-sign" class="w-4 h-4" />
                             {{ products.price }}
                         </del>
                         <span class="text-primary font-medium">{{ products.discounts }}% off</span>
@@ -81,7 +83,9 @@
                 </div>
                 <div class="w-full">
                     <p class="text-lg font-medium to-gray-700">Description</p>
-                    <p class="text-sm">{{ products?.description?.substring(0, 200) }}{{ products?.description?.length > 200 ? '...' : '' }}</p>
+                    <p class="text-sm">{{ products?.description?.substring(0, 200) }}{{ products?.description?.length >
+                        200 ? '...'
+                        : '' }}</p>
                 </div>
                 <div class="w-full">
                     <p class="font-medium to-gray-700">Product Details</p>
@@ -92,15 +96,16 @@
                 </div>
                 <div class="block md:hidden">
                     <div
-                        class="w-full bg-[#982B1C] fixed md:sticky bottom-0 h-14 items-center flex gap-4 left-0 px-2 md:px-0 z-10">
-                        <button @click="addToCart(products.name)"
-                            class="uppercase w-full font-medium h-10 text-white bg-btn-primary">
+                        class="w-full bg-white fixed md:sticky bottom-0 h-14 items-center flex gap-4 left-0 px-2 md:px-0 z-10">
+                        
+                        <Button @click="addToCart(products.name)" :loading="cart_loading"
+                            class="uppercase w-full font-medium h-[40px] text-white bg-primary">
                             Add to Cart
-                        </button>
-                        <button @click="buyNow(products.name)"
-                            class="uppercase w-full font-medium h-10 bg-btn-secondary">
+                        </Button>
+                        <Button @click="buyNow(products.name)" :disabled="cart_loading"
+                            class="uppercase w-full font-medium h-[40px] text-white bg-secondary">
                             Buy Now
-                        </button>
+                        </Button>
                     </div>
                 </div>
             </div>
@@ -110,9 +115,9 @@
 
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import {Spinner} from 'frappe-ui';
+import { Spinner } from 'frappe-ui';
 import { useRoute, useRouter } from 'vue-router';
-import {Button} from 'frappe-ui';
+import { Button } from 'frappe-ui';
 import { Carousel, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
@@ -155,7 +160,7 @@ const addToCart = async (item) => {
             }, 2000);
         }
     } catch (error) {
-       console.log(error);
+        console.log(error);
     }
 };
 
