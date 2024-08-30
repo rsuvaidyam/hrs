@@ -121,9 +121,6 @@ import { Button } from 'frappe-ui';
 import { Carousel, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
 
-const isRender = inject('isRender');
-const setIsRender = inject('setIsRender');
-const setLogInPage = inject('setLogInPage');
 const route = useRoute();
 const router = useRouter();
 

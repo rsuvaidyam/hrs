@@ -1,5 +1,5 @@
 <template>
-    <div class="w-full px-3 md:px-8 pt-6 max-w-[1800px] mx-auto flex flex-col gap-5">
+    <div class="w-full px-1 md:px-5 max-w-[1800px] mx-auto flex flex-col">
         <div v-for="e in product" :key="e.name" class=" p-3">
             <div class="flex items-center justify-between">
                 <p class="text-2xl font-medium text-main">

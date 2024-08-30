@@ -1,6 +1,7 @@
 <template>
   <div class="lg:h-36 py-3 relative border-b flex transition-transform duration-1000 gap-4">
-    <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.product?.images[0]?.image" :alt="product?.product?.name1" />
+    <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.product?.images[0]?.image"
+      :alt="product?.product?.name1" />
     <div class="flex flex-col gap-1 justify-between">
       <div class="flex flex-col gap-2">
         <router-link :to="`/productdetails/${product?.product?.name}`" class="w-[80%]">
@@ -8,7 +9,8 @@
         </router-link>
         <p class="truncate text-sm">
           <span class="text-gray-500">Flavour : </span>
-          <span class="bg-gray-100 rounded-md p-1 text-gray-700 font-medium text-xs">{{ product?.product?.category }}</span>
+          <span class="bg-gray-100 rounded-md p-1 text-gray-700 font-medium text-xs">{{ product?.product?.category
+            }}</span>
         </p>
       </div>
       <div>
@@ -24,7 +26,8 @@
         </p>
       </div>
     </div>
-    <div v-if="product?.product?.discounts != 0" class="absolute flex flex-col items-center justify-center text-white top-0 right-0">
+    <div v-if="product?.product?.discounts != 0"
+      class="absolute flex flex-col items-center justify-center text-white top-0 right-0">
       <div class="relative flex h-8 w-8">
         <span class="absolute inline-flex h-full w-full">
           <svg width="34" height="30" viewBox="0 0 29 28" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -40,9 +43,11 @@
     </div>
     <div class="absolute bottom-2 right-2">
       <div class="bg-primary rounded-[5px] w-14 h-7 flex justify-around items-center text-white">
-        <FeatherIcon name="minus" class="w-3 text-white cursor-pointer" @click="add_to_cart(product?.product.name, 'minus')" />
+        <FeatherIcon name="minus" class="w-3 text-white cursor-pointer"
+          @click="add_to_cart(product?.product.name, 'minus')" />
         <span class="text-xs font-medium">{{ product.count }}</span>
-        <FeatherIcon name="plus" class="w-3 text-white cursor-pointer" @click="add_to_cart(product?.product.name, 'plus')" />
+        <FeatherIcon name="plus" class="w-3 text-white cursor-pointer"
+          @click="add_to_cart(product?.product.name, 'plus')" />
       </div>
     </div>
   </div>
@@ -59,13 +64,10 @@ export default defineComponent({
       type: Object,
       required: true,
     },
-    isSelected: {
-      type: Boolean,
-      required: true,
-    },
   },
   setup(props) {
-    const call = inject('$call'); // Inject the call method
+    const call = inject('$call');  
+    const store = inject('store'); 
     const originalPrice = computed(() => props.product.product.price * props.product.count);
     const formattedPrice = computed(() => {
       if (props.product.product.discounts) {
@@ -85,10 +87,18 @@ export default defineComponent({
       try {
         const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event });
         props.product.count = response?.data?.count ?? 0;
+        updateCartCount();
       } catch (error) {
         props.product.count = originalCount;
         console.log(error);
       }
+    };
+    const updateCartCount = () => {
+      let uniqueProductsCount = 0;
+        if (props.product.count > 0) {
+          uniqueProductsCount++;
+        }
+      store.cart_count = uniqueProductsCount;
     };
 
     return { originalPrice, formattedPrice, add_to_cart };
