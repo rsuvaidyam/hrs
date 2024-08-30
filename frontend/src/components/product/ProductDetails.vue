@@ -98,7 +98,7 @@
                     <div
                         class="w-full bg-white fixed md:sticky bottom-0 h-14 items-center flex gap-4 left-0 px-2 md:px-0 z-10">
                         
-                        <Button @click="addToCart(products.name)" :loading="cart_loading"
+                        <Button @click="addToCart(products.name,'plus')" :loading="cart_loading"
                             class="uppercase w-full font-medium h-[40px] text-white bg-primary">
                             Add to Cart
                         </Button>
@@ -146,27 +146,19 @@ onMounted(async () => {
     }
 });
 
-const addToCart = async (item) => {
+const addToCart = async (item,event) => {
     cart_loading.value = true;
     try {
-        const response = await call('hrs.controllers.api.add_to_cart', { product: item });
-
-        if (response.code === 200) {
-            cart_loading.value = false;
-            router.push('/cart');
-        } else {
-            setTimeout(() => {
-                router.push('/cart');
-            }, 2000);
-        }
+        const response = await call('hrs.controllers.api.add_to_cart', { product: item,event:event });
+        cart_loading.value = false;
+       
     } catch (error) {
         console.log(error);
     }
 };
 
 const buyNow = async (item) => {
-    // Handle buy now logic
-    console.log(item);
+  
 };
 
 const setImageSelected = (image) => {

@@ -13,6 +13,7 @@ def get_event_by_product():
             c.name1 AS category_name,
             p.category AS product_category,
             p.price AS product_price,
+            p.count AS product_count,
             p.final_price AS final_price,
             p.discounts AS product_discounts,
             ic.image AS product_images
@@ -40,6 +41,7 @@ def get_event_by_product():
             'name1': r.get('product_name1'),
             'category': r.get('category_name'),
             'price': r.get('product_price'),
+            'count': r.get('product_count'),
             'final_price': r.get('final_price'),
             'discounts': r.get('product_discounts'),
             'images': [{"url":r.get('product_images')}] if r.get('product_images') else []

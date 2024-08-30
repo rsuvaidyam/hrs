@@ -10,6 +10,7 @@
   "event",
   "price",
   "final_price",
+  "count",
   "column_break_qohp",
   "discounts",
   "description",
@@ -59,8 +60,7 @@
    "fieldname": "discounts",
    "fieldtype": "Float",
    "label": "Discounts",
-   "precision": "1",
-   "reqd": 1
+   "precision": "1"
   },
   {
    "fieldname": "description",
@@ -102,11 +102,17 @@
    "length": 1,
    "precision": "1",
    "read_only": 1
+  },
+  {
+   "default": "0",
+   "fieldname": "count",
+   "fieldtype": "Int",
+   "label": "Count"
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-25 14:35:20.566130",
+ "modified": "2024-08-30 10:23:07.451920",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Products",

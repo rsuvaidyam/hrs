@@ -17,20 +17,45 @@ def get_event():
     event = frappe.get_all('Events', fields=['name','name1','image'])
     return event
 
+
 @frappe.whitelist()
-def add_to_cart(product):
+def add_to_cart(product, event):
     try:
         existing_cart = frappe.db.exists('Cart', {'product': product})
         if existing_cart:
             doc = frappe.get_doc('Cart', existing_cart)
-            doc.count += 1
-            doc.save(ignore_permissions=True)
+            doc1 = frappe.get_doc('Products', product)   
+
+            if event == 'plus':
+                doc.count += 1
+                doc1.count += 1
+            elif event == 'minus':
+                doc.count -= 1
+                doc1.count -= 1
+            
+            doc1.save(ignore_permissions=True)
+            
+            if doc.count == 0:
+                doc.delete()
+                frappe.publish_realtime('cart_update', {"count": 0}, user=frappe.session.user)
+                return {"msg": "Item removed from cart", "code": "200", "data": None}
+            else:
+                doc.save(ignore_permissions=True)
         else:
             doc = frappe.new_doc('Cart')
             doc.count = 1
             doc.product = product
             doc.insert(ignore_permissions=True)
+            doc = frappe.get_doc('Products', product)   
+            if event == 'plus':
+                doc.count += 1
+            elif event == 'minus':
+                doc.count -= 1
+            
+            doc.save(ignore_permissions=True)
+        
         frappe.publish_realtime('cart_update', {"count": doc.count}, user=frappe.session.user)
         return {"msg": "Item added to cart", "code": "200", "data": doc}
+    
     except Exception as e:
-        return str(e)
+        return {"msg": str(e), "code": "500", "data": None}
