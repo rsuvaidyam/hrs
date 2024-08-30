@@ -34,7 +34,7 @@
   </div>
   <div v-if="route.fullPath == '/'" class="w-full block md:hidden text-white">
     <router-link v-if="route.path !== '/cart' && count >= 1" to="/cart"
-      class="w-[90%] left-[5%] z-20 fixed bottom-4 bg-primary py-2 px-4 rounded-md flex justify-between items-center">
+      class="w-[90%] left-[5%] z-20 fixed bottom-4 bg-primary py-2 px-4 rounded-md flex justify-between items-center transition-opacity duration-500">
       <div class="relative">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="size-8">
