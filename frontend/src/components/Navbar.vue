@@ -4,7 +4,7 @@
       <router-link to="/" class="text-xl font-medium text-white cursor-pointer">HRS</router-link>
       <div class="text-white cursor-pointer">
         <div class="flex items-center px-2 py-0.5 rounded-md" @click="store.openpop = true">
-          <p v-if="store.location_ditecter" class="font-medium truncate md:w-auto ">{{ store.address }}</p>
+          <p v-if="store.location_ditecter" class="font-medium truncate md:w-auto w-56 ">{{ store.address }}</p>
           <p v-else class="text-sm">Select Location</p>
           <FeatherIcon name="chevron-down" class="w-5 h-5" />
         </div>
