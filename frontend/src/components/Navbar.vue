@@ -3,20 +3,20 @@
     <div class="px-3 pt-2 md:pt-0 md:px-8 flex justify-between items-center h-full max-w-[1800px] mx-auto w-full">
       <router-link to="/" class="text-xl font-medium text-white cursor-pointer">HRS</router-link>
       <div class="text-white cursor-pointer">
-        <div class="flex items-center border px-2 py-0.5 rounded-md" @click="store.openpop = true">
-          <p v-if="store.location_ditecter" class="text-sm font-medium truncate md:w-auto w-56">{{ store.address }}</p>
+        <div class="flex items-center px-2 py-0.5 rounded-md" @click="store.openpop = true">
+          <p v-if="store.location_ditecter" class="font-medium truncate md:w-auto ">{{ store.address }}</p>
           <p v-else class="text-sm">Select Location</p>
           <FeatherIcon name="chevron-down" class="w-5 h-5" />
         </div>
       </div>
       <div class="flex items-center gap-3 md:gap-6">
-        <div class="hidden md:block w-96">
+        <div class="hidden lg:block w-96">
           <GlobalSearch />
         </div>
         <Dropdown v-if="$auth.isLoggedIn" :options="dropdownOptions" :button="dropdownButton" />
         <Login v-else />
         <router-link v-if="route.path !== '/cart'" to="/cart"
-          class="order-1 md:order-2 hidden md:block text-white relative">
+          class="order-1 md:order-2 hidden lg:block text-white relative">
           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
             stroke="currentColor" class="size-7">
             <path stroke-linecap="round" stroke-linejoin="round"
@@ -28,13 +28,13 @@
         </router-link>
       </div>
     </div>
-    <div class="block md:hidden bg-primary w-full px-4 h-10">
+    <div class="block lg:hidden bg-primary w-full px-4 h-10">
       <GlobalSearch />
     </div>
   </div>
-  <div v-if="route.fullPath == '/'" class="w-full block md:hidden text-white">
+  <div v-if="route.fullPath != '/cart'" class="w-full block text-white">
     <router-link v-if="route.path !== '/cart' && count >= 1" to="/cart"
-      class="w-[90%] left-[5%] z-20 fixed bottom-4 bg-primary py-2 px-4 rounded-md flex justify-between items-center transition-opacity duration-500">
+      class="w-fit z-20 fixed bottom-4 right-4 bg-primary py-3 px-3 rounded-md flex justify-between items-center transition-opacity duration-500">
       <div class="relative">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="size-8">
@@ -44,10 +44,6 @@
         <span v-if="count >= 1"
           class="w-5 h-5 rounded-full absolute top-0 border-[3px] border-white left-5 flex items-center justify-center bg-primary text-xs font-bold ">{{
           count }}</span>
-      </div>
-      <div class="flex items-center">
-        <p class="text-xl font-medium">View Cart</p>
-        <FeatherIcon name="chevron-right" class="w-5 h-5" />
       </div>
     </router-link>
   </div>

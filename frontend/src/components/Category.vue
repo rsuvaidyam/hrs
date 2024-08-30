@@ -1,5 +1,5 @@
 <template>
-    <div class="px-2 md:px-8 py-2 flex flex-wrap items-center gap-3 md:gap-5">
+    <div class="px-3 md:px-8 py-2 flex flex-wrap items-center gap-3 md:gap-5">
       <CategoryLoader v-if="loader" />
       <div v-else v-for="category in categoryList" :key="category.name">
         <!-- :to="`/productlist/category/${category.name}`" -->
