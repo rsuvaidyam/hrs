@@ -6,8 +6,8 @@
           :key="item"
           class="flex flex-col items-center gap-2"
         >
-          <div class="md:w-32 bg-gray-100 w-16 md:h-32 h-16 rounded-full md:rounded-2xl border-2 md:border-0"></div>
-          <div class="md:w-32 bg-gray-100 w-16 h-5 rounded-md"></div>
+          <div class="md:w-28 bg-gray-100 w-16 md:h-28 h-16 rounded-2xl border-2 md:border-0"></div>
+          <div class="md:w-28 bg-gray-100 w-16 h-5 rounded-md"></div>
         </div>
       </div>
     </div>
