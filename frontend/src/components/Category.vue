@@ -2,10 +2,9 @@
     <div class="px-3 md:px-8 py-2 flex flex-wrap items-center gap-3 md:gap-5">
       <CategoryLoader v-if="loader" />
       <div v-else v-for="category in categoryList" :key="category.name">
-        <!-- :to="`/productlist/category/${category.name}`" -->
-        <router-link to="/" class="flex flex-col items-center cursor-pointer">
+        <router-link :to="`/product-list/category/${category.name}`" class="flex flex-col items-center cursor-pointer">
           <div class="md:w-28 w-16 h-20 md:h-28 bg-blue-100 rounded-md ">
-            <!-- <img class="w-full h-full" :src="category?.image" alt="" /> -->
+            <img class="w-full rounded-md h-full" :src="category?.image" alt="" />
           </div>
           <p class="text-xs md:text-lg pt-2 truncate text-main font-medium">{{ category.name1 }}</p>
         </router-link>

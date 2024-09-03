@@ -1,6 +1,6 @@
 {
  "charts": [],
- "content": "[{\"id\":\"naTYaJHuIC\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Carousel\",\"col\":3}},{\"id\":\"1WIa59cx2J\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Category\",\"col\":3}},{\"id\":\"dQWEKta_6F\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Events\",\"col\":3}},{\"id\":\"a8RJYi4tz7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Products\",\"col\":3}},{\"id\":\"dCH1HHDu7A\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"hm8bNC1HFo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"State\",\"col\":3}},{\"id\":\"FL6E_xno72\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"District\",\"col\":3}}]",
+ "content": "[{\"id\":\"nnspo9cUPU\",\"type\":\"paragraph\",\"data\":{\"text\":\"<a href=\\\"/hrs\\\" draggable=\\\"false\\\">website</a>\",\"col\":12}},{\"id\":\"z4YBdLIR3b\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"naTYaJHuIC\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Carousel\",\"col\":3}},{\"id\":\"1WIa59cx2J\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Category\",\"col\":3}},{\"id\":\"dQWEKta_6F\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Events\",\"col\":3}},{\"id\":\"a8RJYi4tz7\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"Products\",\"col\":3}},{\"id\":\"dCH1HHDu7A\",\"type\":\"spacer\",\"data\":{\"col\":12}},{\"id\":\"hm8bNC1HFo\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"State\",\"col\":3}},{\"id\":\"FL6E_xno72\",\"type\":\"shortcut\",\"data\":{\"shortcut_name\":\"District\",\"col\":3}}]",
  "creation": "2024-08-18 12:58:51.928711",
  "custom_blocks": [],
  "docstatus": 0,
@@ -13,8 +13,8 @@
  "is_hidden": 0,
  "label": "Master",
  "links": [],
- "modified": "2024-08-18 13:45:43.565154",
- "modified_by": "Administrator",
+ "modified": "2024-09-01 15:11:56.540151",
+ "modified_by": "rahul@gmail.com",
  "module": "hrs",
  "name": "Master",
  "number_cards": [],

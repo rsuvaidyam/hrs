@@ -1,6 +1,6 @@
 <!-- src/components/Cart.vue -->
 <template>
-	<div class="pt-10 md:pt-0 h-full" 
+	<div class="pt-10 lg:pt-0 h-full mx-auto max-w-[1800px]" 
 	v-motion :initial="{ opacity: 0, scale: 0.8 }" :enter="{ opacity: 1, scale: 1 }"
 		:leave="{ opacity: 0, scale: 0.8 }"
 	>

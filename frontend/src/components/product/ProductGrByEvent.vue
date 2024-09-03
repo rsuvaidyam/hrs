@@ -5,8 +5,7 @@
                 <p class="text-2xl font-medium text-main">
                     {{ e.name1 }} <span class="text-lg">({{ e.products.length }})</span>
                 </p>
-                <!-- :to="`/productlist/event/${e.name}`" -->
-                <router-link to="/" class="px-4 py-1 cursor-pointer text-primary font-bold ">
+                <router-link :to="`/product-list/event/${e.name}`" class="px-4 py-1 cursor-pointer text-primary font-bold ">
                     See all
                 </router-link>
             </div>
