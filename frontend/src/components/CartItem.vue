@@ -1,5 +1,5 @@
 <template>
-  <div class="lg:h-36 py-3 relative border-b flex transition-transform duration-1000 gap-4">
+  <div class="lg:h-28 py-3 relative border-b flex transition-transform duration-1000 gap-4">
     <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.product?.images[0]?.image"
       :alt="product?.product?.name1" />
     <div class="flex flex-col gap-1 justify-between">

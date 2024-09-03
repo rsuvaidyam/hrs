@@ -69,7 +69,6 @@ export default {
     const auth = inject('$auth');
     const call = inject('$call');
     const session = inject('$session');
-console.log(store.cart_count);
 
     if(store.cart_count){
       count.value = store.cart_count;
@@ -85,9 +84,10 @@ console.log(store.cart_count);
       }
     };
 
+    watch(() => store.address, { immediate: true });
     watch(() => auth.isLoggedIn, getCart, { immediate: true });
-    watch(() => store.address, getCart, { immediate: true });
-    watch(() => store.cart_count, getCart, { immediate: true });
+    watch(() => store.cart_count, getCart);
+
 
 
     const dropdownOptions = [
