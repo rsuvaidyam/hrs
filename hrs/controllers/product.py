@@ -70,7 +70,8 @@ def get_product_details(name):
             p.discounts AS product_discounts,
             p.description AS description,
             ic.image AS product_images,
-            ic.name AS product_images_name
+            ic.name AS product_images_name,
+            p.count AS product_count
         FROM 
             `tabProducts` p
         LEFT JOIN 
@@ -91,6 +92,7 @@ def get_product_details(name):
                 "category": r.get('category_name'),
                 "price": r.get('product_price'),
                 "final_price": r.get('final_price'),
+                'count': r.get('product_count'),
                 "discounts": r.get('product_discounts'),
                 "description": r.get('description'),
                 "images": [{"url":r.get('product_images'),"name":r.get('product_images_name')}] if r.get('product_images') else []

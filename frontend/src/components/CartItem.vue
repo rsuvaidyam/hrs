@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="absolute bottom-2 right-2">
-      <div class="bg-primary rounded-[5px] w-14 h-7 flex justify-around items-center text-white">
+      <div class="bg-primary rounded-[5px] w-16 h-8 flex justify-around items-center text-white">
         <FeatherIcon name="minus" class="w-3 text-white cursor-pointer"
           @click="add_to_cart(product?.product.name, 'minus')" />
         <span class="text-xs font-medium">{{ product.count }}</span>
