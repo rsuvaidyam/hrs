@@ -48,15 +48,8 @@
                             <!-- <span class="text-center py-0.5 bg-blue-100 text-xs text-main">{{ product.category }}</span> -->
                         </div>
                     </router-link>
-                    <Button v-if="product?.count == 0" @click="add_to_cart(product.name, 'plus')" :variant="'outline'"
-                        theme="blue" size="md" label="ADD" :loading="false" :loadingText="null" :disabled="false"
-                        :link="null" class="px-4  absolute bottom-2 right-2">
-                        ADD
-                    </Button>
-                    <div v-else class="absolute bottom-2 right-2 bg-primary rounded-[5px] w-14 h-7 flex justify-around items-center text-white">
-                        <FeatherIcon name="minus" class="w-3 text-white cursor-pointer" @click="add_to_cart(product.name,'minus')" />
-                        <span class="text-xs font-medium">{{ product?.count }}</span>
-                        <FeatherIcon name="plus" class="w-3 text-white cursor-pointer" @click="add_to_cart(product.name,'plus')" />
+                    <div class="absolute bottom-2 right-2 w-16">
+                        <AddToCartBtn :product="product" :products="e.products"/>
                     </div>
                 </div>
             </div>
@@ -66,11 +59,10 @@
 
 <script setup>
 import { ref, onMounted, inject } from 'vue';
-import { Button } from 'frappe-ui'
+import AddToCartBtn from '../AddToCartBtn.vue';
 
 const product = ref([]);
 const call = inject('$call');
-const store = inject('store');
 const getProducts = async () => {
     try {
         const response = await call('hrs.controllers.product.get_event_by_product', {});
@@ -80,50 +72,6 @@ const getProducts = async () => {
 
     }
 };
-const add_to_cart = async (item, event) => {
-    let originalCount;
-    product.value.map((e) => {
-        e.products.map((p) => {
-            if (p.name == item) {
-                originalCount = p.count; 
-                p.count = event === 'plus' ? p.count + 1 : p.count - 1; 
-            }
-        });
-    });
-
-    try {
-        const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event });
-        product?.value?.map((e) => {
-            e.products.map((p) => {
-                if (p.name == item) {
-                    p.count = response?.data?.count ?? 0; 
-                }
-            });
-        });
-        updateCartCount()
-    } catch (error) {
-        product?.value?.map((e) => {
-            e?.products?.map((p) => {
-                if (p.name == item) {
-                    p.count = originalCount;
-                }
-            });
-        });
-        console.log(error);
-    }
-};
-const updateCartCount = () => {
-    let uniqueProductsCount = 0;
-    product.value.forEach(e => {
-        e.products.forEach(p => {
-            if (p.count > 0) {
-                uniqueProductsCount++;
-            }
-        });
-    });
-    store.cart_count = uniqueProductsCount;
-};
-
 onMounted(() => {
     getProducts();
 });

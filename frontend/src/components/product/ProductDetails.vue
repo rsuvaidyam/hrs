@@ -89,19 +89,17 @@
                 </div>
                 <div class="w-full">
                     <p class="font-medium to-gray-700">Product Details</p>
-                    <div class="text-xs list-disc pl-6" v-html="products.key_features" />
+                    <div class="text-xs list-disc pl-6" v-html="products?.key_features" />
                 </div>
                 <div class="w-full">
-                    <p class="font-medium text-tatary text-sm">Seller : {{ products.created_by?.name }}</p>
+                    <p class="font-medium text-tatary text-sm">Seller : {{ products?.created_by?.name }}</p>
                 </div>
                 <div class="block md:hidden">
                     <div
                         class="w-full bg-white fixed md:sticky bottom-0 h-14 items-center flex gap-4 left-0 px-2 md:px-0 z-10">
-                        
-                        <Button @click="addToCart(products.name,'plus')" :loading="cart_loading"
-                            class="uppercase w-full font-medium h-[40px] text-white bg-primary">
-                            Add to Cart
-                        </Button>
+                        <div class="w-full">
+                            <AddToCartBtn :product="products" :products="products"/>
+                        </div>
                         <Button @click="buyNow(products.name)" :disabled="cart_loading"
                             class="uppercase w-full font-medium h-[40px] text-white bg-secondary">
                             Buy Now
@@ -120,6 +118,7 @@ import { useRoute, useRouter } from 'vue-router';
 import { Button } from 'frappe-ui';
 import { Carousel, Pagination, Slide } from 'vue3-carousel'
 import 'vue3-carousel/dist/carousel.css'
+import AddToCartBtn from '../AddToCartBtn.vue';
 
 const route = useRoute();
 const router = useRouter();

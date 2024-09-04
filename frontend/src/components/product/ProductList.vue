@@ -48,25 +48,15 @@
                   <!-- <span class="text-center py-0.5 bg-blue-100 text-xs text-main">{{ product.category }}</span> -->
                 </div>
               </router-link>
-              <Button v-if="product?.count == 0" @click="add_to_cart(product.name, 'plus')" :variant="'outline'"
-                theme="blue" size="md" label="ADD" :loading="false" :loadingText="null" :disabled="false" :link="null"
-                class="px-4  absolute bottom-2 right-2">
-                ADD
-              </Button>
-              <div v-else
-                class="absolute bottom-2 right-2 bg-primary rounded-[5px] w-14 h-7 flex justify-around items-center text-white">
-                <FeatherIcon name="minus" class="w-3 text-white cursor-pointer"
-                  @click="add_to_cart(product.name, 'minus')" />
-                <span class="text-xs font-medium">{{ product?.count }}</span>
-                <FeatherIcon name="plus" class="w-3 text-white cursor-pointer"
-                  @click="add_to_cart(product.name, 'plus')" />
+              <div class="absolute bottom-2 right-2 w-16">
+                <AddToCartBtn :product="product" :products="products" />
               </div>
             </div>
           </div>
         </div>
       </template>
       <!-- <DataNotFound v-else /> -->
-       <div v-else class="">Data Not Found</div>
+      <div v-else class="">Data Not Found</div>
     </div>
   </div>
 </template>
@@ -74,14 +64,14 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
-import { Button,Spinner } from 'frappe-ui';
+import { Spinner } from 'frappe-ui';
+import AddToCartBtn from '../AddToCartBtn.vue';
 const route = useRoute();
 const location = route.fullPath.split('/');
 
 const products = ref([]);
 const loading = ref(true);
 const call = inject('$call');
-const store = inject('store');
 onMounted(async () => {
   try {
     let data = {};
@@ -101,41 +91,7 @@ onMounted(async () => {
     console.log(error)
   }
 });
-const add_to_cart = async (item, event) => {
-  let originalCount;
-  products.value.map((p) => {
-    if (p.name == item) {
-      originalCount = p.count;
-      p.count = event === 'plus' ? p.count + 1 : p.count - 1;
-    }
-  });
 
-  try {
-    const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event });
-    products?.value?.map((p) => {
-      if (p.name == item) {
-        p.count = response?.data?.count ?? 0;
-      }
-    });
-    updateCartCount()
-  } catch (error) {
-    products?.value?.map((p) => {
-      if (p.name == item) {
-        p.count = originalCount;
-      }
-    });
-    console.log(error);
-  }
-};
-const updateCartCount = () => {
-  let uniqueProductsCount = 0;
-  products.value.forEach(p => {
-      if (p.count > 0) {
-        uniqueProductsCount++;
-      }
-  });
-  store.cart_count = uniqueProductsCount;
-};
 </script>
 
 <style scoped>
