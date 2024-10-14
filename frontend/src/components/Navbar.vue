@@ -84,7 +84,7 @@ export default {
       }
     };
 
-    watch(() => store.address, { immediate: true });
+    // watch(() => store.address, { immediate: true });
     watch(() => auth.isLoggedIn, getCart, { immediate: true });
     watch(() => store.cart_count, getCart);
 

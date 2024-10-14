@@ -4,9 +4,13 @@
     ADD
   </Button>
   <div v-else class="bg-primary rounded-[5px] w-full h-8 flex justify-around items-center text-white">
-    <FeatherIcon name="minus" class="w-3 text-white cursor-pointer" @click="add_to_cart(product.name, 'minus')" />
-    <span class="text-xs font-medium">{{ product?.count }}</span>
-    <FeatherIcon name="plus" class="w-3 text-white cursor-pointer" @click="add_to_cart(product.name, 'plus')" />
+    <div class="w-2/5 flex justify-center cursor-pointer" @click="add_to_cart(product.name, 'minus')">
+      <FeatherIcon name="minus" class="w-3 text-white"/>
+    </div>
+    <span class="text-xs w-1/5 font-medium flex justify-center">{{ product?.count }}</span>
+    <div class="w-2/5 flex justify-center cursor-pointer" @click="add_to_cart(product.name, 'plus')">
+      <FeatherIcon name="plus" class="w-3 text-white"/>
+    </div>
   </div>
 </template>
 <script setup>
@@ -17,9 +21,8 @@ const store = inject('store');
 const props = defineProps(['product', 'products']);
 const product = ref(props.product);
 const products = ref(props.products);
-
 const add_to_cart = async (item, event) => {
-
+ 
   let originalCount;
   if (products?.value?.length > 0) {
     products?.value?.map((p) => {
