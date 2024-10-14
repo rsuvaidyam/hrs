@@ -1,5 +1,5 @@
 <template>
-    <div class="pt-10 md:pt-2 w-full h-full max-w-[1060px] mx-auto relative">
+    <div class="pt-10 lg:pt-2 w-full h-full max-w-[1060px] mx-auto relative">
         <Spinner v-if="false" />
         <div v-else class="flex flex-col gap-x-5 md:flex-row h-full">
             <div class="w-full md:w-1/2 md:h-full md:p-2">
@@ -15,25 +15,13 @@
                         <div class="w-full h-full flex flex-col gap-3">
                             <img class="w-full"
                                 :src="imageSelected?.url || (products?.images && products?.images[0]?.url)" alt="" />
-                            <div class="hidden md:block">
-                                <div class="w-full items-center flex gap-4 left-0 px-2 md:px-0">
-                                    <Button @click="addToCart(products.name)" :loading="cart_loading"
-                                        class="uppercase w-full font-medium h-[40px] text-white bg-primary">
-                                        Add to Cart
-                                    </Button>
-                                    <Button @click="buyNow(products.name)" :disabled="cart_loading"
-                                        class="uppercase w-full font-medium h-[40px] text-white bg-secondary">
-                                        Buy Now
-                                    </Button>
-                                </div>
-                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="block md:hidden">
                     <Carousel :autoplay="2000" :wrap-around="true">
                         <Slide v-for="(image, index) in products.images" :key="index">
-                            <img :src="image.url" alt="" class="carousel__item rounded-t-sm max-h-56 w-full" />
+                            <img :src="image.url" alt="" class="carousel__item rounded-t-sm max-h-64 w-full" />
                         </Slide>
                         <template #addons>
                             <Pagination />
@@ -41,21 +29,13 @@
                     </Carousel>
                 </div>
             </div>
-            <div
-                class="w-full md:w-1/2 h-full md:overflow-y-scroll md:scrollbar-none p-2 pb-14 md:pb-0 flex flex-col gap-2 relative">
-                <p class="text-xl text-main">{{ products.name1 }}</p>
-                <div class="flex items-center gap-2">
-                    <div class="bg-primary px-1 font-medium rounded-sm text-sm text-white flex items-center gap-1">
-                        4.3
-                        <FeatherIcon name="star" class="w-3 h-3" />
-                    </div>
-                    <div class="text-xs text-primary font-normal">456 Reviews</div>
-                </div>
-                <div class="flex items-center gap-2">
+            <div class="w-full border-l md:w-1/2 h-full px-3 lg:pl-5 pb-14 md:pb-0 flex flex-col gap-2 relative">
+                <p class="text-2xl font-semibold border-b pb-2">{{ products.name1 }}</p>
+                <div class="flex items-center gap-2 relative">
                     <span class="flex gap-0.5 text-3xl font-normal text-secondary">
                         <span>₹</span>
                         {{ products.discounts ? Math.ceil((100 - products.discounts) / 100 * products.price) :
-                        products.price }}
+                            products.price }}
                     </span>
                     <template v-if="products.discounts">
                         <del class="flex gap-0.5 items-center text-base text-tatary">
@@ -64,6 +44,9 @@
                         </del>
                         <span class="text-primary font-medium">{{ products.discounts }}% off</span>
                     </template>
+                    <div class="w-20 absolute right-1 top-0 h-14">
+                        <AddToCartBtn :product="products" :products="products" />
+                    </div>
                 </div>
                 <div class="flex items-center gap-2">
                     <div class="w-5 h-5 border-2 border-green-500 flex items-center justify-center">
@@ -75,10 +58,10 @@
                     <p class="font-light text-sm">Fresh Cake & delicious</p>
                 </div>
                 <div class="">
-                    <p class="font-bold">Weight</p>
+                    <p class="font-bold">Select Unit</p>
                     <div class="flex gap-2">
-                        <div class="px-2 h-10 rounded-lg border flex items-center justify-center text-sm">1 Kg</div>
-                        <div class="px-2 h-10 rounded-lg border flex items-center justify-center text-sm">1.5 Kg</div>
+                        <div class="w-24 cursor-pointer h-14 rounded-lg border flex items-center justify-center text-sm">1 Kg</div>
+                        <div class="w-24 cursor-pointer h-14 rounded-lg border flex items-center justify-center text-sm">1.5 Kg</div>
                     </div>
                 </div>
                 <div class="w-full">
@@ -94,18 +77,7 @@
                 <div class="w-full">
                     <p class="font-medium text-tatary text-sm">Seller : {{ products?.created_by?.name }}</p>
                 </div>
-                <div class="block md:hidden">
-                    <div
-                        class="w-full bg-white fixed md:sticky bottom-0 h-14 items-center flex gap-4 left-0 px-2 md:px-0 z-10">
-                        <div class="w-full">
-                            <AddToCartBtn :product="products" :products="products"/>
-                        </div>
-                        <Button @click="buyNow(products.name)" :disabled="cart_loading"
-                            class="uppercase w-full font-medium h-[40px] text-white bg-secondary">
-                            Buy Now
-                        </Button>
-                    </div>
-                </div>
+
             </div>
         </div>
     </div>
@@ -142,21 +114,16 @@ onMounted(async () => {
     }
 });
 
-const addToCart = async (item,event) => {
+const addToCart = async (item, event) => {
     cart_loading.value = true;
     try {
-        const response = await call('hrs.controllers.api.add_to_cart', { product: item,event:event });
+        const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event });
         cart_loading.value = false;
-       
+
     } catch (error) {
         console.log(error);
     }
 };
-
-const buyNow = async (item) => {
-  
-};
-
 const setImageSelected = (image) => {
     imageSelected.value = image;
 };
