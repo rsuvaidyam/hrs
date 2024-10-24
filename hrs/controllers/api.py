@@ -1,5 +1,34 @@
 import frappe
+from hrs.controllers.product import ProductAPIs
+from hrs.controllers.cart import CartAPIs
 
+# Product APIs --:--
+@frappe.whitelist(allow_guest=True)
+def get_event_by_product():
+    return ProductAPIs.event_by_product()
+    
+@frappe.whitelist(allow_guest=True)
+def get_product_details(name):
+    return ProductAPIs.product_details(name)
+    
+@frappe.whitelist(allow_guest=True)
+def products_list(data):
+    return ProductAPIs.products_list(data)
+
+# Cart APIs --:--
+@frappe.whitelist(allow_guest=True)
+def add_to_cart(product, event,option):
+    return CartAPIs.add_to_cart(product, event,option)
+    
+@frappe.whitelist(allow_guest=True)
+def cart_count(usr):
+    return CartAPIs.cart_count(usr)
+    
+@frappe.whitelist(allow_guest=True)
+def get_cart(usr):
+    return CartAPIs.get_cart(usr)
+
+# Carousel APIs --:--
 @frappe.whitelist(allow_guest=True)
 def get_carousel():
     carousels = frappe.get_all('Carousel', filters={'status': 'Active'}, pluck='name')
@@ -7,69 +36,14 @@ def get_carousel():
         carousel_doc = frappe.get_doc('Carousel', name)
     return carousel_doc
 
+# Category APIs --:--
 @frappe.whitelist(allow_guest=True)
 def get_category():
     category = frappe.get_all('Category', fields=['*'])
     return category
 
+# Event APIs --:--
 @frappe.whitelist(allow_guest=True)
 def get_event():
     event = frappe.get_all('Events', fields=['name','name1','image'])
     return event
-
-
-@frappe.whitelist()
-def add_to_cart(product, event,option):
-    try:
-        existing_cart = frappe.db.exists('Cart', {'option': option})
-        if existing_cart:
-            doc = frappe.get_doc('Cart', existing_cart)
-            doc1 = frappe.get_doc('Products', product)   
-
-            if event == 'plus':
-                doc.count += 1
-                for i in doc1.items:
-                    if i.name == option:
-                        i.count += 1
-                        break
-                doc1.count += 1
-            elif event == 'minus':
-                doc.count -= 1
-                for i in doc1.items:
-                        if i.name == option:
-                            i.count -= 1
-                            break
-            
-            doc1.save(ignore_permissions=True)
-            
-            if doc.count == 0:
-                doc.delete()
-                frappe.publish_realtime('cart_update', {"count": 0}, user=frappe.session.user)
-                return {"msg": "Item removed from cart", "code": "200", "data": None}
-            else:
-                doc.save(ignore_permissions=True)
-        else:
-            doc = frappe.new_doc('Cart')
-            doc.count = 1
-            doc.product = product
-            doc.option = option
-            doc.insert(ignore_permissions=True)
-            doc_p = frappe.get_doc('Products', product)   
-            if event == 'plus':
-                for i in doc_p.items:
-                    if i.name == option:
-                        i.count += 1
-                        break
-            elif event == 'minus':
-                for i in doc_p.items:
-                    if i.name == option:
-                        i.count += 1
-                        break
-            
-            doc_p.save(ignore_permissions=True)
-        
-        frappe.publish_realtime('cart_update', {"count": doc.count}, user=frappe.session.user)
-        return {"msg": "Item added to cart", "code": "200", "data": doc}
-    
-    except Exception as e:
-        return {"msg": str(e), "code": "500", "data": None}

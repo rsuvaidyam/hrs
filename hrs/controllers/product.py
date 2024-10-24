@@ -1,108 +1,34 @@
 import frappe
 
-import frappe
+class ProductAPIs :
+    def event_by_product():
+        data = {}
+        products = frappe.get_all('Products', pluck='name')
+        for name in products:
+            product = frappe.get_doc('Products', name)
+            
+            if not data.get(product.event_name):
+                data[product.event_name] = [product]
+            else:
+                data[product.event_name].append(product)
+        return data
 
-@frappe.whitelist(allow_guest=True)
-def get_event_by_product():
-    data = {}
-    products = frappe.get_all('Products', pluck='name')
-    
-    for name in products:
-        product = frappe.get_doc('Products', name)
-        
-        if not data.get(product.event_name):
-            data[product.event_name] = {
-                'event': product.event,  # Store event details
-                'products': [product]    # Initialize the list of products
-            }
-        else:
-            data[product.event_name]['products'].append(product)
-    return data
+    def product_details(name):
+        data = frappe.get_doc('Products', name).as_dict()
+        return data
 
-import frappe
+    def products_list(data):
+        datas = []
+        filters={}
+        if data.get('event'):
+            filters= {'events':data.get('event')}
+        elif data.get('category'):
+            filters={'category':data.get('category')} 
+        products = frappe.get_all('Products',filters=filters ,pluck='name')
 
-@frappe.whitelist(allow_guest=True)
-def get_product_details(name):
-    data = frappe.get_doc('Products', name).as_dict()
-    return data
-
-
-@frappe.whitelist(allow_guest=True)
-def products_list(data):
-    query = """
-        SELECT 
-            p.name AS product_name, 
-            p.name1 AS product_name1, 
-            c.name1 AS category_name1,
-            c.name AS category_name,
-            p.category AS product_category,
-            p.price AS product_price,
-            p.final_price AS final_price,
-            p.discounts AS product_discounts,
-            p.description AS description,
-            ic.image AS product_images,
-            ic.name AS product_images_name,
-            e.name AS event_name,
-            e.name1 AS event_nam1,
-            p.count AS product_count
-        FROM 
-            `tabProducts` p
-        LEFT JOIN 
-            `tabImages Child` ic ON (p.name = ic.parent AND ic.parenttype = 'Products' AND ic.parentfield = 'images')
-        LEFT JOIN 
-            `tabCategory` c ON p.category = c.name
-        LEFT JOIN 
-            `tabEvents` e ON p.event = e.name
-    """
-    
-    conditions = []
-    params = []
-    
-    if 'event' in data:
-        conditions.append("e.name = %s")
-        params.append(data['event'])
-    elif 'category' in data:
-        conditions.append("p.category = %s")
-        params.append(data['category'])
-    
-    if conditions:
-        query += " WHERE " + " AND ".join(conditions)
-    
-    result = frappe.db.sql(query, tuple(params), as_dict=True)
-    
-    products = []
-    
-    # Temporary storage for product images before final data aggregation
-    product_dict = {}
-
-    # Process the results
-    for r in result:
-        product_key = r.get('product_name')
-        
-        # If the product is not already added, create a new entry
-        if product_key not in product_dict:
-            product_dict[product_key] = {
-                "name": r.get('product_name'),
-                "name1": r.get('product_name1'),
-                "category": r.get('category_name'),
-                "price": r.get('product_price'),
-                "final_price": r.get('final_price'),
-                "discounts": r.get('product_discounts'),
-                'count': r.get('product_count'),
-                "description": r.get('description'),
-                "images": []
-            }
-        
-        # Append image if it exists
-        if r.get('product_images'):
-            product_dict[product_key]['images'].append({
-                "url": r.get('product_images'),
-                "name": r.get('product_images_name')
-            })
-    
-    # Convert the dictionary to a list of products
-    products = list(product_dict.values())
-
-    return products
+        for name in products:
+            product = frappe.get_doc('Products', name)
+            datas.append(product.as_dict())
+        return datas
 
 

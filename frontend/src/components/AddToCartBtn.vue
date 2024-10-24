@@ -1,5 +1,5 @@
 <template>
-  <Button v-if="product?.count == 0" @click="add_to_cart(product.parent, 'plus',option)" :variant="'outline'" theme="blue"
+  <Button v-if="product?.count == 0 && product.name == option" @click="add_to_cart(product.parent, 'plus',option)" :variant="'outline'" theme="blue"
     size="md" label="ADD" :loading="false" :loadingText="null" :disabled="false" :link="null" class="px-4 w-full">
     ADD
   </Button>
@@ -33,16 +33,15 @@ watch(() => props.products, (newOption, oldOption) => {
 });
 const add_to_cart = async (item, event,option) => {
   let originalCount;
-  console.log('first',products?.length,product)
-  if (products?.length > 0) {
-    products?.map((p) => {
-      if (p?.parent == item) {
+  if (products.value?.length > 0) {
+    products.value?.map((p) => {
+      if (p?.parent == item && p.name == option) {
         originalCount = p.count;
         p.count = event === 'plus' ? p?.count + 1 : p?.count - 1;
       }
     });
-  } else {
-    if (products.parent == item) {
+  } else { 
+    if (products.parent == item && products.name == option) {
       originalCount = products.count;
       products.count = event === 'plus' ? products.count + 1 : products.count - 1;
     }
@@ -50,9 +49,9 @@ const add_to_cart = async (item, event,option) => {
 
   try {
     const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event,option:option });
-    if (products?.length > 0) {
-      products?.map((p) => {
-        if (p.parent == item) {
+    if (products.value?.length > 0) {
+      products.value?.map((p) => {
+        if (p.parent == item && p.name == option) {
           p.count = response?.data?.count ?? 0;
         }
       });
@@ -61,9 +60,9 @@ const add_to_cart = async (item, event,option) => {
     }
     updateCartCount()
   } catch (error) {
-    if (products?.length > 0) {
-      products?.map((p) => {
-        if (p.parent == item) {
+    if (products.value?.length > 0) {
+      products.value?.map((p) => {
+        if (p.parent == item && p.name == option) {
           p.count = originalCount;
         }
       });
@@ -75,14 +74,14 @@ const add_to_cart = async (item, event,option) => {
 
 const updateCartCount = () => {
   let uniqueProductsCount = 0;
-  if (products?.length > 0) {
-    products?.map((p) => {
+  if (products.value?.length > 0) {
+    products.value?.map((p) => {
       if (p.count > 0) {
         uniqueProductsCount++;
       }
     });
   } else {
-    if (products.count > 0) {
+    if (products.value.count > 0) {
       uniqueProductsCount++;
     }
   }

@@ -65,7 +65,7 @@ export default defineComponent({
 		const session = inject('$session');
 		const fetchCart = async () => {
 			try {
-				const response = await call('hrs.controllers.cart.get_cart', { usr: session.user });
+				const response = await call('hrs.controllers.api.get_cart', { usr: session.user });
 				products.value = response;
 				loading.value = false;
 

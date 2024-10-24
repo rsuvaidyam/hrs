@@ -76,7 +76,7 @@ export default {
 
     const getCart = async () => {
       try {
-        const response = auth.isLoggedIn ? await call('hrs.controllers.cart.cart_count', { usr: session.user }) : 0;
+        const response = auth.isLoggedIn ? await call('hrs.controllers.api.cart_count', { usr: session.user }) : 0;
         count.value = response || 0;
       } catch (error) {
         console.error(error);

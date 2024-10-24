@@ -46,7 +46,7 @@
                         <span class="text-primary font-medium">{{ selectedOption.discounts }}% off</span>
                     </template>
                     <div class="w-20 absolute right-1 top-0 h-14">
-                        <AddToCartBtn :product="selectedOption" :products="selectedOption" :option="selectedOption.name"/>
+                        <AddToCartBtn :product="selectedOption" :products="products.items" :option="selectedOption.name"/>
                     </div>
                 </div>
                 <div class="flex items-center gap-2">
@@ -107,7 +107,7 @@ const call = inject('$call');
 
 onMounted(async () => {
     try {
-        const response = await call('hrs.controllers.product.get_product_details', { name: route.params.name });
+        const response = await call('hrs.controllers.api.get_product_details', { name: route.params.name });
         products.value = { ...response, image: response.images };
         imageSelected.value = response.images[0];
         selectedOption.value = products.value.items[0]; 
