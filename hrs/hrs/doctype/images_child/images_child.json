@@ -3,6 +3,7 @@
  "allow_rename": 1,
  "creation": "2024-08-18 11:58:39.353428",
  "doctype": "DocType",
+ "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
   "image",
@@ -25,7 +26,7 @@
  "index_web_pages_for_search": 1,
  "istable": 1,
  "links": [],
- "modified": "2024-08-18 12:02:53.104282",
+ "modified": "2024-10-21 20:36:46.984233",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Images Child",

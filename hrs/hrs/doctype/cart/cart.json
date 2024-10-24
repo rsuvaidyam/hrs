@@ -5,26 +5,53 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "product",
   "count",
-  "product"
+  "column_break_edzt",
+  "msg",
+  "option",
+  "column_break_takx"
  ],
  "fields": [
   {
    "default": "1",
    "fieldname": "count",
    "fieldtype": "Int",
-   "label": "Count"
+   "in_list_view": 1,
+   "label": "Count",
+   "reqd": 1
   },
   {
    "fieldname": "product",
    "fieldtype": "Link",
+   "in_list_view": 1,
    "label": "Product",
-   "options": "Products"
+   "options": "Products",
+   "reqd": 1
+  },
+  {
+   "fieldname": "column_break_edzt",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_takx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "msg",
+   "fieldtype": "Data",
+   "label": "Message"
+  },
+  {
+   "fieldname": "option",
+   "fieldtype": "Data",
+   "label": "Option",
+   "read_only": 1
   }
  ],
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-25 14:34:21.181047",
+ "modified": "2024-10-22 14:22:46.110693",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Cart",

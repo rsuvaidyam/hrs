@@ -1,46 +1,47 @@
 <template>
     <div class="w-full px-1 md:px-5 max-w-[1800px] mx-auto flex flex-col">
-        <div v-for="e in product" :key="e.name" class=" p-3">
+        <div v-for="[event_name,e] in Object.entries(product)" :key="event_name" class=" p-3">
             <div class="flex items-center justify-between">
                 <p class="text-2xl font-medium text-main">
-                    {{ e.name1 }} <span class="text-lg">({{ e.products.length }})</span>
+                    {{ event_name }} <span class="text-lg">({{ e.products.length }})</span>
                 </p>
-                <router-link :to="`/product-list/event/${e.name}`" class="px-4 py-1 cursor-pointer text-primary font-bold ">
+                <router-link :to="`/product-list/event/${e.event}`" class="px-4 py-1 cursor-pointer text-primary font-bold ">
                     See all
                 </router-link>
             </div>
             <div class="pt-3  overflow-x-auto scrollbar-thin flex gap-2 md:gap-3">
                 <div class="border w-[16%] min-w-[160px] md:min-w-[180px] hover:shadow-xl cursor-pointer rounded-sm bg-white relative"
                     v-for="product in e.products" :key="product.name">
-                    <router-link :to="{ name: 'ProductDetails', params: { name: product.name } }">
+                    <router-link :to="{ name: 'ProductDetails', params: { name: product?.name } }">
                         <div class="w-full overflow-hidden rounded-t-sm relative">
-                            <div class="-top-0.5 -left-0.5 absolute " v-if="product.discounts">
+                            <div class="-top-0.5 -left-0.5 absolute " v-if="product?.items[0]?.discounts">
                                 <svg width="34" height="30" viewBox="0 0 29 28" fill="none"
                                     xmlns="http://www.w3.org/2000/svg">
                                     <path
                                         d="M28.9499 0C28.3999 0 27.9361 1.44696 27.9361 2.60412V27.9718L24.5708 25.9718L21.2055 27.9718L17.8402 25.9718L14.4749 27.9718L11.1096 25.9718L7.74436 27.9718L4.37907 25.9718L1.01378 27.9718V2.6037C1.01378 1.44655 0.549931 0 0 0H28.9499Z"
                                         fill="#538CEE"></path>
                                 </svg>
-                                <span v-if="product.discounts"
+                                <span v-if="product?.items[0]?.discounts"
                                     class="top-0.5 absolute rounded-br-md px-2 text-white text-[9px] font-medium flex flex-col">{{
-                                        product.discounts }}% <span>OFF</span></span>
+                                        product?.items[0]?.discounts }}% <span>OFF</span></span>
                             </div>
                             <div class="max-h-36 min-h-36 flex item-center justify-center">
-                                <img :src="product?.images[0]?.url" alt="" class="carousel__item rounded-t-sm w-full" />
+                                <img :src="product?.images[0]?.image" alt="" class="carousel__item rounded-t-sm w-full" />
                             </div>
 
                         </div>
                         <div class="w-full p-2 flex flex-col gap-2">
-                            <p class="text-sm text-main">{{ product.name1 }}</p>
+                            <p class="text-sm text-main">{{ product?.items[0]?.name1 }}</p>
+                            <ProductOption :product="product"/>
                             <div class="flex justify-between items-end">
                                 <div class="flex flex-col gap-1">
-                                    <span class="flex gap-0.5 items-center text-secondary">
-                                        <span>₹</span>{{ Math.ceil(product.final_price)
+                                    <span class="flex gap-0.5 items-center text-sm text-secondary">
+                                        <span>₹</span>{{ Math.ceil(product?.items[0]?.final_price)
                                         }}
                                     </span>
-                                    <template v-if="product.discounts">
+                                    <template v-if="product?.items[0]?.discounts">
                                         <div class="flex gap-0.5 items-center text-sm text-gray-700 text-tatary">
-                                            <span>₹</span> <del>{{ product.price }}</del>
+                                            <span>₹</span> <del>{{ product?.items[0]?.price }}</del>
                                         </div>
                                     </template>
                                 </div>
@@ -48,8 +49,8 @@
                             <!-- <span class="text-center py-0.5 bg-blue-100 text-xs text-main">{{ product.category }}</span> -->
                         </div>
                     </router-link>
-                    <div class="absolute bottom-2 right-2 w-16">
-                        <AddToCartBtn :product="product" :products="e.products"/>
+                    <div class="absolute bottom-1 right-2 w-16">
+                        <AddToCartBtn :product="product.items[0]" :products="product.items" :option="product.items[0].name"/>
                     </div>
                 </div>
             </div>
@@ -60,6 +61,7 @@
 <script setup>
 import { ref, onMounted, inject } from 'vue';
 import AddToCartBtn from '../AddToCartBtn.vue';
+import ProductOption from '../product/ProductOption.vue';
 
 const product = ref([]);
 const call = inject('$call');

@@ -1,7 +1,7 @@
 <template>
   <div class="lg:h-28 py-3 relative border-b flex transition-transform duration-1000 gap-4">
-    <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.product?.images[0]?.image"
-      :alt="product?.product?.name1" />
+    <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.images[0]?.image"
+      :alt="product?.product?.name" />
     <div class="flex flex-col gap-1 justify-between">
       <div class="flex flex-col gap-2">
         <router-link :to="`/productdetails/${product?.product?.name}`" class="w-[80%]">
@@ -44,10 +44,10 @@
     <div class="absolute bottom-2 right-2">
       <div class="bg-primary rounded-[5px] w-16 h-8 flex justify-around items-center text-white">
         <FeatherIcon name="minus" class="w-3 text-white cursor-pointer"
-          @click="add_to_cart(product?.product.name, 'minus')" />
+          @click="add_to_cart(product?.product.parent, 'minus',product?.product.name)" />
         <span class="text-xs font-medium">{{ product.count }}</span>
         <FeatherIcon name="plus" class="w-3 text-white cursor-pointer"
-          @click="add_to_cart(product?.product.name, 'plus')" />
+          @click="add_to_cart(product?.product.parent, 'plus',product?.product.name)" />
       </div>
     </div>
   </div>
@@ -76,7 +76,7 @@ export default defineComponent({
       return originalPrice.value;
     });
 
-    const add_to_cart = async (item, event) => {
+    const add_to_cart = async (item, event,option) => {
       let originalCount = props.product.count;
       if (event === 'plus') {
         props.product.count++;
@@ -85,7 +85,7 @@ export default defineComponent({
       }
 
       try {
-        const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event });
+        const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event,option:option });
         props.product.count = response?.data?.count ?? 0;
         updateCartCount();
       } catch (error) {

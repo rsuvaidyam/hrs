@@ -5,29 +5,17 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "name1",
-  "category",
-  "event",
-  "price",
-  "final_price",
-  "count",
+  "events",
+  "event_name",
   "column_break_qohp",
-  "discounts",
-  "description",
-  "status",
-  "section_break_tmao",
-  "images",
-  "section_break_fuzy",
-  "key_features"
+  "category",
+  "column_break_inen",
+  "section_break_jzcw",
+  "items",
+  "images_tab",
+  "images"
  ],
  "fields": [
-  {
-   "fieldname": "name1",
-   "fieldtype": "Data",
-   "in_list_view": 1,
-   "label": "Name",
-   "reqd": 1
-  },
   {
    "fieldname": "category",
    "fieldtype": "Link",
@@ -37,47 +25,8 @@
    "reqd": 1
   },
   {
-   "fieldname": "event",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Event",
-   "options": "Events",
-   "reqd": 1
-  },
-  {
-   "fieldname": "price",
-   "fieldtype": "Currency",
-   "in_list_view": 1,
-   "label": "Price",
-   "precision": "1",
-   "reqd": 1
-  },
-  {
    "fieldname": "column_break_qohp",
    "fieldtype": "Column Break"
-  },
-  {
-   "fieldname": "discounts",
-   "fieldtype": "Float",
-   "label": "Discounts",
-   "precision": "1"
-  },
-  {
-   "fieldname": "description",
-   "fieldtype": "Small Text",
-   "label": "Description"
-  },
-  {
-   "default": "Active",
-   "fieldname": "status",
-   "fieldtype": "Select",
-   "label": "Status",
-   "options": "\nActive\nInactive",
-   "reqd": 1
-  },
-  {
-   "fieldname": "section_break_tmao",
-   "fieldtype": "Section Break"
   },
   {
    "fieldname": "images",
@@ -86,34 +35,44 @@
    "options": "Images Child"
   },
   {
-   "fieldname": "key_features",
-   "fieldtype": "Text Editor",
-   "label": "Key Features"
+   "fieldname": "images_tab",
+   "fieldtype": "Tab Break",
+   "label": "Images"
   },
   {
-   "fieldname": "section_break_fuzy",
+   "fieldname": "column_break_inen",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_jzcw",
    "fieldtype": "Section Break"
   },
   {
-   "fieldname": "final_price",
-   "fieldtype": "Float",
-   "in_list_view": 1,
-   "label": "Final Price",
-   "length": 1,
-   "precision": "1",
-   "read_only": 1
+   "fieldname": "items",
+   "fieldtype": "Table",
+   "label": "Items",
+   "options": "Product Option"
   },
   {
-   "default": "0",
-   "fieldname": "count",
-   "fieldtype": "Int",
-   "label": "Count",
-   "non_negative": 1
+   "fieldname": "events",
+   "fieldtype": "Link",
+   "in_list_view": 1,
+   "label": "Event",
+   "options": "Events",
+   "reqd": 1
+  },
+  {
+   "fetch_from": "events.name1",
+   "fieldname": "event_name",
+   "fieldtype": "Data",
+   "hidden": 1,
+   "label": "Event Name"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-30 11:58:16.423159",
+ "modified": "2024-10-23 13:46:08.928509",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Products",
@@ -154,9 +113,7 @@
    "write": 1
   }
  ],
- "show_title_field_in_link": 1,
  "sort_field": "creation",
  "sort_order": "DESC",
- "states": [],
- "title_field": "name1"
+ "states": []
 }

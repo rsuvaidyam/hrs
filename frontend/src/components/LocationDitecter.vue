@@ -11,7 +11,7 @@
         }" 
         class="bg-white h-3/5 fixed bottom-0 md:static md:h-auto rounded-t-lg md:rounded-lg shadow-lg p-4 md:p-6 max-w-xl w-full md:text-center md:animate-vibrate">
             <FeatherIcon v-if="pinCodes.includes(store.location_ditecter)" name="x"
-                class="w-6 h-6 md:w-5 md:h-5 text-gray-500 cursor-pointer absolute top-4 md:top-[70px] md:left-12 right-4"
+                class="w-6 h-6 md:w-5 md:h-5 text-gray-500 cursor-pointer absolute top-4 right-4"
                 @click="store.openpop = false" />
             <h2 class="text-xl font-semibold text-main text-center">Welcome to <span class="text-primary">HRS</span>
             </h2>

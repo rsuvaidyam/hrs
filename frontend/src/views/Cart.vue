@@ -13,7 +13,7 @@
 				class="flex flex-col px-2 pb-2 md:flex-row gap-3 h-full pt-1 md:pt-3 overflow-y-auto md:overscroll-y-none scrollbar-thin">
 				<div
 					class="w-full md:w-[70%] md:overflow-y-auto px-2 rounded-md shadow-md md:shadow-none md:scrollbar-thin md:border h-auto md:h-full flex flex-col bg-white">
-					<CartItem v-for="item in products" :key="item.name" :product="item" />
+					<CartItem v-for="item in products" :key="item.product.name" :product="item" />
 				</div>
 				<div class="w-full md:w-[30%]">
 					<div class="md:border rounded-md bg-white h-auto shadow-md md:shadow-none">
@@ -77,7 +77,7 @@ export default defineComponent({
 
 		const totalPrice = computed(() => {
 			return products.value.reduce((total, product) => {
-				return total + (product.product.discounts ? Math.ceil((100 - product.product.discounts) / 100 * product.product.price) * product.count : product.product.price * product.count);
+				return total + Math.ceil((product.product.price) * product.count);
 			}, 0);
 		});
 

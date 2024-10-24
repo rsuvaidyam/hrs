@@ -1,8 +1,12 @@
 <template>
   <div class="pt-12 md:pt-14 w-full h-full pb-3 max-w-[1600px] mx-auto">
     <!-- <Filter /> -->
-    <Spinner v-if="loading" :loading="loading" />
-    <div v-else>
+     <div class="w-full h-full flex justify-center items-center" v-if="loading">
+      <div class="w-14" >
+        <Spinner :loading="loading" />
+      </div>
+    </div>
+    <div v-else class="h-full">
       <template v-if="products.length >= 1">
         <div class="w-full h-full pt-2 px-2 md:px-8">
           <div class="w-full px-2 pt-1 rounded-md text-xl flex items-center gap-3 font-medium">
@@ -56,7 +60,9 @@
         </div>
       </template>
       <!-- <DataNotFound v-else /> -->
-      <div v-else class="">Data Not Found</div>
+      <div v-else class="w-full h-full flex justify-center items-center">
+        <p class="text-3xl text-gray-500">No products found</p>
+      </div>
     </div>
   </div>
 </template>
