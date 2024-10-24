@@ -15,15 +15,15 @@
             <template #body-content>
                 <div class="flex flex-col justify-center gap-4">
                     <div class="w-full h-16 border rounded-sm flex justify-between items-center"
-                        v-for="i in product?.items">
+                        v-for="el in product?.items">
                         <img :src="product.images[0].image" class="h-full rounded-sm" alt="">
-                        <p class="text-sm font-light">{{ i?.qty }} {{i?.unit }}</p>
+                        <p class="text-sm font-light">{{ el?.qty }} {{el?.unit }}</p>
                         <div class=" text-sm flex gap-2">
-                            <p class="font-bold">₹ {{ Math.ceil(i.final_price) }}</p>
-                            <del class="text-gray-600">₹ {{ i.price }}</del>
+                            <p class="font-bold">₹ {{ Math.ceil(el.final_price) }}</p>
+                            <del class="text-gray-600">₹ {{ el.price }}</del>
                         </div>
                         <div class="w-20 h-full flex items-center pr-2">
-                            <AddToCartBtn :product="i" :products="product.items" :option="i.name" />
+                            <AddToCartBtn :product="el" :products="product.items" :option="el.name" />
                         </div>
                     </div>
                 </div>
@@ -59,7 +59,3 @@ export default {
     },
 };
 </script>
-
-<style scoped>
-/* Add any additional styles here */
-</style>
