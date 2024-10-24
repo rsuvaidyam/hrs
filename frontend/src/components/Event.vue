@@ -6,7 +6,7 @@
         <router-link
           v-for="occasion in occasions"
           :key="occasion.name"
-          :to="`/productlist/event/${occasion.name}`"
+          :to="`/product-list/event/${occasion.name}`"
           class="w-full md:w-1/2"
         >
           <div class="w-full cursor-pointer overflow-hidden rounded-t-md">
@@ -29,7 +29,7 @@
     </div>
   </template>
   
-  <script lang="ts">
+  <script >
   import { defineComponent, ref, onMounted,inject } from 'vue';
   import OccasionsLoader from '@/components/Loader/EventLoader.vue'; // Adjust the path as necessary
   
@@ -51,7 +51,7 @@
           setTimeout(() => {
             loader.value = false;
           }, 1000);
-        } catch (error: any) {
+        } catch (error) {
           console.log(error);
           
         }

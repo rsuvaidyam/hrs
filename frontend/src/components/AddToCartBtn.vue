@@ -22,6 +22,7 @@ const props = defineProps(['product', 'products','option']);
 let product = ref(props.product);
 let products = ref(props.products);
 let option = ref(props.option);
+
 watch(() => props.option, (newOption, oldOption) => {
   option = newOption;
 });
@@ -31,6 +32,7 @@ watch(() => props.product, (newOption, oldOption) => {
 watch(() => props.products, (newOption, oldOption) => {
   products = newOption; 
 });
+
 const add_to_cart = async (item, event,option) => {
   let originalCount;
   if (products.value?.length > 0) {
@@ -40,12 +42,7 @@ const add_to_cart = async (item, event,option) => {
         p.count = event === 'plus' ? p?.count + 1 : p?.count - 1;
       }
     });
-  } else { 
-    if (products.parent == item && products.name == option) {
-      originalCount = products.count;
-      products.count = event === 'plus' ? products.count + 1 : products.count - 1;
-    }
-  }
+  } 
 
   try {
     const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event,option:option });
@@ -55,9 +52,7 @@ const add_to_cart = async (item, event,option) => {
           p.count = response?.data?.count ?? 0;
         }
       });
-    } else {
-      products.count = response?.data?.count ?? 0;
-    }
+    } 
     updateCartCount()
   } catch (error) {
     if (products.value?.length > 0) {
@@ -66,9 +61,7 @@ const add_to_cart = async (item, event,option) => {
           p.count = originalCount;
         }
       });
-    } else {
-      products.count = originalCount;
-    }
+    }  
   }
 };
 
@@ -80,11 +73,7 @@ const updateCartCount = () => {
         uniqueProductsCount++;
       }
     });
-  } else {
-    if (products.value.count > 0) {
-      uniqueProductsCount++;
-    }
-  }
+  } 
   store.cart_count = uniqueProductsCount;
 };
 

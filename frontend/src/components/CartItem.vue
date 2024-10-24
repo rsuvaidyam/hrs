@@ -2,28 +2,29 @@
   <div class="lg:h-28 py-3 relative border-b flex transition-transform duration-1000 gap-4">
     <img class="h-20 w-20 lg:h-full rounded-md" :src="product?.images[0]?.image"
       :alt="product?.product?.name" />
-    <div class="flex flex-col gap-1 justify-between">
+    <div class="flex flex-col gap-1 justify-around">
       <div class="flex flex-col gap-2">
-        <router-link :to="`/productdetails/${product?.product?.name}`" class="w-[80%]">
-          <p class="text-sm md:text-lg truncate group-hover:underline">{{ product?.product?.name1 }}</p>
+        <router-link :to="`/productdetails/${product?.product?.name}`" >
+          <p class="text-sm font-light md:text-lg group-hover:underline">{{ product?.product?.name1 }}</p>
         </router-link>
-        <p class="truncate text-sm">
+        <!-- <p class="truncate text-sm">
           <span class="text-gray-500">Flavour : </span>
           <span class="bg-gray-100 rounded-md p-1 text-gray-700 font-medium text-xs">{{ product?.product?.category
             }}</span>
-        </p>
+        </p> -->
       </div>
-      <div>
+      <p class="text-sm font-extralight">{{ product?.product.qty }} {{ product.product.unit }}</p>
+      <div class="flex gap-2 font-normal">
+        <p class="flex items-center gap-0.5 text-primary">
+          <span>₹</span>
+          {{ formattedPrice }}
+        </p>
         <template v-if="product.product.discounts">
           <del class="flex items-center gap-0.5 text-sm text-gray-700">
             <span>₹</span>
             {{ originalPrice }}
           </del>
         </template>
-        <p class="flex items-center text-lg gap-0.5 text-primary">
-          <span>₹</span>
-          {{ formattedPrice }}
-        </p>
       </div>
     </div>
     <div v-if="product?.product?.discounts != 0"

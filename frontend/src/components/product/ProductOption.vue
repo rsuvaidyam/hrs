@@ -10,11 +10,11 @@
         </div>
         <Dialog v-model="dialog1">
             <template #body-title>
-                <h3>Products Option</h3>
+                <h3>{{ product?.items[0].name1 }}</h3>
             </template>
             <template #body-content>
-                <div class="flex flex-col justify-center gap-4">
-                    <div class="w-full h-16 border rounded-sm flex justify-between items-center"
+                <div class="flex flex-col justify-center gap-3">
+                    <div class="w-full h-[70px] border shadow-sm rounded-sm flex justify-between items-center"
                         v-for="el in product?.items">
                         <img :src="product.images[0].image" class="h-full rounded-sm" alt="">
                         <p class="text-sm font-light">{{ el?.qty }} {{el?.unit }}</p>
