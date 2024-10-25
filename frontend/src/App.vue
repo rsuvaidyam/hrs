@@ -1,6 +1,6 @@
 <template>
 	<div class="h-screen w-full">
-		<Navbar />
+		<Navbar v-if="router.currentRoute.value.path!=='/place-order'"/>
 		<div class="pt-12 md:pt-14 h-full">
 			<!-- <PageTransition> -->
 			<router-view />
@@ -9,14 +9,11 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 import Navbar from './components/Navbar.vue';
+import { useRouter } from 'vue-router';
 // import PageTransition from './components/PageTransition.vue';
 import './style.css';
 
-export default {
-	components: {
-		Navbar,
-	},
-};
+const router = useRouter(); 
 </script>

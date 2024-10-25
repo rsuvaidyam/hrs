@@ -86,9 +86,10 @@
   }
  ],
  "hide_toolbar": 1,
+ "image_field": "user_image",
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-24 15:59:44.589685",
+ "modified": "2024-10-24 19:51:05.668544",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Hrs User",

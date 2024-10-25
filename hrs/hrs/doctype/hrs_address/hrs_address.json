@@ -5,6 +5,7 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
+  "default",
   "name1",
   "phone_no",
   "house_name",
@@ -14,6 +15,7 @@
   "pin_code",
   "state",
   "district",
+  "user",
   "status"
  ],
  "fields": [
@@ -83,12 +85,24 @@
    "fieldtype": "Select",
    "label": "Status",
    "options": "\nActive\nInactive"
+  },
+  {
+   "fieldname": "user",
+   "fieldtype": "Link",
+   "label": "User",
+   "options": "User"
+  },
+  {
+   "default": "0",
+   "fieldname": "default",
+   "fieldtype": "Check",
+   "label": "Default"
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-08-30 14:22:46.460882",
+ "modified": "2024-10-24 20:49:24.573151",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Hrs Address",
