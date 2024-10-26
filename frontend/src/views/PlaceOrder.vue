@@ -5,7 +5,7 @@
     <div class="w-full h-full" v-else>
         <Order_success v-if="order_success" />
         <div v-else class="w-full h-full flex flex-col md:flex-row">
-            <div class="absolute top-2 w-full">
+            <div class="h-12 flex w-full">
                 <div class="flex items-center gap-2 justify-between w-full px-2">
                     <router-link to="/cart" class="flex items-center gap-1 ">
                         <FeatherIcon name="arrow-left" class="w-5" />
@@ -55,7 +55,7 @@ let order_success = ref(false);
 let loader = ref(false);
 const call = inject('$call');
 const session = inject('$session');
-console.log(products)
+
 const address_list = async () => {
     const response = await call('hrs.controllers.api.get_address', { user: session.user });
     if (response) {
