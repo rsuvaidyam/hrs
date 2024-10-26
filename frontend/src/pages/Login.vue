@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      email: 'rahul@gmail.com',
+      email: 'samar@gmail.com',
       password: 'Rahul@123',
     };
   },

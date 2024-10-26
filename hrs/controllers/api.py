@@ -30,15 +30,29 @@ def cart_count(usr):
 def get_cart(usr):
     return CartAPIs.get_cart(usr)
 
-# Address APIs --:--
+# Order APIs --:--
 
+@frappe.whitelist(allow_guest=True)
+def place_order(data):
+    OrderAPIs.place_order(data)
+    
 @frappe.whitelist(allow_guest=True)
 def get_order(user):
     return OrderAPIs.get_order(user)
+
+@frappe.whitelist(allow_guest=True)
+def get_order_details(item):
+    return OrderAPIs.get_order_details(item)
+
 # Address APIs --:--
+@frappe.whitelist(allow_guest=True)
+def add_address(data):
+    return AddressAPIs.add_address(data)
+
 @frappe.whitelist(allow_guest=True)
 def get_address(user):
     return AddressAPIs.get_address(user)
+
 @frappe.whitelist(allow_guest=True)
 def change_address(user,address):
     return AddressAPIs.change_address(user,address)
@@ -63,16 +77,5 @@ def get_event():
     event = frappe.get_all('Events', fields=['name','name1','image'])
     return event
 
-# Event APIs --:--
-@frappe.whitelist(allow_guest=True)
-def place_order(data):
-    for item in data:
-        new_doc = frappe.new_doc('Order')
-        new_doc.update(item)
-        new_doc.insert()
-        frappe.db.set_value('Product Option', item.get('item'), 'count', 0)
-        cart_data = frappe.get_all('Cart', filters={'product':item.get('product')}, pluck='name')
-        frappe.delete_doc('Cart', cart_data[0])
-    return {"msg": "Order placed successfully", "code": "200", "data": None}
 
 

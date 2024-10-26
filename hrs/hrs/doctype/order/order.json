@@ -12,7 +12,20 @@
   "column_break_bznm",
   "address",
   "user",
-  "p_mode"
+  "p_mode",
+  "amended_from",
+  "order_confirmation_section",
+  "order_status",
+  "column_break_jswv",
+  "order_date",
+  "shipping_confirmation_section",
+  "shipping_status",
+  "column_break_eqqe",
+  "shipping_date",
+  "delivery_confirmation_section",
+  "delivery_status",
+  "column_break_hzeq",
+  "delivery_date"
  ],
  "fields": [
   {
@@ -53,11 +66,85 @@
    "fieldtype": "Select",
    "label": "Payment Mode",
    "options": "\nCash\nUPI\nCard\nNet Banking"
+  },
+  {
+   "fieldname": "amended_from",
+   "fieldtype": "Link",
+   "label": "Amended From",
+   "no_copy": 1,
+   "options": "Order",
+   "print_hide": 1,
+   "read_only": 1,
+   "search_index": 1
+  },
+  {
+   "fieldname": "order_confirmation_section",
+   "fieldtype": "Section Break",
+   "label": "Order Confirmation"
+  },
+  {
+   "default": "Confirm",
+   "fieldname": "order_status",
+   "fieldtype": "Select",
+   "label": "Order Status",
+   "options": "\nConfirm\nPending\nCancel"
+  },
+  {
+   "fieldname": "column_break_jswv",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "order_date",
+   "fieldtype": "Datetime",
+   "label": "Order Date"
+  },
+  {
+   "fieldname": "shipping_confirmation_section",
+   "fieldtype": "Section Break",
+   "label": "Shipping Confirmation"
+  },
+  {
+   "fieldname": "shipping_status",
+   "fieldtype": "Select",
+   "label": "Shipping Status",
+   "options": "\nConfirm\nPending\nCancel"
+  },
+  {
+   "fieldname": "column_break_eqqe",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "shipping_date",
+   "fieldtype": "Datetime",
+   "label": "Shipping Date"
+  },
+  {
+   "fieldname": "delivery_confirmation_section",
+   "fieldtype": "Section Break",
+   "label": "Delivery Confirmation"
+  },
+  {
+   "fieldname": "delivery_status",
+   "fieldtype": "Select",
+   "label": "Delivery Status ",
+   "options": "\nConfirm\nPending\nCancel"
+  },
+  {
+   "fieldname": "column_break_hzeq",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "delivery_date",
+   "fieldtype": "Datetime",
+   "label": "Delivery Date",
+   "options": "\nConfirm\nCancel"
   }
  ],
+ "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
+ "is_submittable": 1,
  "links": [],
- "modified": "2024-10-25 17:04:00.320928",
+ "modified": "2024-10-26 12:49:06.732677",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Order",
@@ -74,6 +161,47 @@
    "report": 1,
    "role": "System Manager",
    "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "cancel": 1,
+   "create": 1,
+   "email": 1,
+   "read": 1,
+   "role": "BUYER",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "SELLER",
+   "share": 1,
+   "submit": 1,
+   "write": 1
+  },
+  {
+   "amend": 1,
+   "cancel": 1,
+   "create": 1,
+   "delete": 1,
+   "email": 1,
+   "export": 1,
+   "print": 1,
+   "read": 1,
+   "report": 1,
+   "role": "ADMIN",
+   "share": 1,
+   "submit": 1,
    "write": 1
   }
  ],

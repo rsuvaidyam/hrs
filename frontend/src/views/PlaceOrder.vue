@@ -1,10 +1,7 @@
 <template>
-    <div v-if="loader" class="w-full h-full flex justify-center items-center">
-        <Spinner class="w-16" />
-    </div>
-    <div class="w-full h-full" v-else>
+    <div class="w-full h-screen">
         <Order_success v-if="order_success" />
-        <div v-else class="w-full h-full flex flex-col md:flex-row">
+        <div v-else class="w-full h-full">
             <div class="h-12 flex w-full">
                 <div class="flex items-center gap-2 justify-between w-full px-2">
                     <router-link to="/cart" class="flex items-center gap-1 ">
@@ -14,7 +11,10 @@
                     <div class="bg-gray-300 rounded-sm text-sm p-1 animate-pulse">100 % secure</div>
                 </div>
             </div>
-            <div class="w-full md:w-1/2">
+            <div v-if="loader" class="w-full h-full flex justify-center items-center">
+                <Spinner class="w-16" />
+            </div>
+            <div class="w-full md:w-1/2" v-else>
                 <div class="w-full px-2">
                     <div class="w-full p-3 mb-3 bg-blue-200 rounded-md flex justify-between items-center">
                         <p>Total Amount</p>
@@ -63,9 +63,13 @@ const address_list = async () => {
     }
 }
 const OrderProduct = async () => {
+    loader.value = true;
     const response = await call('hrs.controllers.api.get_cart', { usr: session.user });
     response?.map((item) => {
         totalPrice.value += item.product.final_price * item.product.count;
+        setTimeout(() => {
+            loader.value = false;
+        }, 500);
     });
     products.value = response.map((item) => {
         return {

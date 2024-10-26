@@ -8,6 +8,12 @@ class AddressAPIs:
         data['default_address'] = next((addr for addr in address if addr['default'] == 1), None)
         return data
     
+    def add_address(data):
+        doc = frappe.new_doc('Hrs Address')
+        doc.update(data)
+        doc.insert()
+        return doc
+    
     def change_address(user,address):
         data = {}
         address = frappe.get_all('Hrs Address', filters={'user': user}, pluck='name')

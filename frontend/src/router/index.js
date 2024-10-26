@@ -6,6 +6,7 @@ import authRoutes from './auth';
 import PlaceOrder from '../views/PlaceOrder.vue';
 import Address from '../views/Address.vue';
 import MyOrder from '../views/MyOrder.vue';
+import OrderItem from "../components/OrderItem.vue";
 
 const routes = [
   {
@@ -17,6 +18,11 @@ const routes = [
 	path: "/order",
 	name: "MyOrder",
 	component: MyOrder,
+  },
+  {
+	path: "/order/:name",
+	name: "OrderItem",
+	component: OrderItem,
   },
   {
 	path: "/productdetails/:name",
