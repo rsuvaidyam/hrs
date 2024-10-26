@@ -2,6 +2,7 @@ import frappe
 from hrs.controllers.product import ProductAPIs
 from hrs.controllers.cart import CartAPIs
 from hrs.controllers.adress import AddressAPIs
+from hrs.controllers.order import OrderAPIs
 
 # Product APIs --:--
 @frappe.whitelist(allow_guest=True)
@@ -29,6 +30,11 @@ def cart_count(usr):
 def get_cart(usr):
     return CartAPIs.get_cart(usr)
 
+# Address APIs --:--
+
+@frappe.whitelist(allow_guest=True)
+def get_order(user):
+    return OrderAPIs.get_order(user)
 # Address APIs --:--
 @frappe.whitelist(allow_guest=True)
 def get_address(user):

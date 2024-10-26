@@ -5,12 +5,18 @@ import ProductList from "../components/product/ProductList.vue";
 import authRoutes from './auth';
 import PlaceOrder from '../views/PlaceOrder.vue';
 import Address from '../views/Address.vue';
+import MyOrder from '../views/MyOrder.vue';
 
 const routes = [
   {
 	path: "/",
 	name: "Home",
 	component: Home,
+  },
+  {
+	path: "/order",
+	name: "MyOrder",
+	component: MyOrder,
   },
   {
 	path: "/productdetails/:name",

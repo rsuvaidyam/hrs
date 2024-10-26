@@ -9,6 +9,9 @@
 		<ProductGrByEvent />
 	</div>
 	<Footer/>
+	<div class="block md:hidden">
+		<Nav/>
+	</div>
 </template>
 
 <script setup>
@@ -18,7 +21,7 @@ import Category from '../components/Category.vue';
 import LocationDitecter from '../components/LocationDitecter.vue';
 import Event from '../components/Event.vue';
 import Footer from '../components/Footer/Footer.vue';
-const store = inject('store');
 import ProductGrByEvent from '../components/product/ProductGrByEvent.vue';
-
+import Nav from '../components/BottomNav/Nav.vue';
+const store = inject('store');
 </script>

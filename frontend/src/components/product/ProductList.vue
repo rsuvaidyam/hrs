@@ -35,6 +35,7 @@ import { ref, onMounted, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import { Spinner } from 'frappe-ui';
 import Item from '../product/Item.vue';
+
 const route = useRoute();
 const location = route.fullPath.split('/');
 

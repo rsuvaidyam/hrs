@@ -33,8 +33,8 @@
     </div>
   </div>
   <div v-if="route.fullPath != '/cart'" class="w-full block text-white">
-    <router-link v-if="route.path !== '/cart' && count >= 1" to="/cart"
-      class="w-fit z-20 fixed bottom-4 right-4 bg-primary py-3 px-3 rounded-md flex justify-between items-center transition-opacity duration-500">
+    <router-link v-if="!['/cart','/order'].includes(route.path)  && count >= 1" to="/cart"
+      class="w-fit z-20 fixed bottom-16 right-4 bg-primary py-3 px-3 rounded-md flex justify-between items-center transition-opacity duration-500">
       <div class="relative">
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"
           class="size-8">
@@ -78,6 +78,7 @@ export default {
       try {
         const response = auth.isLoggedIn ? await call('hrs.controllers.api.cart_count', { usr: session.user }) : 0;
         count.value = response || 0;
+        store.cart_count = response;
       } catch (error) {
         console.error(error);
         count.value = 0;

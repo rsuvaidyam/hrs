@@ -1,7 +1,7 @@
 <template>
 	<div class="h-screen w-full">
-		<Navbar v-if="router.currentRoute.value.path!=='/place-order'"/>
-		<div class="pt-12 md:pt-14 h-full">
+		<Navbar v-if="!rou.includes(router.currentRoute.value.path)"/>
+		<div :class="!rou.includes(router.currentRoute.value.path)?'pt-12 md:pt-14 h-full':''">
 			<!-- <PageTransition> -->
 			<router-view />
 			<!-- </PageTransition> -->
@@ -16,4 +16,5 @@ import { useRouter } from 'vue-router';
 import './style.css';
 
 const router = useRouter(); 
+const rou= ['/place-order','/order','/cart']
 </script>

@@ -1,12 +1,21 @@
 <!-- src/components/Cart.vue -->
 <template>
-	<div class="pt-10 lg:pt-0 h-full mx-auto max-w-[1800px]" v-motion :initial="{ opacity: 0, scale: 0.8 }"
+	<div class="h-screen mx-auto max-w-[1800px]" v-motion :initial="{ opacity: 0, scale: 0.8 }"
 		:enter="{ opacity: 1, scale: 1 }" :leave="{ opacity: 0, scale: 0.8 }">
 		<div class="w-full h-full flex items-center justify-center" v-if="loading">
 			<CartLoader />
 		</div>
 		<CartAlert v-else-if="!products.length" />
 		<div v-else class=" pb-20 w-full h-full px-0 lg:px-4 bg-gray-100 relative">
+			<div class="h-10 flex w-full">
+				<div class="flex items-center gap-2 justify-between w-full px-3">
+					<div @click="router.back(-1)" class="flex items-center gap-1 ">
+						<FeatherIcon name="arrow-left" class="w-5" />
+						<span>My Cart</span>
+					</div>
+					
+				</div>
+			</div>
 			<div
 				class="flex flex-col px-2 pb-2 md:flex-row gap-3 h-full pt-1 md:pt-3 overflow-y-auto md:overscroll-y-none scrollbar-thin">
 				<div
@@ -59,7 +68,7 @@ import CartItem from '../components/CartItem.vue';
 import CartAlert from '../components/CartAlert.vue';
 import CartLoader from '../components/Loader/CartLoader.vue';
 
-const router = useRouter();
+const router = useRouter(); 
 const products = ref([]);
 const loading = ref(true);
 const call = inject('$call');
@@ -104,8 +113,8 @@ const placeOrder = async () => {
 	const response = await call('hrs.controllers.api.get_address', { user: session.user });
 	if (response.default_address) {
 		router.push({ name: "PlaceOrder" });
-	}else{
+	} else {
 		router.push({ name: "Address" });
-	} 
+	}
 };
 </script>
