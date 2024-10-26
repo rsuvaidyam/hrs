@@ -51,7 +51,7 @@
 
 <script>
 import { ref, onMounted, watch, computed, inject } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute,useRouter } from 'vue-router';
 import GlobalSearch from './GlobalSearch.vue';
 import Login from '../pages/Login.vue';
 import { Dropdown } from 'frappe-ui';
@@ -66,6 +66,7 @@ export default {
     const count = ref(0);
     const store = inject('store');
     const route = useRoute();
+    const router = useRouter();
     const auth = inject('$auth');
     const call = inject('$call');
     const session = inject('$session');
@@ -95,6 +96,10 @@ export default {
       {
         label: 'Profile',
         onClick: () => { /* Profile functionality */ },
+      },
+      {
+        label: 'My Orders',
+        onClick: () => { router.push({name:'MyOrder'}); },
       },
       {
         label: 'Logout',

@@ -66,11 +66,11 @@
    "reqd": 1
   },
   {
+   "fetch_from": "district.state",
    "fieldname": "state",
    "fieldtype": "Link",
    "label": "State",
-   "options": "State",
-   "reqd": 1
+   "options": "State"
   },
   {
    "fieldname": "district",
@@ -102,7 +102,7 @@
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-24 20:49:24.573151",
+ "modified": "2024-10-26 13:52:26.637301",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Hrs Address",
