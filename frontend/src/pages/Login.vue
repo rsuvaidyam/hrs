@@ -15,7 +15,8 @@
         </div>
       </template>
       <template #actions>
-        <Button class="w-full" variant="outline" theme='gray' :loading="loading" size='md' :disabled="false" @click="login()">
+        <Button class="w-full" variant="outline" theme='gray' :loading="loading" size='md' :disabled="false"
+          @click="login()">
           Login
         </Button>
       </template>
@@ -24,53 +25,39 @@
   </div>
 </template>
 
-<script>
-import { ref, watch } from 'vue';
+<script setup>
+import { ref, watch, inject, onMounted } from 'vue';
 import { TextInput, Button, Dialog } from 'frappe-ui';
+import { useRouter } from 'vue-router';
+import { useRoute } from 'vue-router';
+const email = ref('samar@gmail.com');
+const password = ref('Rahul@123');
+const auth = inject('$auth');
+const loading = ref(false);
+const signinpop = ref(false);
+const router = useRouter()
+const route = useRoute()
 
-export default {
-  components: {
-    Button,
-    TextInput,
-    Dialog,
-  },
-  data() {
-    return {
-      email: 'samar@gmail.com',
-      password: 'Rahul@123',
-    };
-  },
-  setup() {
-    const signinpop = ref(false);
-    const loading = ref(false);
-    return {
-      signinpop,
-      loading
-    };
-  },
-  inject: ["$auth"],
-  async mounted() {
-    if (this.$route?.query?.route) {
-      this.redirect_route = this.$route.query.route;
-      this.$router.replace({ query: null });
+watch(()=> auth, (newVal) => {
+  auth=newVal
+});
+onMounted(() => {
+  if (route?.query?.route) {
+    this.redirect_route = route.query.route;
+    router.replace({ query: null });
+  }
+});
+
+const login = async () => {
+  loading.value = true;
+  if (email.value && password.value) {
+    let res = await auth.login(email.value, password.value);
+    if (res) {
+      signinpop.value = false;
+      loading.value = false;
+      router.push({ name: "Home" });
     }
-  },
-  methods: {
-    async login() {
-      this.loading = true;
-      if (this.email && this.password) {
-        let res = await this.$auth.login(this.email, this.password);
-        if (res) {
-          this.signinpop = false;
-          this.loading = false;
-          this.$router.push({ name: "Home" });
-        }
-      }
-    },
-  },
-};
-</script>
+  }
+}
 
-<style scoped>
-/* Add any scoped styles here */
-</style>
+</script>
