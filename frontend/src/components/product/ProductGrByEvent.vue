@@ -25,9 +25,10 @@ import Item from '../product/Item.vue';
 
 const product = ref([]);
 const call = inject('$call');
+const session = inject('$session');
 const getProducts = async () => {
     try {
-        const response = await call('hrs.controllers.api.get_event_by_product', {});
+        const response = await call('hrs.controllers.api.get_event_by_product', {user: session?.user ?? ''});
         product.value = response;
     } catch (error) {
         console.log(error);

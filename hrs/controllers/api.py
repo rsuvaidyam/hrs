@@ -6,8 +6,8 @@ from hrs.controllers.order import OrderAPIs
 
 # Product APIs --:--
 @frappe.whitelist(allow_guest=True)
-def get_event_by_product():
-    return ProductAPIs.event_by_product()
+def get_event_by_product(user=None):
+    return ProductAPIs.event_by_product(user)
     
 @frappe.whitelist(allow_guest=True)
 def get_product_details(name):
@@ -16,6 +16,10 @@ def get_product_details(name):
 @frappe.whitelist(allow_guest=True)
 def products_list(data):
     return ProductAPIs.products_list(data)
+    
+@frappe.whitelist(allow_guest=True)
+def product_search(key_word):
+    return ProductAPIs.product_search(key_word)
 
 # Cart APIs --:--
 @frappe.whitelist(allow_guest=True)
