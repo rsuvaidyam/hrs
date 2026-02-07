@@ -6,7 +6,7 @@
 
     <Dialog v-model="signinpop">
       <template #body-title>
-        <h3>Login to Sweetkart</h3>
+        <h3>Login to Hearthstone Bakery</h3>
       </template>
       <template #body-content>
         <div class="flex flex-col gap-2">
@@ -26,7 +26,7 @@
 </template>
 
 <script setup>
-import { ref, watch, inject, onMounted } from 'vue';
+import { ref, inject, onMounted } from 'vue';
 import { TextInput, Button, Dialog } from 'frappe-ui';
 import { useRouter } from 'vue-router';
 import { useRoute } from 'vue-router';
@@ -37,13 +37,11 @@ const loading = ref(false);
 const signinpop = ref(false);
 const router = useRouter()
 const route = useRoute()
+const redirectRoute = ref(null);
 
-watch(()=> auth, (newVal) => {
-  auth=newVal
-});
 onMounted(() => {
   if (route?.query?.route) {
-    this.redirect_route = route.query.route;
+    redirectRoute.value = route.query.route;
     router.replace({ query: null });
   }
 });
@@ -55,7 +53,7 @@ const login = async () => {
     if (res) {
       signinpop.value = false;
       loading.value = false;
-      router.push({ name: "Home" });
+      router.push(redirectRoute.value || { name: "Home" });
     }
   }
 }
