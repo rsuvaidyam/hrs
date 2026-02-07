@@ -4,6 +4,8 @@ from hrs.controllers.cart import CartAPIs
 from hrs.controllers.adress import AddressAPIs
 from hrs.controllers.order import OrderAPIs
 
+DEFAULT_PAGE_LENGTH = 20
+
 # Product APIs --:--
 @frappe.whitelist(allow_guest=True)
 def get_event_by_product(user=None):
@@ -81,4 +83,68 @@ def get_event():
     event = frappe.get_all('Events', fields=['name','name1','image'])
     return event
 
+# Generic DocType APIs --:--
+def _parse_json(value, default=None):
+    if value in (None, ""):
+        return default
+    return frappe.parse_json(value)
+
+def _assert_permission(doctype, perm):
+    if not frappe.has_permission(doctype, perm):
+        frappe.throw(f"Not permitted to {perm} {doctype}.", frappe.PermissionError)
+
+@frappe.whitelist()
+def list_doctypes():
+    _assert_permission("DocType", "read")
+    return frappe.get_all(
+        "DocType",
+        filters={"istable": 0},
+        fields=["name", "module", "custom"],
+        order_by="name",
+    )
+
+@frappe.whitelist()
+def get_document(doctype, name):
+    _assert_permission(doctype, "read")
+    return frappe.get_doc(doctype, name)
+
+@frappe.whitelist()
+def get_documents(
+    doctype,
+    filters=None,
+    fields=None,
+    limit_start=0,
+    limit_page_length=DEFAULT_PAGE_LENGTH,
+    order_by=None,
+):
+    _assert_permission(doctype, "read")
+    parsed_filters = _parse_json(filters, {})
+    parsed_fields = _parse_json(fields, ["name"])
+    parsed_order_by = order_by or "modified desc"
+    return frappe.get_all(
+        doctype,
+        filters=parsed_filters,
+        fields=parsed_fields,
+        limit_start=limit_start,
+        limit_page_length=limit_page_length,
+        order_by=parsed_order_by,
+    )
+
+@frappe.whitelist()
+def create_document(doctype, data):
+    _assert_permission(doctype, "create")
+    payload = _parse_json(data, {})
+    payload["doctype"] = doctype
+    doc = frappe.get_doc(payload)
+    doc.insert()
+    return doc
+
+@frappe.whitelist()
+def update_document(doctype, name, data):
+    _assert_permission(doctype, "write")
+    payload = _parse_json(data, {})
+    doc = frappe.get_doc(doctype, name)
+    doc.update(payload)
+    doc.save()
+    return doc
 
