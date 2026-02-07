@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white md:rounded-md shadow-md p-3 w-full h-full">
-      <p class="text-2xl pt-2 pb-3 font-medium text-main truncate">Celebrate with Bakery Favorites</p>
+      <p class="text-2xl pt-2 pb-3 font-medium text-main truncate">Celebrate Every Occasion</p>
       <OccasionsLoader v-if="loader" />
       <div v-else class="w-full flex flex-col md:flex-row gap-3">
         <router-link
