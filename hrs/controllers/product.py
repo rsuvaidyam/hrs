@@ -23,12 +23,13 @@ class ProductAPIs :
 
     def products_list(data):
         datas = []
-        filters={}
-        if data.get('event'):
-            filters= {'events':data.get('event')}
-        elif data.get('category'):
-            filters={'category':data.get('category')} 
-        products = frappe.get_all('Products',filters=filters ,pluck='name')
+        parsed_data = frappe.parse_json(data) if data else {}
+        filters = {}
+        if parsed_data.get('event'):
+            filters = {'events': parsed_data.get('event')}
+        elif parsed_data.get('category'):
+            filters = {'category': parsed_data.get('category')}
+        products = frappe.get_all('Products', filters=filters, pluck='name')
 
         for name in products:
             product = frappe.get_doc('Products', name)
@@ -38,9 +39,8 @@ class ProductAPIs :
     def product_search(key_word):
         datas = []
         data = frappe.get_all('Product Option',filters={'name1': ['like', '%{}%'.format(key_word)]}, fields=['parent as name'])
-        for name in data:
-            product = frappe.get_doc('Products', name)
+        for entry in data:
+            product = frappe.get_doc('Products', entry.get('name'))
             datas.append(product.as_dict())
         return datas
-
 
