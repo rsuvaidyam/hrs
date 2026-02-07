@@ -7,7 +7,7 @@
     "dev": "vite",
     "build": "vite build --base=/assets/hrs/frontend/ && yarn copy-html-entry",
     "preview": "vite preview",
-    "copy-html-entry": "cp ../hrs/public/frontend/index.html ../hrs/www/hrs.html"
+    "copy-html-entry": "mkdir -p ../hrs/www && cp ../hrs/public/frontend/index.html ../hrs/www/hrs.html"
   },
   "dependencies": {
     "@heroicons/vue": "^2.1.5",
