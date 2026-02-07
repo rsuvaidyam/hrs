@@ -5,13 +5,20 @@
  "doctype": "DocType",
  "engine": "InnoDB",
  "field_order": [
-  "events",
-  "event_name",
+  "section_break_egws",
+  "product_name",
   "column_break_qohp",
   "category",
   "column_break_inen",
-  "section_break_jzcw",
-  "items",
+  "price",
+  "section_break_bqpx",
+  "product_type",
+  "column_break_ffrx",
+  "status",
+  "column_break_xulx",
+  "image",
+  "section_break_gbmh",
+  "is_customizable",
   "images_tab",
   "images"
  ],
@@ -44,35 +51,68 @@
    "fieldtype": "Column Break"
   },
   {
-   "fieldname": "section_break_jzcw",
-   "fieldtype": "Section Break"
-  },
-  {
-   "fieldname": "items",
-   "fieldtype": "Table",
-   "label": "Items",
-   "options": "Product Option"
-  },
-  {
-   "fieldname": "events",
-   "fieldtype": "Link",
-   "in_list_view": 1,
-   "label": "Event",
-   "options": "Events",
+   "fieldname": "product_name",
+   "fieldtype": "Data",
+   "label": "Product Name",
    "reqd": 1
   },
   {
-   "fetch_from": "events.name1",
-   "fieldname": "event_name",
-   "fieldtype": "Data",
-   "hidden": 1,
-   "label": "Event Name"
+   "fieldname": "product_type",
+   "fieldtype": "Select",
+   "label": "Product Type",
+   "options": "\nVeg\nNon-Veg\nEggless",
+   "reqd": 1
+  },
+  {
+   "fieldname": "price",
+   "fieldtype": "Currency",
+   "label": "Price"
+  },
+  {
+   "fieldname": "image",
+   "fieldtype": "Attach Image",
+   "label": "Image"
+  },
+  {
+   "default": "Active",
+   "fieldname": "status",
+   "fieldtype": "Select",
+   "label": "Status",
+   "options": "Active\nInactive"
+  },
+  {
+   "default": "0",
+   "fieldname": "is_customizable",
+   "fieldtype": "Check",
+   "label": "Is Customizable"
+  },
+  {
+   "fieldname": "section_break_bqpx",
+   "fieldtype": "Section Break",
+   "hide_border": 1
+  },
+  {
+   "fieldname": "column_break_ffrx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "column_break_xulx",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "section_break_gbmh",
+   "fieldtype": "Section Break"
+  },
+  {
+   "fieldname": "section_break_egws",
+   "fieldtype": "Section Break",
+   "hide_border": 1
   }
  ],
  "hide_toolbar": 1,
  "index_web_pages_for_search": 1,
  "links": [],
- "modified": "2024-10-23 13:46:08.928509",
+ "modified": "2026-01-19 21:48:06.790708",
  "modified_by": "Administrator",
  "module": "hrs",
  "name": "Products",
@@ -113,6 +153,7 @@
    "write": 1
   }
  ],
+ "row_format": "Dynamic",
  "sort_field": "creation",
  "sort_order": "DESC",
  "states": []

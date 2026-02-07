@@ -1,1 +1,5 @@
 hrs
+Sales
+Inventory
+Production
+Purchase
