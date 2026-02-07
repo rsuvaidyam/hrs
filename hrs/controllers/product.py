@@ -10,11 +10,12 @@ class ProductAPIs :
         
         for name in products:
             product = frappe.get_doc('Products', name)
-            
-            if not data.get(product.event_name):
-                data[product.event_name] = [product]
+
+            event_key = product.get("events") or product.get("event_name") or "Uncategorized"
+            if not data.get(event_key):
+                data[event_key] = [product]
             else:
-                data[product.event_name].append(product)
+                data[event_key].append(product)
         return data
 
     def product_details(name):
@@ -43,4 +44,3 @@ class ProductAPIs :
             product = frappe.get_doc('Products', entry.get('name'))
             datas.append(product.as_dict())
         return datas
-
