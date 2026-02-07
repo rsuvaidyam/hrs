@@ -2,7 +2,7 @@
     <div class="order-tracking">
       
       
-      <div v-for="(item, index) in steps" :key="index" class="step">
+      <div v-for="(item, index) in steps" :key="item.title" class="step">
         <div class="step-indicator">
           <div
             :class="{
@@ -22,6 +22,7 @@
         <div class="step-details">
           <p class="step-title">{{ item.title }}</p>
           <p v-if="item.date" class="step-date">{{ item.date }}</p>
+          <p v-else class="step-date">{{ item.status }}</p>
         </div>
       </div>
     </div>
@@ -29,15 +30,35 @@
   
   <script setup>
   import FeatherIcon from 'frappe-ui/src/components/FeatherIcon.vue';
-import { ref } from 'vue';
+  import { computed } from 'vue';
+
+  const props = defineProps({
+    orderStatus: { type: String, default: 'Confirm' },
+    orderDate: { type: String, default: '' },
+    shippingStatus: { type: String, default: 'Pending' },
+    shippingDate: { type: String, default: '' },
+    deliveryStatus: { type: String, default: 'Pending' },
+    deliveryDate: { type: String, default: '' },
+  });
+
+  const formatDate = (value) => {
+    if (!value) return '';
+    const parsed = new Date(value);
+    if (Number.isNaN(parsed.getTime())) return '';
+    return parsed.toLocaleString();
+  };
+
+  const steps = computed(() => ([
+    { title: 'Order Confirmed', date: formatDate(props.orderDate), status: props.orderStatus },
+    { title: 'Shipped', date: formatDate(props.shippingDate), status: props.shippingStatus },
+    { title: 'Delivery', date: formatDate(props.deliveryDate), status: props.deliveryStatus },
+  ]));
   
-  const steps = ref([
-    { title: 'Order Confirmed', date: 'Your Order has been placed, Sat 26th Oct' },
-    { title: 'Shipped', date: 'Expected by Oct 30' },
-    { title: 'Delivery', date: 'Nov 03 by 11 PM' },
-  ]);
-  
-  const currentStep = ref(1); // Adjust this to simulate progress
+  const currentStep = computed(() => {
+    if (props.deliveryStatus === 'Confirm') return 2;
+    if (props.shippingStatus === 'Confirm') return 1;
+    return 0;
+  });
   </script>
   
   <style scoped>

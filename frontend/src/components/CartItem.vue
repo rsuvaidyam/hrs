@@ -69,6 +69,7 @@ export default defineComponent({
   setup(props) {
     const call = inject('$call');  
     const store = inject('store'); 
+    const session = inject('$session');
     const originalPrice = computed(() => props.product.product.price * props.product.count);
     const formattedPrice = computed(() => {
       if (props.product.product.discounts) {
@@ -94,12 +95,13 @@ export default defineComponent({
         console.log(error);
       }
     };
-    const updateCartCount = () => {
-      let uniqueProductsCount = 0;
-        if (props.product.count > 0) {
-          uniqueProductsCount++;
-        }
-      store.cart_count = uniqueProductsCount;
+    const updateCartCount = async () => {
+      try {
+        const response = await call('hrs.controllers.api.cart_count', { usr: session.user });
+        store.cart_count = response ?? 0;
+      } catch (error) {
+        console.log(error);
+      }
     };
 
     return { originalPrice, formattedPrice, add_to_cart };

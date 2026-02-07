@@ -38,7 +38,14 @@
             </div>
             <!-- steper -->
             <div class="">
-                <OrderTracking />
+                <OrderTracking
+                    :orderStatus="order_item?.order_status"
+                    :orderDate="order_item?.order_date"
+                    :shippingStatus="order_item?.shipping_status"
+                    :shippingDate="order_item?.shipping_date"
+                    :deliveryStatus="order_item?.delivery_status"
+                    :deliveryDate="order_item?.delivery_date"
+                />
             </div>
             <div class="w-full px-4 h-10">
                 <Button label="Cancel Order"></Button>
