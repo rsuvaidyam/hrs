@@ -18,19 +18,20 @@ import { ref, watch, inject } from 'vue';
 import { Button } from 'frappe-ui';
 const call = inject('$call');
 const store = inject('store');
+const session = inject('$session');
 const props = defineProps(['product', 'products','option']);
 let product = ref(props.product);
 let products = ref(props.products);
 let option = ref(props.option);
 
 watch(() => props.option, (newOption, oldOption) => {
-  option = newOption;
+  option.value = newOption;
 });
 watch(() => props.product, (newOption, oldOption) => {
-  product = newOption;
+  product.value = newOption;
 });
 watch(() => props.products, (newOption, oldOption) => {
-  products = newOption; 
+  products.value = newOption;
 });
 
 const add_to_cart = async (item, event,option) => {
@@ -53,7 +54,7 @@ const add_to_cart = async (item, event,option) => {
         }
       });
     } 
-    updateCartCount()
+    await updateCartCount()
   } catch (error) {
     if (products.value?.length > 0) {
       products.value?.map((p) => {
@@ -65,16 +66,24 @@ const add_to_cart = async (item, event,option) => {
   }
 };
 
-const updateCartCount = () => {
-  let uniqueProductsCount = 0;
+const updateCartCount = async () => {
   if (products.value?.length > 0) {
-    products.value?.map((p) => {
+    let uniqueProductsCount = 0;
+    products.value?.forEach((p) => {
       if (p.count > 0) {
         uniqueProductsCount++;
       }
     });
-  } 
-  store.cart_count = uniqueProductsCount;
+    store.cart_count = uniqueProductsCount;
+    return;
+  }
+
+  try {
+    const response = await call('hrs.controllers.api.cart_count', { usr: session.user });
+    store.cart_count = response ?? 0;
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 

@@ -24,15 +24,19 @@ class CartAPIs:
 
     def add_to_cart(product, event,option):
         try:
-            existing_cart = frappe.db.exists('Cart', {'option': option})
+            existing_cart = frappe.db.exists('Cart', {
+                'option': option,
+                'product': product,
+                'owner': frappe.session.user,
+            })
             if existing_cart:
                 doc = frappe.get_doc('Cart', existing_cart)
                 if event == 'plus':
                     doc.count += 1
-                elif event == 'minus':
+                elif event == 'minus' and doc.count > 0:
                     doc.count -= 1 
                 
-                if doc.count == 0:
+                if doc.count <= 0:
                     doc.delete()
                     frappe.publish_realtime('cart_update', {"count": 0}, user=frappe.session.user)
                     return {"msg": "Item removed from cart", "code": "200", "data": None}
@@ -50,5 +54,3 @@ class CartAPIs:
         
         except Exception as e:
             return {"msg": str(e), "code": "500", "data": None}
-
-

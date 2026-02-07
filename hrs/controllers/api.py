@@ -38,7 +38,7 @@ def get_cart(usr):
 
 @frappe.whitelist(allow_guest=True)
 def place_order(data):
-    OrderAPIs.place_order(data)
+    return OrderAPIs.place_order(data)
     
 @frappe.whitelist(allow_guest=True)
 def get_order(user):
@@ -80,6 +80,5 @@ def get_category():
 def get_event():
     event = frappe.get_all('Events', fields=['name','name1','image'])
     return event
-
 
 

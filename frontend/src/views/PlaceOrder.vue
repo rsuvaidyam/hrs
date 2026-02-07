@@ -61,42 +61,42 @@ const address_list = async () => {
     if (response) {
         address.value = response;
     }
-}
+};
 const OrderProduct = async () => {
     loader.value = true;
     const response = await call('hrs.controllers.api.get_cart', { usr: session.user });
-    response?.map((item) => {
-        totalPrice.value += item.product.final_price * item.product.count;
-        setTimeout(() => {
-            loader.value = false;
-        }, 500);
-    });
-    products.value = response.map((item) => {
+    totalPrice.value = response?.reduce((total, item) => {
+        return total + item.product.final_price * item.count;
+    }, 0) ?? 0;
+    products.value = response?.map((item) => {
         return {
             item: item.product.name,
             product: item.product.parent,
-            count: item.product.count,
+            count: item.count,
             user: session.user,
-            address: address.value.default_address.name,
+            address: address.value?.default_address?.name,
             p_mode: 'Cash',
-        }
-    });
+        };
+    }) ?? [];
+    loader.value = false;
 }
-let placeOrder = () => {
-    loader.value = true
-    let response = call('hrs.controllers.api.place_order', { data: products.value });
-    if (response) {
-        setTimeout(() => {
-            loader.value = false
+let placeOrder = async () => {
+    loader.value = true;
+    try {
+        const response = await call('hrs.controllers.api.place_order', { data: products.value });
+        if (response?.code === "200") {
             order_success.value = true;
-        }, 2000);
-        setTimeout(() => {
-            router.push('/');
-        }, 4000);
+            setTimeout(() => {
+                router.push('/');
+            }, 4000);
+        }
+    } finally {
+        loader.value = false;
     }
 }
 onMounted(() => {
-    address_list();
-    OrderProduct();
+    address_list().then(() => {
+        OrderProduct();
+    });
 });
 </script>
