@@ -128,6 +128,7 @@ onMounted(async () => {
         }, 1000);
     } catch (error) {
         console.log(error);
+        loading.value = false;
     }
 });
 

@@ -1,6 +1,7 @@
 // Author: Gavin D'souza <gavin@frappe.io>
 
 import router from '@/router';
+import { getMockResponse } from '@/data/bakery';
 
 export default async function call(method, args) {
 	if (!args) {
@@ -19,20 +20,26 @@ export default async function call(method, args) {
 
 	updateState(this, 'RequestStarted', null);
 
-	const res = await fetch(`/api/method/${method}`, {
-		method: 'POST',
-		headers,
-		body: JSON.stringify(args)
-	});
+	try {
+		const res = await fetch(`/api/method/${method}`, {
+			method: 'POST',
+			headers,
+			body: JSON.stringify(args)
+		});
 
-	if (res.ok) {
-		updateState(this, null, null);
-		const data = await res.json();
-		if (data.docs || method === 'login') {
-			return data;
+		if (res.ok) {
+			updateState(this, null, null);
+			const data = await res.json();
+			if (data.docs || method === 'login') {
+				return data;
+			}
+			return data.message;
 		}
-		return data.message;
-	} else {
+		const mockResponse = getMockResponse(method, args);
+		if (mockResponse !== undefined) {
+			updateState(this, null, null);
+			return mockResponse;
+		}
 		let response = await res.text();
 		let error, exception;
 		try {
@@ -77,6 +84,14 @@ export default async function call(method, args) {
 			router.push('/login');
 		}
 		throw e;
+	} catch (error) {
+		const mockResponse = getMockResponse(method, args);
+		if (mockResponse !== undefined) {
+			updateState(this, null, null);
+			return mockResponse;
+		}
+		updateState(this, null, error?.message || 'Unable to reach the bakery services.');
+		throw error;
 	}
 
 	function updateState(vm, state, errorMessage) {

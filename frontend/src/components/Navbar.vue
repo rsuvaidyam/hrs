@@ -1,7 +1,7 @@
 <template>
   <div class="w-full fixed top-0 h-12 md:h-14 z-40 bg-primary shadow-sm">
     <div class="px-3 pt-2 md:pt-0 md:px-8 flex justify-between items-center h-full max-w-[1800px] mx-auto w-full">
-      <router-link to="/" class="text-xl font-medium text-white cursor-pointer">HRS</router-link>
+      <router-link to="/" class="text-xl font-medium text-white cursor-pointer">Hearthstone Bakery</router-link>
       <div class="text-white cursor-pointer">
         <div class="flex items-center px-2 py-0.5 rounded-md" @click="store.openpop = true">
           <p v-if="store.location_ditecter" class="font-medium truncate md:w-auto w-56 ">{{ store.address }}</p>
@@ -76,13 +76,17 @@ export default {
     }
 
     const getCart = async () => {
+      if (!auth.isLoggedIn) {
+        count.value = store.cart_count || 0;
+        return;
+      }
       try {
-        const response = auth.isLoggedIn ? await call('hrs.controllers.api.cart_count', { usr: session.user }) : 0;
+        const response = await call('hrs.controllers.api.cart_count', { usr: session.user });
         count.value = response || 0;
         store.cart_count = response;
       } catch (error) {
         console.error(error);
-        count.value = 0;
+        count.value = store.cart_count || 0;
       }
     };
 

@@ -1,6 +1,6 @@
 <template>
     <div class="bg-white md:rounded-md shadow-md p-3 w-full h-full">
-      <p class="text-2xl pt-2 pb-3 font-medium text-main truncate">Celebrate Special Occasions</p>
+      <p class="text-2xl pt-2 pb-3 font-medium text-main truncate">Celebrate with Bakery Favorites</p>
       <OccasionsLoader v-if="loader" />
       <div v-else class="w-full flex flex-col md:flex-row gap-3">
         <router-link
@@ -11,19 +11,12 @@
         >
           <div class="w-full cursor-pointer overflow-hidden rounded-t-md">
             <img
-              v-if="occasion.name1 === 'Happy Birthday'"
               class="rounded-t-md h-full w-full transition-all duration-200 hover:scale-105"
-              src="https://www.fnp.com/assets/images/custom/cakes_23/special_occasion/Birthday_web.jpg"
-              alt=""
-            />
-            <img
-              v-else
-              class="rounded-t-md h-full w-full transition-all duration-200 hover:scale-105"
-              src="https://www.fnp.com/assets/images/custom/cakes_23/special_occasion/Anniversary_web.jpg"
-              alt=""
+              :src="occasion.image"
+              :alt="occasion.name1"
             />
           </div>
-          <p class="text-center font-semibold text-main pt-2">{{ occasion.name1.split(' ')[1] }}</p>
+          <p class="text-center font-semibold text-main pt-2">{{ occasion.name1 }}</p>
         </router-link>
       </div>
     </div>
