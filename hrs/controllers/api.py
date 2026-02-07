@@ -67,9 +67,7 @@ def change_address(user,address):
 @frappe.whitelist(allow_guest=True)
 def get_carousel():
     carousels = frappe.get_all('Carousel', filters={'status': 'Active'}, pluck='name')
-    for name in carousels:
-        carousel_doc = frappe.get_doc('Carousel', name)
-    return carousel_doc
+    return [frappe.get_doc('Carousel', name).as_dict() for name in carousels]
 
 # Category APIs --:--
 @frappe.whitelist(allow_guest=True)
@@ -147,4 +145,3 @@ def update_document(doctype, name, data):
     doc.update(payload)
     doc.save()
     return doc
-
