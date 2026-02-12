@@ -287,6 +287,20 @@ const bakeryProducts = [
 ];
 
 const CART_KEY = 'bakery_cart';
+const ADDRESS_KEY = 'bakery_address';
+const ORDER_KEY = 'bakery_orders';
+
+const demoAddress = {
+  name: 'ADDR-001',
+  name1: 'Aarav Sharma',
+  phone_no: '9876543210',
+  house_name: 'Rose Villa',
+  road_name: 'Baker Street',
+  land_mark: 'Near City Mall',
+  pin_code: '682001',
+  district: 'Ernakulam',
+  default: 1,
+};
 
 const normalizeCart = (cart) =>
   cart
@@ -306,6 +320,44 @@ const getCart = () => {
   } catch (error) {
     return [];
   }
+};
+
+const getAddress = () => {
+  if (typeof window === 'undefined') {
+    return demoAddress;
+  }
+  try {
+    const raw = window.localStorage.getItem(ADDRESS_KEY);
+    return raw ? JSON.parse(raw) : demoAddress;
+  } catch (error) {
+    return demoAddress;
+  }
+};
+
+const setAddress = (address) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  window.localStorage.setItem(ADDRESS_KEY, JSON.stringify(address));
+};
+
+const getOrders = () => {
+  if (typeof window === 'undefined') {
+    return [];
+  }
+  try {
+    const raw = window.localStorage.getItem(ORDER_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (error) {
+    return [];
+  }
+};
+
+const setOrders = (orders) => {
+  if (typeof window === 'undefined') {
+    return;
+  }
+  window.localStorage.setItem(ORDER_KEY, JSON.stringify(orders));
 };
 
 const setCart = (cart) => {
@@ -374,8 +426,80 @@ const getProductDetails = (name) => bakeryProducts.find((product) => product.nam
 
 const cartCount = () => getCart().filter((entry) => entry.count > 0).length;
 
+const addAddress = (args = {}) => {
+  const data = args.data || {};
+  const address = {
+    ...demoAddress,
+    ...data,
+    name: data.name || `ADDR-${Date.now()}`,
+    default: 1,
+  };
+  setAddress(address);
+  return address;
+};
+
+const placeOrder = () => {
+  const cart = getCart();
+  if (!cart.length) {
+    return { code: '400', message: 'Cart is empty' };
+  }
+
+  const address = getAddress();
+  const now = new Date();
+  const orders = getOrders();
+
+  const newOrders = cart.map((entry, index) => ({
+    name: `ORD-${now.getTime()}-${index + 1}`,
+    creation: now.toISOString().replace('T', ' ').split('.')[0],
+    product: entry.product,
+    images: { image: entry.images?.[0]?.image || '' },
+    order_status: 'Order Confirmed',
+    order_date: now.toISOString(),
+    shipping_status: 'Preparing',
+    shipping_date: '',
+    delivery_status: 'Pending',
+    delivery_date: '',
+    address,
+  }));
+
+  setOrders([...newOrders, ...orders]);
+  setCart([]);
+  return { code: '200', message: 'Order placed successfully' };
+};
+
+const productSearch = (keyWord = '') => {
+  if (!keyWord?.trim()) {
+    return [];
+  }
+  const query = keyWord.toLowerCase();
+  return bakeryProducts.filter((product) =>
+    product.name1.toLowerCase().includes(query) ||
+    product.items.some((item) => item.name1.toLowerCase().includes(query))
+  );
+};
+
+const login = (args = {}) => {
+  if (typeof document !== 'undefined') {
+    document.cookie = `user_id=${encodeURIComponent(args.usr || 'demo@bakery.com')}; path=/`;
+    document.cookie = `full_name=${encodeURIComponent('Bakery User')}; path=/`;
+  }
+  return { message: 'Logged In', full_name: 'Bakery User' };
+};
+
+const logout = () => {
+  if (typeof document !== 'undefined') {
+    document.cookie = 'user_id=Guest; path=/';
+    document.cookie = 'full_name=Guest; path=/';
+  }
+  return { message: 'Logged Out' };
+};
+
 export const getMockResponse = (method, args = {}) => {
   switch (method) {
+    case 'login':
+      return login(args);
+    case 'logout':
+      return logout();
     case 'hrs.controllers.api.get_carousel':
       return { images: bakeryCarousel };
     case 'hrs.controllers.api.get_category':
@@ -395,9 +519,17 @@ export const getMockResponse = (method, args = {}) => {
     case 'hrs.controllers.api.cart_count':
       return cartCount();
     case 'hrs.controllers.api.get_address':
-      return { default_address: true };
+      return { default_address: getAddress() };
+    case 'hrs.controllers.api.add_address':
+      return addAddress(args);
     case 'hrs.controllers.api.place_order':
-      return { status: 'ok' };
+      return placeOrder(args);
+    case 'hrs.controllers.api.get_order':
+      return getOrders();
+    case 'hrs.controllers.api.get_order_details':
+      return getOrders().find((item) => item.name === args.item) || null;
+    case 'hrs.controllers.api.product_search':
+      return productSearch(args.key_word);
     default:
       return undefined;
   }
