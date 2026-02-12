@@ -49,7 +49,7 @@ const inputValue = ref({
 });
 
 // Function to handle form submission with validation
-const handleSubmit = () => {
+const handleSubmit = async () => {
     const requiredFields = ['name1', 'phone_no', 'house_name', 'pin_code', 'district'];
     const emptyFields = requiredFields.filter(field => !inputValue.value[field]);
 
@@ -59,7 +59,7 @@ const handleSubmit = () => {
     } else {
         try {
             const formData = inputValue.value;
-            let res = call('hrs.controllers.api.add_address', { data: { ...formData, user: session.user, default: 1 } });
+            let res = await call('hrs.controllers.api.add_address', { data: { ...formData, user: session.user, default: 1 } });
             if (res.name) {
                 router.push({ name: 'PlaceOrder' })
             }
