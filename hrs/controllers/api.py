@@ -81,6 +81,67 @@ def get_event():
     event = frappe.get_all('Events', fields=['name','name1','image'])
     return event
 
+
+@frappe.whitelist(allow_guest=True)
+def get_homepage_content():
+    return {
+        "featured_products": [
+            {
+                "name": "Velvet Strawberry Gateau",
+                "price": 980,
+                "tag": "Best Seller",
+                "description": "Layers of vanilla sponge, fresh berries, and cloud-light cream.",
+                "image": "https://images.unsplash.com/photo-1464306076886-debede6f7917?auto=format&fit=crop&w=900&q=80",
+            },
+            {
+                "name": "Belgian Chocolate Tart",
+                "price": 760,
+                "tag": "New",
+                "description": "Dark chocolate ganache on a buttery almond shortcrust base.",
+                "image": "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=900&q=80",
+            },
+            {
+                "name": "Rose Pistachio Pastry",
+                "price": 420,
+                "tag": "Eggless",
+                "description": "Fragrant rose milk cream and roasted pistachio praline crunch.",
+                "image": "https://images.unsplash.com/photo-1559620192-032c4bc4674e?auto=format&fit=crop&w=900&q=80",
+            },
+        ],
+        "categories": [
+            {"name": "Cakes", "note": "Celebration signatures in luxe finishes."},
+            {"name": "Pastries", "note": "Delicate handcrafted bites for every craving."},
+            {"name": "Artisan Bread", "note": "Long-fermented loaves baked every dawn."},
+            {"name": "Cookies", "note": "Golden, buttery, and deeply comforting."},
+        ],
+        "testimonials": [
+            {
+                "name": "Ananya R",
+                "title": "Food Stylist",
+                "text": "Everything tastes as beautiful as it looks. Their pastries feel straight out of Paris.",
+                "avatar": "https://images.unsplash.com/photo-1487412720507-e7ab37603c6f?auto=format&fit=crop&w=300&q=80",
+            },
+            {
+                "name": "Rahul M",
+                "title": "Loyal Customer",
+                "text": "The same-day delivery is flawless and the cakes always arrive fresh and elegant.",
+                "avatar": "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=300&q=80",
+            },
+            {
+                "name": "Sana K",
+                "title": "Event Planner",
+                "text": "Premium quality every single time. My clients now ask specifically for Aurélia desserts.",
+                "avatar": "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&w=300&q=80",
+            },
+        ],
+        "gallery": [
+            "https://images.unsplash.com/photo-1519869325930-281384150729?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1608198093002-ad4e005484ec?auto=format&fit=crop&w=800&q=80",
+            "https://images.unsplash.com/photo-1514517220017-8ce97a34a7b6?auto=format&fit=crop&w=800&q=80",
+        ],
+    }
+
 # Generic DocType APIs --:--
 def _parse_json(value, default=None):
     if value in (None, ""):
