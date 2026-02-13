@@ -55,11 +55,6 @@ const routes = [
 	name: "Address",
 	component: Address,
   },
-  // {
-	// path: "/productlist/event/:name",
-	// name: "ProductDetails",
-	// component: ProductDetails,
-  // },
   ...authRoutes,
 ];
 

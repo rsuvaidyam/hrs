@@ -63,7 +63,7 @@ def validate_coupon(code, total=None, category=None):
         from datetime import datetime
         now = datetime.now()
         code_str = str(code).strip()
-        name = frappe.db.get_value('Coupon Code', {'name': code_str}, 'name')
+        name = frappe.db.get_value('Coupon Code', {'name1': code_str}, 'name')
         if not name:
             return {'valid': False, 'message': 'Invalid coupon code', 'discount': 0}
         doc = frappe.get_doc('Coupon Code', name)
@@ -122,27 +122,60 @@ def get_carousel():
 # Category APIs --:--
 @frappe.whitelist(allow_guest=True)
 def get_category():
-    category = frappe.get_all('Category', fields=['*'])
-    return category
+    """Return categories for Cake Showcase. Fields: name, name1, description, status, image (if exists)."""
+    try:
+        fields = ['name', 'name1', 'description', 'status']
+        if frappe.db.has_column('Category', 'image'):
+            fields.append('image')
+        docs = frappe.get_all(
+            'Category',
+            filters={'status': 'Active'},
+            fields=fields,
+            order_by='name1 asc'
+        )
+        return docs or []
+    except Exception:
+        return []
 
 # Event APIs --:--
 @frappe.whitelist(allow_guest=True)
 def get_event():
-    event = frappe.get_all('Events', fields=['name','name1','image'])
-    return event
-
-# Homepage / Featured --:--
-@frappe.whitelist(allow_guest=True)
-def get_featured_products(user=None):
-    """Return featured products for homepage (first 8 from events)."""
     try:
+        if frappe.db.table_exists('Events'):
+            return frappe.get_all('Events', fields=['name', 'name1', 'image'])
+        return []
+    except Exception:
+        return []
+
+
+# Occasions (for Cake Showcase categories) --:--
+@frappe.whitelist(allow_guest=True)
+def get_occasions():
+    """Return occasion list for Browse by Occasion. Optional: map to category name for filtering."""
+    return [
+        {'slug': 'birthday', 'label': 'Birthday Cakes', 'category': None},
+        {'slug': 'wedding', 'label': 'Wedding Cakes', 'category': None},
+        {'slug': 'anniversary', 'label': 'Anniversary', 'category': None},
+        {'slug': 'designer', 'label': 'Designer Cakes', 'category': None},
+        {'slug': 'cupcakes', 'label': 'Cupcakes', 'category': None},
+    ]
+
+# Homepage / Featured (Cake Showcase) --:--
+@frappe.whitelist(allow_guest=True)
+def get_featured_products(user=None, limit=12):
+    """Return featured products for Cake Showcase. Uses active products (no event dependency)."""
+    try:
+        out = ProductAPIs.featured_products(limit=limit)
+        if out:
+            return out
+        # Fallback: try event_by_product for legacy
         data = ProductAPIs.event_by_product(user)
         if not data:
             return []
         flat = []
         for products in data.values():
             flat.extend(products)
-        return flat[:8]
+        return flat[: int(limit) if limit else 12]
     except Exception:
         return []
 

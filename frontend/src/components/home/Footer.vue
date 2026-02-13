@@ -1,12 +1,12 @@
 <template>
 	<footer class="bg-bakery-footer text-footer-text">
-		<div class="max-w-[1800px] mx-auto px-4 md:px-8 py-16 md:py-20">
-			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 md:gap-16">
+		<div class="max-w-[1400px] mx-auto px-4 sm:px-6 md:px-8 py-12 md:py-16">
+			<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10 md:gap-12">
 				<!-- Brand -->
 				<div class="lg:col-span-1">
-					<h2 class="font-serif text-2xl md:text-3xl font-semibold text-white">{{ props.siteName || siteName || 'Store' }}</h2>
-					<p v-if="props.tagline || props.siteName" class="mt-4 text-footer-muted text-sm md:text-base max-w-xs">
-						{{ props.tagline || '' }}
+					<h2 class="font-serif text-xl md:text-2xl font-semibold text-white">{{ props.siteName || siteName || 'Store' }}</h2>
+					<p v-if="(props.tagline || props.siteName)" class="mt-3 text-footer-muted text-sm max-w-xs">
+						{{ props.tagline || 'Fresh bakes, delivered with care.' }}
 					</p>
 				</div>
 
@@ -68,7 +68,7 @@
 				</div>
 			</div>
 
-			<div class="mt-16 pt-8 border-t border-white/10 text-center text-footer-muted text-sm">
+			<div class="mt-12 pt-6 border-t border-white/10 text-center text-footer-muted text-sm">
 				<p>&copy; {{ new Date().getFullYear() }} {{ props.siteName || siteName || 'Store' }}. All rights reserved.</p>
 			</div>
 		</div>

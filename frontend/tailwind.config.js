@@ -22,6 +22,10 @@ module.exports = {
 					'primary-hover': '#A66B47',
 					footer: '#2C2419',
 				},
+				footer: {
+					text: '#E8E0D8',
+					muted: '#9A8F82',
+				},
 			},
 			backgroundColor: {
 				'primary': 'var(--color-bg-primary)',
@@ -44,7 +48,11 @@ module.exports = {
 			borderRadius: {
 				'card': '16px',
 				'button': '14px',
+				'pill': '9999px',
 				'xl': '20px',
+			},
+			transitionDuration: {
+				'300': '300ms',
 			},
 			screens: {
 				standalone: { raw: "(display-mode: standalone)" },

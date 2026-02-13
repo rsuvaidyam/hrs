@@ -32,7 +32,7 @@
 
 <script>
 import { ref, computed } from 'vue';
-import { Dialog, Button, TextInput, Spinner } from 'frappe-ui';
+import { Dialog } from 'frappe-ui';
 import AddToCartBtn from '../AddToCartBtn.vue';
 
 export default {
@@ -45,9 +45,6 @@ export default {
     components: {
         Dialog,
         AddToCartBtn,
-        Button,
-        TextInput,
-        Spinner
     },
     setup(props) {
         const dialog1 = ref(false);

@@ -1,6 +1,5 @@
 <template>
 	<div class="min-h-screen bg-cream">
-		<!-- Hero (full-width) -->
 		<Hero
 			:tagline="siteSettings.hero_tagline"
 			:headline="siteSettings.hero_headline"
@@ -8,22 +7,12 @@
 			:image="siteSettings.hero_image"
 		/>
 
-		<!-- Featured Products -->
 		<FeaturedProducts />
-
-		<!-- Categories -->
 		<CategorySection />
-
-		<!-- Why Choose Us -->
+		<CustomCakeBanner />
 		<WhyChooseUs />
-
-		<!-- Testimonials -->
 		<Testimonials />
-
-		<!-- Gallery strip -->
 		<GalleryStrip />
-
-		<!-- Footer -->
 		<Footer
 			:site-name="siteSettings.site_name"
 			:store-hours="siteSettings.store_hours"
@@ -31,9 +20,8 @@
 			:tagline="siteSettings.footer_tagline"
 		/>
 
-		<!-- Mobile bottom nav -->
-		<div :class="[store.cart_count > 0 ? 'pb-14' : '']" class="block md:hidden" aria-hidden="true" />
-		<div class="block md:hidden">
+		<div class="block md:hidden h-16 flex-shrink-0" aria-hidden="true" />
+		<div class="block md:hidden fixed bottom-0 left-0 right-0 z-30">
 			<Nav />
 		</div>
 	</div>
@@ -44,6 +32,7 @@ import { ref, inject } from 'vue';
 import Hero from '../components/home/Hero.vue';
 import FeaturedProducts from '../components/home/FeaturedProducts.vue';
 import CategorySection from '../components/home/CategorySection.vue';
+import CustomCakeBanner from '../components/home/CustomCakeBanner.vue';
 import WhyChooseUs from '../components/home/WhyChooseUs.vue';
 import Testimonials from '../components/home/Testimonials.vue';
 import GalleryStrip from '../components/home/GalleryStrip.vue';

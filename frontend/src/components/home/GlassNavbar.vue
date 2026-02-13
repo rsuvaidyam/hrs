@@ -14,38 +14,6 @@
 					{{ siteName || (siteSettings && siteSettings.site_name) || 'Store' }}
 				</router-link>
 
-				<!-- Center nav - desktop -->
-				<nav class="hidden md:flex items-center gap-8" aria-label="Main navigation">
-					<router-link
-						to="/"
-						class="text-sm font-medium transition-colors hover:opacity-90"
-						:class="scrolled ? 'text-chocolate' : 'text-white/95'"
-					>
-						Home
-					</router-link>
-					<router-link
-						to="/#featured"
-						class="text-sm font-medium transition-colors hover:opacity-90"
-						:class="scrolled ? 'text-chocolate' : 'text-white/95'"
-					>
-						Menu
-					</router-link>
-					<router-link
-						to="/#categories"
-						class="text-sm font-medium transition-colors hover:opacity-90"
-						:class="scrolled ? 'text-chocolate' : 'text-white/95'"
-					>
-						Categories
-					</router-link>
-					<router-link
-						to="/#about"
-						class="text-sm font-medium transition-colors hover:opacity-90"
-						:class="scrolled ? 'text-chocolate' : 'text-white/95'"
-					>
-						Why Us
-					</router-link>
-				</nav>
-
 				<!-- Right: search, cart, profile -->
 				<div class="flex items-center gap-3 md:gap-5">
 					<div class="hidden lg:block w-64 xl:w-80">

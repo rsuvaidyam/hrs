@@ -1,18 +1,18 @@
 <template>
-	<section class="py-16 md:py-20 px-0 overflow-hidden">
-		<div class="text-center mb-10 md:mb-12 px-4">
-			<p class="font-sans text-sm uppercase tracking-widest text-chocolate-soft mb-2">Behind the scenes</p>
-			<h2 class="font-serif text-3xl md:text-4xl font-semibold text-chocolate">From Our Kitchen</h2>
+	<section class="py-12 sm:py-16 md:py-20 px-0 overflow-hidden">
+		<div class="text-center mb-8 md:mb-10 px-4">
+			<p class="font-sans text-xs uppercase tracking-widest text-chocolate-soft mb-1.5">Behind the scenes</p>
+			<h2 class="font-serif text-2xl sm:text-3xl md:text-4xl font-semibold text-chocolate">From Our Kitchen</h2>
 		</div>
 
-		<div class="flex gap-2 md:gap-4 overflow-x-auto pb-4 scroll-smooth" style="scrollbar-width: none;">
+		<div class="flex gap-3 overflow-x-auto pb-2 scroll-smooth hide-scrollbar px-4 md:px-6">
 			<a
 				v-for="(img, i) in galleryImages"
 				:key="i"
 				:href="img.url || img"
 				target="_blank"
-		rel="noopener noreferrer"
-				class="flex-shrink-0 w-64 md:w-80 h-64 md:h-80 rounded-card overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-bakery-primary"
+				rel="noopener noreferrer"
+				class="flex-shrink-0 w-56 h-56 sm:w-64 sm:h-64 md:w-72 md:h-72 rounded-2xl overflow-hidden group focus:outline-none focus-visible:ring-2 focus-visible:ring-bakery-primary shadow-soft"
 			>
 				<img
 					:src="img.url || img"
