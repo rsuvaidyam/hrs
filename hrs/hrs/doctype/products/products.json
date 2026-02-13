@@ -17,6 +17,9 @@
   "status",
   "column_break_xulx",
   "image",
+  "section_break_diet",
+  "is_vegan",
+  "is_gluten_free",
   "section_break_gbmh",
   "is_customizable",
   "images_tab",
@@ -72,6 +75,25 @@
    "fieldname": "image",
    "fieldtype": "Attach Image",
    "label": "Image"
+  },
+  {
+   "fieldname": "section_break_diet",
+   "fieldtype": "Section Break",
+   "label": "Dietary"
+  },
+  {
+   "default": 0,
+   "fieldname": "is_vegan",
+   "fieldtype": "Check",
+   "label": "Vegan",
+   "in_list_view": 1
+  },
+  {
+   "default": 0,
+   "fieldname": "is_gluten_free",
+   "fieldtype": "Check",
+   "label": "Gluten Free",
+   "in_list_view": 1
   },
   {
    "default": "Active",

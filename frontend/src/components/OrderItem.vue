@@ -31,9 +31,14 @@
                     <p class="text-xl">{{ order_item?.product?.name1 }}</p>
                     <img :src="order_item?.images?.image" alt="" class="w-16 rounded-sm shadow-sm">
                 </div>
-                <div class="flex gap-5 items-center pt-2">
-                    <p class="px-2 text-xl font-semibold">₹ {{ Math.ceil(order_item?.product?.final_price) }}</p>
-                    <p class="px-2 text-xl">{{ order_item?.product?.qty }} {{ order_item?.product?.unit }}</p>
+                <div class="flex flex-wrap gap-3 items-center pt-2 px-2">
+                    <p class="text-xl font-semibold">₹ {{ Math.ceil(order_item?.product?.final_price ?? order_item?.product?.price) }} × {{ order_item?.count ?? 1 }}</p>
+                    <p class="text-chocolate-soft">{{ order_item?.product?.qty }} {{ order_item?.product?.unit }}</p>
+                </div>
+                <div v-if="order_item?.total_amount != null || order_item?.discount_amount > 0 || order_item?.amount_payable != null" class="px-2 pt-2 space-y-1 border-t mt-2">
+                    <p v-if="order_item?.total_amount != null" class="text-sm text-chocolate-soft">Subtotal: ₹ {{ Math.ceil(order_item.total_amount) }}</p>
+                    <p v-if="order_item?.discount_amount > 0" class="text-sm text-green-600">Discount ({{ order_item?.coupon_code || 'coupon' }}): − ₹ {{ Math.ceil(order_item.discount_amount) }}</p>
+                    <p v-if="order_item?.amount_payable != null" class="text-lg font-semibold text-primary">Amount paid: ₹ {{ Math.ceil(order_item.amount_payable) }}</p>
                 </div>
             </div>
             <!-- steper -->

@@ -1,7 +1,7 @@
 <template>
   <div class="pt-12 md:pt-14 w-full h-full pb-3 max-w-[1600px] mx-auto">
-    <!-- <Filter /> -->
-     <div class="w-full h-full flex justify-center items-center" v-if="loading">
+    <ProductFilters v-model="filters" @update:modelValue="fetchProducts" />
+    <div class="w-full h-full flex justify-center items-center" v-if="loading">
       <div class="w-14" >
         <Spinner :loading="loading" />
       </div>
@@ -31,36 +31,39 @@
 </template>
 
 <script setup>
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, watch, inject } from 'vue';
 import { useRoute } from 'vue-router';
 import { Spinner } from 'frappe-ui';
-import Item from '../product/Item.vue';
+import Item from './Item.vue';
+import ProductFilters from './ProductFilters.vue';
 
 const route = useRoute();
 const location = route.fullPath.split('/');
 
 const products = ref([]);
 const loading = ref(true);
+const filters = ref({});
 const call = inject('$call');
-onMounted(async () => {
+
+async function fetchProducts() {
+  loading.value = true;
   try {
-    let data = {};
-    if (location[2] === 'category') {
-      data.category = location[3];
-    } else if (location[2] === 'event') {
-      data.event = location[3];
-    }
-
-    const response = await call('hrs.controllers.api.products_list', { data: data });
-
-    products.value = response;
-    setTimeout(() => {
-      loading.value = false;
-    }, 1000);
-  } catch (error) {
-    console.log(error)
+    const data = { ...filters.value };
+    if (location[2] === 'category') data.category = location[3];
+    else if (location[2] === 'event') data.event = location[3];
+    const response = await call('hrs.controllers.api.products_list', { data });
+    const list = Array.isArray(response) ? response : (response && response.message) ? response.message : [];
+    products.value = list || [];
+  } catch (e) {
+    console.error(e);
+    products.value = [];
+  } finally {
+    loading.value = false;
   }
-});
+}
+
+onMounted(fetchProducts);
+watch(() => route.fullPath, fetchProducts);
 
 </script>
 

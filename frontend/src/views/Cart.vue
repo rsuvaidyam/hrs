@@ -73,15 +73,17 @@ const products = ref([]);
 const loading = ref(true);
 const call = inject('$call');
 const session = inject('$session');
+const store = inject('store');
 const fetchCart = async () => {
 	try {
 		const response = await call('hrs.controllers.api.get_cart', { usr: session.user });
-		products.value = response;
-		loading.value = false;
-
+		products.value = Array.isArray(response) ? response : [];
+		store.cart_count = products.value.length;
 	} catch (error) {
-		// Handle error, e.g., show a toast or redirect to login
+		products.value = [];
 		console.error(error);
+	} finally {
+		loading.value = false;
 	}
 };
 

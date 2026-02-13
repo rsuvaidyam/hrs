@@ -6,20 +6,54 @@ class CartAPIs:
         return cart
 
     def get_cart(usr):
-        cart_data = frappe.get_all('Cart', filters={'owner': usr}, fields=['name', 'product', 'count','msg','option'])
+        cart_data = frappe.get_all('Cart', filters={'owner': usr}, fields=['name', 'product', 'count', 'msg', 'option'])
 
         products = []
         for cart in cart_data:
-            product_names = frappe.get_all('Product Option', filters={'parent': cart.product,'name':cart.option}, pluck='name')
-            for name in product_names:
-                products_doc = frappe.get_doc('Product Option', name)
-                image_doc = frappe.get_all('Images Child', filters={'parent': products_doc.parent}, fields=['name','image'])
-                products.append({
-                    'count': cart.count,
-                    'product': products_doc.as_dict() if products_doc else {},
-                    'images': image_doc if image_doc else [],
-                })
-
+            # Option may be a Product Option name (variant) or the product name itself (simple product)
+            product_names = frappe.get_all(
+                'Product Option', filters={'parent': cart.product, 'name': cart.option}, pluck='name'
+            )
+            if product_names:
+                for name in product_names:
+                    products_doc = frappe.get_doc('Product Option', name)
+                    image_doc = frappe.get_all(
+                        'Images Child', filters={'parent': products_doc.parent}, fields=['name', 'image']
+                    )
+                    p_dict = products_doc.as_dict() if products_doc else {}
+                    if products_doc.get('parent') and frappe.db.exists('Products', products_doc.parent):
+                        p_dict['category'] = frappe.db.get_value('Products', products_doc.parent, 'category')
+                    products.append({
+                        'count': cart.count,
+                        'product': p_dict,
+                        'images': image_doc if image_doc else [],
+                    })
+            else:
+                # Simple product: option == product name (no Product Option child)
+                if frappe.db.exists('Products', cart.product):
+                    product_doc = frappe.get_doc('Products', cart.product)
+                    doc_dict = product_doc.as_dict()
+                    image_doc = getattr(product_doc, 'images', None) or []
+                    if hasattr(image_doc, '__iter__') and not isinstance(image_doc, (str, dict)):
+                        image_doc = [{'name': getattr(r, 'name', None), 'image': getattr(r, 'image', None)} for r in image_doc]
+                    else:
+                        image_doc = doc_dict.get('images') or []
+                    # Normalize to same shape as Product Option for frontend (name1, final_price, parent)
+                    products.append({
+                        'count': cart.count,
+                        'product': {
+                            'name': doc_dict.get('name'),
+                            'name1': doc_dict.get('product_name'),
+                            'parent': doc_dict.get('name'),
+                            'price': doc_dict.get('price'),
+                            'final_price': doc_dict.get('price'),
+                            'discounts': 0,
+                            'qty': 1,
+                            'unit': 'pc',
+                            'category': doc_dict.get('category'),
+                        },
+                        'images': image_doc,
+                    })
         return products
 
     def add_to_cart(product, event,option):

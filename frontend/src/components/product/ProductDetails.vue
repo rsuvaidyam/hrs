@@ -1,149 +1,224 @@
 <template>
-    <div class="pt-10 lg:pt-2 w-full h-full max-w-[1060px] mx-auto relative">
-        <div class="w-full h-full flex justify-center items-center" v-if="loading">
-            <Spinner class="w-14" />
+    <div class="min-h-screen bg-cream pt-14 md:pt-16 pb-20 md:pb-10">
+        <div class="max-w-5xl mx-auto px-4" v-if="!loading && (products.name || selectedOption.name1)">
+            <!-- Breadcrumb -->
+            <nav class="text-sm text-chocolate-soft mb-4">
+                <router-link to="/" class="hover:text-primary">Home</router-link>
+                <span class="mx-2">/</span>
+                <router-link :to="`/product-list/category/${products.category || 'all'}`" class="hover:text-primary">Products</router-link>
+                <span class="mx-2">/</span>
+                <span class="text-chocolate">{{ selectedOption.name1 || products.product_name }}</span>
+            </nav>
+
+            <div class="flex flex-col lg:flex-row gap-8 lg:gap-12">
+                <!-- Images -->
+                <div class="w-full lg:w-1/2">
+                    <div class="rounded-2xl overflow-hidden bg-cream-dark shadow-soft">
+                        <div class="aspect-square md:aspect-[4/3] flex items-center justify-center">
+                            <img
+                                v-if="mainImageUrl"
+                                :src="mainImageUrl"
+                                :alt="selectedOption.name1 || products.product_name"
+                                class="w-full h-full object-cover"
+                            />
+                            <div v-else class="w-full h-full flex items-center justify-center text-chocolate-soft bg-blush-soft">
+                                <span class="font-serif text-4xl">No image</span>
+                            </div>
+                        </div>
+                        <div v-if="productImages.length > 1" class="flex gap-2 p-3 overflow-x-auto border-t border-blush-soft">
+                            <button
+                                v-for="(img, idx) in productImages"
+                                :key="idx"
+                                @click="setImageSelected(img)"
+                                :class="{ 'ring-2 ring-primary ring-offset-2': imageSelected === img }"
+                                class="shrink-0 w-16 h-16 rounded-lg overflow-hidden bg-cream border border-blush-soft"
+                            >
+                                <img :src="resolveImage(img)" alt="" class="w-full h-full object-cover" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Info -->
+                <div class="w-full lg:w-1/2 flex flex-col">
+                    <h1 class="font-serif text-3xl md:text-4xl font-semibold text-chocolate mb-2">
+                        {{ selectedOption.name1 || products.product_name }}
+                    </h1>
+                    <p v-if="categoryName" class="text-sm text-chocolate-soft mb-4">{{ categoryName }}</p>
+
+                    <!-- Price & Add to cart -->
+                    <div class="flex flex-wrap items-center gap-4 mb-6">
+                        <div class="flex items-baseline gap-2">
+                            <span class="font-serif text-2xl md:text-3xl text-primary font-medium">
+                                ₹ {{ Math.ceil(selectedOption.final_price ?? selectedOption.price ?? 0) }}
+                            </span>
+                            <template v-if="selectedOption.discounts">
+                                <del class="text-base text-chocolate-soft">₹ {{ selectedOption.price }}</del>
+                                <span class="text-sm font-medium text-primary">{{ selectedOption.discounts }}% off</span>
+                            </template>
+                        </div>
+                        <div class="h-12 flex items-center">
+                            <AddToCartBtn
+                                :product="selectedOption"
+                                :products="(products.items && products.items.length) ? products.items : [selectedOption]"
+                                :option="selectedOption.name"
+                            />
+                        </div>
+                    </div>
+
+                    <!-- Dietary badges -->
+                    <div class="flex flex-wrap gap-2 mb-6">
+                        <span v-if="products.product_type" class="px-3 py-1 rounded-full text-xs font-medium bg-blush-soft text-chocolate">
+                            {{ products.product_type }}
+                        </span>
+                        <span v-if="products.is_vegan" class="px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                            Vegan
+                        </span>
+                        <span v-if="products.is_gluten_free" class="px-3 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-800">
+                            Gluten Free
+                        </span>
+                    </div>
+
+                    <!-- Description -->
+                    <div v-if="selectedOption?.description" class="mb-6">
+                        <h2 class="font-serif text-lg font-semibold text-chocolate mb-2">Description</h2>
+                        <p class="text-chocolate-soft text-sm leading-relaxed">{{ selectedOption.description }}</p>
+                    </div>
+                    <div v-else class="mb-6">
+                        <h2 class="font-serif text-lg font-semibold text-chocolate mb-2">Description</h2>
+                        <p class="text-chocolate-soft text-sm italic">No description added yet.</p>
+                    </div>
+
+                    <!-- Product details (key features) -->
+                    <div v-if="selectedOption?.key_features" class="mb-6">
+                        <h2 class="font-serif text-lg font-semibold text-chocolate mb-2">Product Details</h2>
+                        <div class="text-sm text-chocolate-soft prose prose-sm max-w-none" v-html="selectedOption.key_features" />
+                    </div>
+
+                    <!-- Unit selector (when multiple options) -->
+                    <div v-if="products?.items?.length > 1" class="mb-6">
+                        <h2 class="font-serif text-lg font-semibold text-chocolate mb-2">Select unit</h2>
+                        <div class="flex flex-wrap gap-2">
+                            <button
+                                v-for="(item, index) in products.items"
+                                :key="item?.name || index"
+                                @click="selectedOption = item"
+                                :class="selectedOption === item ? 'border-primary bg-blush-soft text-chocolate' : 'border-blush-soft'"
+                                class="px-4 py-2 rounded-xl border-2 text-sm font-medium transition-colors"
+                            >
+                                {{ item.qty }} {{ item.unit }} — ₹ {{ Math.ceil(item.final_price) }}
+                            </button>
+                        </div>
+                    </div>
+
+                    <div v-if="products?.owner" class="mt-auto pt-6 border-t border-blush-soft text-sm text-chocolate-soft">
+                        Seller: {{ products.owner }}
+                    </div>
+                </div>
+            </div>
         </div>
-        <div v-else class="flex flex-col gap-x-5 md:flex-row h-full">
-            <div class="w-full md:w-1/2 md:h-full md:p-2">
-                <div class="hidden md:block">
-                    <div class="w-full h-auto md:h-full flex gap-2">
-                        <div class="w-20 h-full flex flex-col gap-1">
-                            <div v-for="(image, index) in products.images" :key="index" @click="setImageSelected(image)"
-                                :class="{ 'border-2 border-gray-950': imageSelected?.name === image.name }"
-                                class="px-0.5 md:px-0 overflow-hidden cursor-pointer">
-                                <img class="h-full md:h-auto w-auto md:w-full" :src="image?.image" alt="" />
-                            </div>
-                        </div>
-                        <div class="w-full h-full flex flex-col gap-3">
-                            <img class="w-full"
-                                :src="imageSelected?.image || (products?.images && products?.images[0]?.image)"
-                                alt="" />
-                        </div>
-                    </div>
-                </div>
-                <div class="block md:hidden">
-                    <Carousel :autoplay="2000" :wrap-around="true">
-                        <Slide v-for="(image, index) in products.images" :key="index">
-                            <img :src="image?.image" alt="" class="carousel__item rounded-t-sm max-h-64 w-full" />
-                        </Slide>
-                        <template #addons>
-                            <Pagination />
-                        </template>
-                    </Carousel>
-                </div>
-            </div>
-            <div class="w-full border-l md:w-1/2 h-full px-3 lg:pl-5 pb-14 md:pb-0 flex flex-col gap-2 relative">
-                <p class="text-3xl border-b pb-2">{{ selectedOption.name1 }}</p>
-                <div class="flex items-center gap-2 relative">
-                    <span class="flex gap-0.5 text-3xl font-normal text-secondary">
-                        <span>₹</span>
-                        {{ Math.ceil(selectedOption.final_price) }}
-                    </span>
-                    <template v-if="selectedOption">
-                        <del class="flex gap-0.5 items-center text-base text-tatary">
-                            <span>₹</span>
-                            {{ selectedOption.price }}
-                        </del>
-                        <span class="text-primary text-base font-medium">{{ selectedOption.discounts }}% off</span>
-                    </template>
-                    <div class="w-20 absolute right-1 top-0 h-14">
-                        <AddToCartBtn :product="selectedOption" :products="products.items"
-                            :option="selectedOption.name" />
-                    </div>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="w-5 h-5 border-2 border-green-500 flex items-center justify-center">
-                        <div class="w-3 h-3 rounded-full bg-green-500"></div>
-                    </div>
-                    <span class="text-main">100% vegetarian</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <p class="font-light text-sm">Fresh Cake & delicious</p>
-                </div>
-                <div class="" v-if="products?.items?.length > 1">
-                    <p class="pb-2 text-md">Select Unit</p>
-                    <div class="flex gap-2">
-                        <div v-for="(item, index) in products?.items" :key="index"
-                            class="truncate px-4 cursor-pointer py-2 rounded-md border-2 flex flex-col gap-1 items-center justify-center text-[11px] font-medium"
-                            :class="{ 'border-yellow-900 border-2 shadow-sm bg-amber-50': selectedOption === item }"
-                            @click="selectOption(item)">
-                            <p>{{ item.qty }} {{ selectedOption.unit }}</p>
-                            <div class="flex gap-1">
-                                <p class="flex items-center text-xs gap-0.5 font-semibold">
-                                    ₹ {{ Math.ceil(item.final_price) }}
-                                </p>
-                                <del v-if="item.discounts > 0" class="flex items-center text-xs gap-0.5 font-light">
-                                    ₹ {{ item.price }}
-                                </del>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="w-full" >
-                    <p class="text-md font-medium to-gray-700 py-2">Description</p>
-                    <p class="text-sm border-b">{{ selectedOption?.description?.substring(0, 200) }}{{
-                        selectedOption?.description?.length >
-                            200 ? '...'
-                            : '' }}</p>
-                </div>
-                <div class="w-full">
-                    <p class="font-medium text-md to-gray-700" v-if="selectedOption?.key_features">Product Details</p>
-                    <div class="text-xs list-disc pl-6" v-html="selectedOption.key_features" />
-                </div>
-                <div class="w-full">
-                    <p class="font-medium text-tatary text-sm">Seller : {{ products?.owner }}</p>
-                </div>
-            </div>
+
+        <!-- Loading -->
+        <div v-if="loading" class="flex items-center justify-center min-h-[60vh]">
+            <Spinner class="w-12 h-12 text-primary" />
+        </div>
+
+        <!-- Not found -->
+        <div v-if="!loading && !products.name && !selectedOption.name1 && !error" class="flex flex-col items-center justify-center min-h-[60vh] text-chocolate-soft">
+            <p class="font-serif text-xl">Product not found.</p>
+            <router-link to="/" class="mt-4 text-primary font-medium hover:underline">Back to home</router-link>
+        </div>
+        <div v-if="error" class="flex flex-col items-center justify-center min-h-[60vh] text-chocolate-soft">
+            <p class="font-serif text-xl">Something went wrong.</p>
+            <router-link to="/" class="mt-4 text-primary font-medium hover:underline">Back to home</router-link>
         </div>
     </div>
 </template>
 
 <script setup>
-import { ref, onMounted, inject } from 'vue';
+import { ref, onMounted, inject, computed } from 'vue';
 import { Spinner } from 'frappe-ui';
-import { useRoute, useRouter } from 'vue-router';
-import { Button } from 'frappe-ui';
-import { Carousel, Pagination, Slide } from 'vue3-carousel'
-import 'vue3-carousel/dist/carousel.css'
+import { useRoute } from 'vue-router';
 import AddToCartBtn from '../AddToCartBtn.vue';
 
 const route = useRoute();
-const router = useRouter();
-
 const products = ref({});
-const imageSelected = ref({});
+const imageSelected = ref(null);
 const selectedOption = ref({});
 const loading = ref(true);
-const cart_loading = ref(false);
+const error = ref(null);
 const call = inject('$call');
 
+function resolveImage(img) {
+    if (!img) return '';
+    const url = typeof img === 'string' ? img : (img.image || img.url);
+    if (!url) return '';
+    if (url.startsWith('http')) return url;
+    return window.location.origin + (url.startsWith('/') ? url : '/' + url);
+}
+
+const productImages = computed(() => {
+    const p = products.value;
+    const imgs = p?.images;
+    if (Array.isArray(imgs) && imgs.length) return imgs;
+    if (p?.image) return [{ image: p.image }];
+    return [];
+});
+
+const mainImageUrl = computed(() => {
+    const sel = imageSelected.value;
+    const first = productImages.value[0];
+    if (sel) return resolveImage(sel);
+    if (first) return resolveImage(first);
+    return '';
+});
+
+const categoryName = computed(() => {
+    const p = products.value;
+    if (p?.category_name) return p.category_name;
+    const c = p?.category;
+    return typeof c === 'string' ? c : (c?.name ?? '');
+});
+
 onMounted(async () => {
+    loading.value = true;
+    error.value = null;
     try {
-        const response = await call('hrs.controllers.api.get_product_details', { name: route.params.name });
-        products.value = { ...response, image: response.images };
-        imageSelected.value = response.images[0];
-        selectedOption.value = products.value.items[0];
-        setTimeout(() => {
+        const raw = await call('hrs.controllers.api.get_product_details', { name: route.params.name });
+        const response = raw?.message ?? raw;
+        if (!response || !response.doctype) {
             loading.value = false;
-        }, 1000);
-    } catch (error) {
-        console.log(error);
+            return;
+        }
+        const images = response.images ?? (response.image ? [{ image: response.image }] : []);
+        const imagesList = Array.isArray(images) ? images : [];
+        products.value = { ...response, images: imagesList };
+        imageSelected.value = imagesList[0] ?? null;
+
+        const items = response.items;
+        if (Array.isArray(items) && items.length > 0) {
+            selectedOption.value = items[0];
+        } else {
+            selectedOption.value = {
+                name: response.name,
+                parent: response.name,
+                name1: response.product_name,
+                price: response.price,
+                final_price: response.price,
+                discounts: 0,
+                description: response.description ?? '',
+                key_features: response.key_features ?? '',
+            };
+        }
+    } catch (e) {
+        console.error(e);
+        error.value = e;
+    } finally {
+        loading.value = false;
     }
 });
 
-const addToCart = async (item, event) => {
-    cart_loading.value = true;
-    try {
-        const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event });
-        cart_loading.value = false;
-    } catch (error) {
-        console.log(error);
-    }
-};
-const setImageSelected = (image) => {
-    imageSelected.value = image;
-};
-const selectOption = (option) => {
-    selectedOption.value = option;
-};
+function setImageSelected(img) {
+    imageSelected.value = img;
+}
 </script>

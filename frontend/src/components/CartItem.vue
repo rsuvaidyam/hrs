@@ -68,7 +68,8 @@ export default defineComponent({
   },
   setup(props) {
     const call = inject('$call');  
-    const store = inject('store'); 
+    const store = inject('store');
+    const session = inject('$session'); 
     const originalPrice = computed(() => props.product.product.price * props.product.count);
     const formattedPrice = computed(() => {
       if (props.product.product.discounts) {
@@ -88,18 +89,12 @@ export default defineComponent({
       try {
         const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event,option:option });
         props.product.count = response?.data?.count ?? 0;
-        updateCartCount();
+        const count = await call('hrs.controllers.api.cart_count', { usr: session.user });
+        store.cart_count = count ?? 0;
       } catch (error) {
         props.product.count = originalCount;
         console.log(error);
       }
-    };
-    const updateCartCount = () => {
-      let uniqueProductsCount = 0;
-        if (props.product.count > 0) {
-          uniqueProductsCount++;
-        }
-      store.cart_count = uniqueProductsCount;
     };
 
     return { originalPrice, formattedPrice, add_to_cart };

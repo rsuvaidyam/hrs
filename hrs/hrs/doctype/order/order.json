@@ -13,6 +13,10 @@
   "address",
   "user",
   "p_mode",
+  "coupon_code",
+  "discount_amount",
+  "total_amount",
+  "amount_payable",
   "amended_from",
   "order_confirmation_section",
   "order_status",
@@ -66,6 +70,29 @@
    "fieldtype": "Select",
    "label": "Payment Mode",
    "options": "\nCash\nUPI\nCard\nNet Banking"
+  },
+  {
+   "fieldname": "coupon_code",
+   "fieldtype": "Data",
+   "label": "Coupon Code"
+  },
+  {
+   "fieldname": "discount_amount",
+   "fieldtype": "Currency",
+   "label": "Discount Amount",
+   "precision": 2
+  },
+  {
+   "fieldname": "total_amount",
+   "fieldtype": "Currency",
+   "label": "Total Amount",
+   "precision": 2
+  },
+  {
+   "fieldname": "amount_payable",
+   "fieldtype": "Currency",
+   "label": "Amount Payable",
+   "precision": 2
   },
   {
    "fieldname": "amended_from",

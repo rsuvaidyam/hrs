@@ -26,15 +26,20 @@
         <div class="w-full h-full" v-else>
             <div class="w-full pt-2 flex flex-col gap-2">
                 <router-link :to="`/order/${item.name}`" v-for="item in order_list" :key="item.name"
-                    class="w-full flex items-center justify-between gap-3 pb-3 px-2 h-24 border-b">
-                    <div class="flex gap-3 items-center h-full">
-                        <img :src="item.images?.image" alt="" class="h-full w-20">
-                        <div class="flex flex-col gap-2">
-                            <p class="text-xl">{{ item.creation?.split(' ')[0] }}</p>
-                            <p>{{ item.product.name1 }}</p>
+                    class="w-full flex items-center justify-between gap-3 pb-3 px-2 min-h-24 border-b">
+                    <div class="flex gap-3 items-center flex-1 min-w-0">
+                        <img :src="item.images?.image" alt="" class="h-20 w-20 object-cover rounded">
+                        <div class="flex flex-col gap-1 min-w-0">
+                            <p class="text-lg font-medium">{{ item.creation?.split(' ')[0] }}</p>
+                            <p class="text-chocolate-soft truncate">{{ item.product?.name1 }}</p>
+                            <div class="flex flex-wrap items-center gap-2 text-sm">
+                                <span v-if="item.total_amount != null" class="text-chocolate-soft">₹ {{ Math.ceil(item.total_amount) }}</span>
+                                <span v-if="item.discount_amount > 0" class="text-green-600">− ₹ {{ Math.ceil(item.discount_amount) }} coupon</span>
+                                <span v-if="item.amount_payable != null" class="font-semibold text-primary">Pay ₹ {{ Math.ceil(item.amount_payable) }}</span>
+                            </div>
                         </div>
                     </div>
-                    <FeatherIcon name="chevron-right" class="w-5" />
+                    <FeatherIcon name="chevron-right" class="w-5 shrink-0" />
                 </router-link>
             </div>
             <div class="block md:hidden">

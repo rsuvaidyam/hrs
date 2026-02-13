@@ -2,13 +2,13 @@
   <div class="w-full fixed top-0 h-12 md:h-14 z-40 bg-primary shadow-sm">
     <div class="px-3 pt-2 md:pt-0 md:px-8 flex justify-between items-center h-full max-w-[1800px] mx-auto w-full">
       <router-link to="/" class="text-xl font-medium text-white cursor-pointer">HRS</router-link>
-      <div class="text-white cursor-pointer">
+      <!-- <div class="text-white cursor-pointer">
         <div class="flex items-center px-2 py-0.5 rounded-md" @click="store.openpop = true">
           <p v-if="store.location_ditecter" class="font-medium truncate md:w-auto w-56 ">{{ store.address }}</p>
           <p v-else class="text-sm">Select Location</p>
           <FeatherIcon name="chevron-down" class="w-5 h-5" />
         </div>
-      </div>
+      </div> -->
       <div class="flex items-center gap-3 md:gap-6">
         <div class="hidden lg:block w-96">
           <GlobalSearch />
@@ -95,7 +95,7 @@ export default {
     const dropdownOptions = [
       {
         label: 'Profile',
-        onClick: () => { /* Profile functionality */ },
+        onClick: () => { router.push({ name: 'Profile' }); },
       },
       {
         label: 'My Orders',

@@ -18,63 +18,53 @@ import { ref, watch, inject } from 'vue';
 import { Button } from 'frappe-ui';
 const call = inject('$call');
 const store = inject('store');
+const session = inject('$session');
 const props = defineProps(['product', 'products','option']);
 let product = ref(props.product);
 let products = ref(props.products);
 let option = ref(props.option);
 
-watch(() => props.option, (newOption, oldOption) => {
-  option = newOption;
+watch(() => props.option, (newOption) => {
+  option.value = newOption;
 });
-watch(() => props.product, (newOption, oldOption) => {
-  product = newOption;
+watch(() => props.product, (newVal) => {
+  product.value = newVal;
 });
-watch(() => props.products, (newOption, oldOption) => {
-  products = newOption; 
+watch(() => props.products, (newVal) => {
+  products.value = newVal;
 });
 
-const add_to_cart = async (item, event,option) => {
+const add_to_cart = async (item, event, opt) => {
   let originalCount;
   if (products.value?.length > 0) {
-    products.value?.map((p) => {
-      if (p?.parent == item && p.name == option) {
+    products.value?.forEach((p) => {
+      if (p?.parent == item && p.name == opt) {
         originalCount = p.count;
-        p.count = event === 'plus' ? p?.count + 1 : p?.count - 1;
+        p.count = event === 'plus' ? (p?.count ?? 0) + 1 : Math.max(0, (p?.count ?? 0) - 1);
       }
     });
-  } 
+  }
 
   try {
-    const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event,option:option });
+    const response = await call('hrs.controllers.api.add_to_cart', { product: item, event: event, option: opt });
     if (products.value?.length > 0) {
-      products.value?.map((p) => {
-        if (p.parent == item && p.name == option) {
+      products.value?.forEach((p) => {
+        if (p.parent == item && p.name == opt) {
           p.count = response?.data?.count ?? 0;
         }
       });
-    } 
-    updateCartCount()
+    }
+    const count = await call('hrs.controllers.api.cart_count', { usr: session?.user });
+    store.cart_count = count ?? 0;
   } catch (error) {
-    if (products.value?.length > 0) {
-      products.value?.map((p) => {
-        if (p.parent == item && p.name == option) {
+    if (products.value?.length > 0 && originalCount !== undefined) {
+      products.value?.forEach((p) => {
+        if (p.parent == item && p.name == opt) {
           p.count = originalCount;
         }
       });
-    }  
+    }
   }
-};
-
-const updateCartCount = () => {
-  let uniqueProductsCount = 0;
-  if (products.value?.length > 0) {
-    products.value?.map((p) => {
-      if (p.count > 0) {
-        uniqueProductsCount++;
-      }
-    });
-  } 
-  store.cart_count = uniqueProductsCount;
 };
 
 
